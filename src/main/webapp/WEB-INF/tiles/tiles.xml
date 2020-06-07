@@ -11,8 +11,20 @@
 		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
 	</definition>
 
+	<definition name="admin" extends="mainLayout">
+		<put-attribute name="body" value="/WEB-INF/views/dashboard.jsp" />
+	</definition>
+	
 	<definition name="dashboard" extends="mainLayout">
 		<put-attribute name="body" value="/WEB-INF/views/dashboard.jsp" />
+	</definition>
+	
+	<definition name="banner_setup" extends="mainLayout">
+		<put-attribute name="body" value="/WEB-INF/views/banner_setup.jsp" />
+	</definition>
+	
+	<definition name="brand_setup" extends="mainLayout">
+		<put-attribute name="body" value="/WEB-INF/views/brand_setup.jsp" />
 	</definition>
 
 </tiles-definitions>
