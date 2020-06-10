@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finder.ecoshop.core.dto.BannerDTO;
 import com.finder.ecoshop.core.services.BannerService;
+import com.finder.ecoshop.utils.CommonConstant;
 import com.finder.ecoshop.utils.CommonUtil;
 import com.finder.ecoshop.utils.PageTitleConstant;
 
@@ -33,7 +34,7 @@ public class BannerController {
 		if(bannerId != null && bannerId > 0) {
 			BannerDTO bannerDTO  =  bannerService.getBannerById(bannerId);
 			if(!CommonUtil.isEmpty(bannerDTO.getImagePath())) {
-				bannerDTO.setImagePath("/images/" + bannerDTO.getImagePath());
+				bannerDTO.setImagePath(CommonConstant.IMAGE_PATH + bannerDTO.getImagePath());
 			}
 			model.addAttribute("bannerDTO", bannerDTO);
 		}else {

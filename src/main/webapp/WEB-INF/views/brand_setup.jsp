@@ -75,13 +75,13 @@
 					</div>
 				</div>
 
-				<form:form role="form" id="brand_setup_form"
-					modelAttribute="brandDTO" action="brand_setup.html" method="POST"
-					enctype="multipart/form-data">
-					<form:hidden path="seq" />
+				<div class="card-body">
 
+					<form:form role="form" id="brand_setup_form"
+						modelAttribute="brandDTO" action="brand_setup.html" method="POST"
+						enctype="multipart/form-data">
+						<form:hidden path="seq" />
 
-					<div class="card-body">
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
@@ -121,60 +121,71 @@
 											<span class="input-group-text" id="">Upload</span>
 										</div>
 									</div>
+									<div class="image show" style="margin-top: 20px;">
+										<c:if test="${not empty brandDTO.imagePath}">
+											<img src="${brandDTO.imagePath}" width="150px;"
+												height="150px;" class="img-circle elevation-2"
+												alt="Brand Image">
+										</c:if>
+									</div>
+								</div>
+
+								<div class="form-group" style="text-align: right;">
+									<button type="submit" class="btn btn-primary">Save</button>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!-- /.card-body -->
+					</form:form>
 
-					<div class="card-footer" style="text-align: right;">
-						<button type="submit" class="btn btn-primary">Save</button>
-					</div>
-				</form:form>
+				</div>
+				<!-- /.card-body -->
+
 				<!-- banner setup -->
 			</div>
 
 
 			<!-- brand list -->
-			<div class="row">
-				<div class="col-12">
-					<div class="card">
-						<div class="card-header">
-							<h3 class="card-title">Brand List</h3>
-						</div>
+			<div class="card card-default">
+				<div class="card-header">
+					<h3 class="card-title">Brand List</h3>
 
-						<div class="card-body">
-							<div id="example1_wrapper"
-								class="dataTables_wrapper dt-bootstrap4">
-								<table id="example1"
-									class="table table-bordered table-striped dataTable dtr-inline"
-									role="grid" aria-describedby="example1_info">
+					<div class="card-tools">
+						<button type="button" class="btn btn-tool"
+							data-card-widget="collapse">
+							<i class="fas fa-minus"></i>
+						</button>
+					</div>
+				</div>
 
-									<thead>
-										<tr role="row">
-											<td width="5%">Edit</td>
-											<td>No</td>
-											<td>Name</td>
-											<td>Sequence</td>
-											<td>Status</td>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${brandList}" var="br" varStatus="status">
-											<tr>
-												<td><a href="brand_setup.html?brandId=${br.seq}">
-														<i class="fas fa-edit"></i>
-												</a></td>
-												<td>${status.count}</td>
-												<td>${br.name}</td>
-												<td>${br.sequence}</td>
-												<td>${br.status}</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
+				<div class="card-body">
+					<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+						<table id="example1"
+							class="table table-bordered table-striped dataTable dtr-inline"
+							role="grid" aria-describedby="example1_info">
+
+							<thead>
+								<tr role="row">
+									<td width="5%">Edit</td>
+									<td>No</td>
+									<td>Name</td>
+									<td>Sequence</td>
+									<td>Status</td>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${brandList}" var="br" varStatus="status">
+									<tr>
+										<td><a href="brand_setup.html?brandId=${br.seq}"> <i
+												class="fas fa-edit"></i>
+										</a></td>
+										<td>${status.count}</td>
+										<td>${br.name}</td>
+										<td>${br.sequence}</td>
+										<td>${br.status}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<!-- banner list -->

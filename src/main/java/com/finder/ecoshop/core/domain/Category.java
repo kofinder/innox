@@ -4,13 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "category")
 public class Category extends CommonEntity implements Serializable {
 
-	private static final long serialVersionUID = -837673046368843485L;
+	private static final long serialVersionUID = -6554531829620575649L;
 
 	@Column(name = "Name")
 	private String name;
@@ -24,7 +26,8 @@ public class Category extends CommonEntity implements Serializable {
 	@Column(name = "Status")
 	private Integer status;
 
-	@Column(name = "CreatedBy_Id")
+	@ManyToOne
+	@JoinColumn(name = "CreatedBy_Id")
 	private AdminUser createdBy;
 
 	public String getName() {

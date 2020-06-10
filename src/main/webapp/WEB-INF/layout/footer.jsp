@@ -11,14 +11,11 @@
 				href="https://adminlte.io">AdminLTE.io</a>.
 			</strong> All rights reserved.
 		</div>
-
-		<div class="col-sm-6" style="text-align: right">
-			<strong>Copyright &copy; 2020-2020 <a
-				href="https://adminlte.io">Finder</a>.
+		
+		<div class="col-sm-6">
+			<strong>Copyright &copy; 2020-<script>document.write(new Date().getFullYear())</script><a
+				href="https://adminlte.io"> Finder</a>.
 			</strong> All rights reserved.
 		</div>
 	</div>
-
-
-
 </footer>

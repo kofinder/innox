@@ -3,10 +3,16 @@ package com.finder.ecoshop.core.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "sub_category")
 public class SubCategory extends CommonEntity implements Serializable {
 
-	private static final long serialVersionUID = 5206892789313763641L;
+	private static final long serialVersionUID = 2799110511713961866L;
 
 	@Column(name = "Name")
 	private String name;
@@ -20,8 +26,13 @@ public class SubCategory extends CommonEntity implements Serializable {
 	@Column(name = "Status")
 	private Integer status;
 
-	@Column(name = "Category_Id")
+	@ManyToOne
+	@JoinColumn(name = "Category_Id")
 	private Category category;
+
+	@ManyToOne
+	@JoinColumn(name = "CreatedBy_Id")
+	private AdminUser createdBy;
 
 	public String getName() {
 		return name;
@@ -61,6 +72,14 @@ public class SubCategory extends CommonEntity implements Serializable {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public AdminUser getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(AdminUser createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }

@@ -68,7 +68,7 @@ public class BrandServiceImpl implements BrandService{
 		if (!CommonUtil.isEmpty(brandDTO.getImageFile().getOriginalFilename())) {
 			try {
 				String fileName = ImagesUtil.uploadMultipartFile(brandDTO.getImageFile(),
-						CommonConstant.BRAND__DIRECTORY + CommonConstant.BRAND_IMAGE_DIRECTORY + brand.getSeq() + "/",
+						CommonConstant.BRAND_DIRECTORY + CommonConstant.BRAND_IMAGE_DIRECTORY + brand.getSeq() + "/",
 						CommonConstant.BRAND_IMAGE_PERFIX, brand.getSeq());
 				brand.setImagePath(fileName);
 			} catch (Exception e) {

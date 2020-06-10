@@ -53,7 +53,7 @@ public class BannerServiceImpl implements BannerService {
 			banner.setName(bannerDTO.getName());
 			banner.setDescription(bannerDTO.getDescription());
 			banner.setSequenceNo(bannerDTO.getSequenceNo());
-			banner.setStatus(CommonStatus.ACTIVE.getCode());
+			banner.setStatus(bannerDTO.getStatus());
 			banner.setUpdatedTime(new Date());
 			
 			bannerDao.update(banner);
@@ -71,7 +71,7 @@ public class BannerServiceImpl implements BannerService {
 		if (!CommonUtil.isEmpty(bannerDTO.getImageFile().getOriginalFilename())) {
 			try {
 				String fileName = ImagesUtil.uploadMultipartFile(bannerDTO.getImageFile(),
-						CommonConstant.BANNER__DIRECTORY + CommonConstant.BANNER_IMAGE_DIRECTORY + banner.getSeq() + "/",
+						CommonConstant.BANNER_DIRECTORY + CommonConstant.BANNER_IMAGE_DIRECTORY + banner.getSeq() + "/",
 						CommonConstant.BANNER_IMAGE_PERFIX, banner.getSeq());
 				banner.setImagePath(fileName);
 			} catch (Exception e) {

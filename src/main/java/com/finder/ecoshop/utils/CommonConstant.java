@@ -42,7 +42,7 @@ public class CommonConstant {
 	public static final String STD_TIME_FORMAT_HH_MM_SS = "HH:mm:ss";
 	
 	public static final String ROOT_DIRECTORY = "E:\\usr/innox/images/"; 
-	public static final String IMAGE_PATH = "/innox/";
+	public static final String IMAGE_PATH = "/images/";
 	public static final String BASE_PATH = "innox";
 	public static final String IMAGE_SUFFIX = ".png";
 	public static final String IMAGE_SAVE_DIRECTORY = "/usr/innox/images/";
@@ -55,13 +55,21 @@ public class CommonConstant {
 	public static final String DEFAULT_LOGO = "innox_logo.png";
 	
 	
-	public static final String BANNER__DIRECTORY = "banner/";
+	public static final String BANNER_DIRECTORY = "banner/";
 	public static final String BANNER_IMAGE_DIRECTORY = "banner_image/";
 	public static final String BANNER_IMAGE_PERFIX = "banner_image";
 	
-	public static final String BRAND__DIRECTORY = "brand/";
+	public static final String BRAND_DIRECTORY = "brand/";
 	public static final String BRAND_IMAGE_DIRECTORY = "brand_image/";
 	public static final String BRAND_IMAGE_PERFIX = "brand_image";
+	
+	public static final String CATEGORY_DIRECTORY = "category/";
+	public static final String CATEGORY_IMAGE_DIRECTORY = "category_image/";
+	public static final String CATEGORY_IMAGE_PERFIX = "category_image";
+	
+	public static final String SUB_CATEGORY_DIRECTORY = "sub_category/";
+	public static final String SUB_CATEGORY_IMAGE_DIRECTORY = "sub_category_image/";
+	public static final String SUB_CATEGORY_IMAGE_PERFIX = "sub_category_image";
 	
 	public static final int RECORD_LIMIT_PROMO_ITEM = 6;
 	public static final int RECORD_LIMIT_POPULAR = 6;
@@ -69,9 +77,12 @@ public class CommonConstant {
 	public static final String CURRENCY_CODE_KS = "Ks";
 	
 	// should be only 5 or 10
-		public static final int SHOW_PAGINATION_COUNT = 5;
+	public static final int SHOW_PAGINATION_COUNT = 5;
 
-		public static final int SHOW_COMMENT_COUNT = 5;
+	public static final int SHOW_COMMENT_COUNT = 5;
+	
+	public static final String UI_MESSGAE = "message";
+	public static final String UI_ERROR_MESSGAE = "errorMsg";
 
 
 }

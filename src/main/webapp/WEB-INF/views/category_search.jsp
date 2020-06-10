@@ -42,7 +42,7 @@
 
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Banner</h1>
+					<h1 class="m-0 text-dark">Category Search</h1>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -62,13 +62,11 @@
 	<div class="content">
 		<div class="container-fluid">
 
-
 			<div class="row">
 				<div class="col-12">
-					<!-- banner setup -->
 					<div class="card card-default">
 						<div class="card-header">
-							<h3 class="card-title">Banner Setup</h3>
+							<h3 class="card-title">Search</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -78,74 +76,52 @@
 							</div>
 						</div>
 
-
 						<div class="card-body">
-
-							<form:form role="form" id="banner_setup_form"
-								modelAttribute="bannerDTO" action="banner_setup.html"
+							<!-- category search-->
+							<form:form role="form" id="category_search_form"
+								modelAttribute="searchCatDTO" action="category_setup.html"
 								method="POST" enctype="multipart/form-data">
 								<form:hidden path="seq" />
-
-								<div class="form-row">
-									<div class="col-sm-6">
-										<div class="form-group" id="banner_name_data">
-											<label for="bnnerName">Banner Name</label>
-											<form:input path="name" id="banner_name"
-												placeholder="Banner Name" class="form-control" />
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="categoryName">Category Name</label>
+											<form:input path="name" id="category_name"
+												placeholder="Category Name" class="form-control" />
 										</div>
-										<div class="form-group" id="sequence_data">
-											<label for="sequence_id">Sequence</label>
-											<form:input path="sequenceNo" class="form-control"
-												id="sequence_id" placeholder="Banner Name" />
+
+										<div class="form-group">
+											<label for="status">Status</label>
+											<form:select class="form-control" path="status"
+												id="status_id">
+												<form:option value="-1">--- Please Select One ---</form:option>
+												<form:options items="${statusList}" itemValue="code"
+													itemLabel="desc" />
+											</form:select>
 										</div>
 									</div>
 
-									<div class="col-sm-6">
-										<div class="form-group" id="description-data">
-											<label for="bannerDescription">Description</label>
-											<form:input path="description" class="form-control"
-												id="description_id" placeholder="Description" />
-										</div>
+									<div class="col-md-6">
 										<div class="form-group">
-											<label for=exampleInputFile>File input</label>
-											<div class="input-group">
-												<div class="custom-file">
-													<form:input path="imageFile" type="file"
-														accept="image/x-png, image/jpeg" class="custom-file-input"
-														id="exampleInputFile" />
-													<label class="custom-file-label" for="exampleInputFile">Choose
-														file</label>
-												</div>
-												<div class="input-group-append">
-													<span class="input-group-text" id="">Upload</span>
-												</div>
-											</div>
-											<div class="image show" style="margin-top: 20px;">
-												<c:if test="${not empty bannerDTO.imagePath}">
-													<img src="${bannerDTO.imagePath}" width="100px;"
-														height="100px;" class="img-circle elevation-2"
-														alt="Banner Image">
-												</c:if>
-											</div>
+											<label for="sequenceNo">Sequence No</label>
+											<form:input path="sequenceNo" id="sequence_no"
+												placeholder="Sequence No" class="form-control" />
 										</div>
-
 										<div class="form-group" style="text-align: right;">
-											<button type="submit" class="btn btn-primary"
-												onclick="checkBannerSetup()">Save</button>
+											<button id="category-save" type="submit"
+												class="btn btn-primary">Search</button>
 										</div>
 									</div>
 								</div>
 							</form:form>
 						</div>
-						<!-- /.card-body -->
+						<!-- /.card -->
 					</div>
-					<!-- banner setup -->
 
-					<!-- banner list -->
 					<div class="card card-default">
 
 						<div class="card-header">
-							<h3 class="card-title">Banner List</h3>
+							<h3 class="card-title">Search</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -156,45 +132,59 @@
 						</div>
 
 						<div class="card-body">
-							<div id="example1_wrapper"
-								class="dataTables_wrapper dt-bootstrap4">
-								<table id="example1"
-									class="table table-bordered table-striped dataTable dtr-inline"
-									role="grid" aria-describedby="example1_info">
+							<!-- category list -->
+							<div class="row" style="margin-top: 15px;">
+								<div class="col-12">
+									<div class="card">
+										<div class="card-header">
+											<h3 class="card-title">Category List</h3>
+										</div>
 
-									<thead>
-										<tr role="row">
-											<td width="5%">Edit</td>
-											<td>No</td>
-											<td>Name</td>
-											<td>Description</td>
-											<td>Sequence</td>
-											<td>Status</td>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${bannerList}" var="b" varStatus="status">
-											<tr>
-												<td><a href="banner_setup.html?bannerId=${b.seq}">
-														<i class="fas fa-edit"></i>
-												</a></td>
-												<td>${status.count}</td>
-												<td>${b.name}</td>
-												<td>${b.description}</td>
-												<td>${b.sequenceNo}</td>
-												<td>${b.status}</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+										<div class="card-body">
+											<div id="example1_wrapper"
+												class="dataTables_wrapper dt-bootstrap4">
+												<table id="example1"
+													class="table table-bordered table-striped dataTable dtr-inline"
+													role="grid" aria-describedby="example1_info">
+
+													<thead>
+														<tr role="row">
+															<td width="5%">Edit</td>
+															<td>No</td>
+															<td>Name</td>
+															<td>Sequence</td>
+															<td>Status</td>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${categoryList}" var="cat"
+															varStatus="status">
+															<tr>
+																<td><a
+																	href="category_setup.html?catId=${cat.seq}"> <i
+																		class="fas fa-edit"></i>
+																</a></td>
+																<td>${status.count}</td>
+																<td>${cat.name}</td>
+																<td>${cat.sequenceNo}</td>
+																<td>${cat.status}</td>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- category list -->
 							</div>
 						</div>
-						<!-- banner list -->
 					</div>
-
-
 				</div>
 			</div>
+
+			<!-- category list -->
+
 
 			<!-- /.container-fluid -->
 		</div>
@@ -236,50 +226,6 @@
 		});
 	});
 </script>
-
-<script>
-	function checkBannerSetup() {
-		checkBannerSetupValid();
-		if (errors == 0) {
-			return true;
-		}
-		event.preventDefault();
-	}
-
-	function checkBannerSetupValid() {
-		errors = 0;
-		var nameErr = checkField("Name", $("#banner_name").val(), true, null,
-				null, null);
-
-		var descErr = checkField("Description", $("#description_id").val(),
-				true, null, null, null);
-
-		var sequenceErr = checkField("Sequence", $("#sequence_id").val(), true,
-				null, null, null);
-
-		if (nameErr) {
-			showError("banner_name_data", "banner_name", nameErr);
-			errors = 1;
-		} else {
-			removeErrorMsg("banner_name_data", "banner_name")
-		}
-
-		if (descErr) {
-			showError("description-data", "description_id", descErr);
-			errors = 1;
-		} else {
-			removeErrorMsg("description-data", "description_id")
-		}
-
-		if (sequenceErr) {
-			showError("sequence_data", "sequence_id", sequenceErr);
-			errors = 1;
-		} else {
-			removeErrorMsg("sequence_data", "sequence_id")
-		}
-	}
-</script>
-
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
 	<!-- Control sidebar content goes here -->

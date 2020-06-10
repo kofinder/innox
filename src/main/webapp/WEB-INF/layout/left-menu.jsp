@@ -67,6 +67,24 @@
 						</a></li>
 					</ul></li>
 					
+				<li class="nav-item has-treeview"><a href="#" class="nav-link">
+						<i class="nav-icon fas fa-list-alt"></i>
+						<p>
+							Category <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item"><a href="category_setup.html"
+							class="nav-link"> <i class="far fa-circle nav-icon"></i>
+								<p>Category Setup</p>
+						</a></li>
+						
+						<li class="nav-item"><a href="category_search.html"
+							class="nav-link"> <i class="far fa-circle nav-icon"></i>
+								<p>Category Search</p>
+						</a></li>
+					</ul></li>
+					
 					
 			</ul>
 		</nav>

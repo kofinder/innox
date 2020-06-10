@@ -22,7 +22,6 @@ public class BannerDaoImpl extends GenericDaoImpl<Banner, Long> implements Banne
 	@Override
 	public List<Banner> getAllBannerList() {
 		Criteria c = this.sessionFactory.getCurrentSession().createCriteria(Banner.class);
-		c.add(Restrictions.eq("status", 1));
 		return c.list();
 	}
 

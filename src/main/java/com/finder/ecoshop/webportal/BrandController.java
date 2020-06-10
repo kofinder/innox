@@ -15,7 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finder.ecoshop.core.dto.BrandDTO;
 import com.finder.ecoshop.core.services.BrandService;
+import com.finder.ecoshop.utils.CommonConstant;
 import com.finder.ecoshop.utils.CommonStatus;
+import com.finder.ecoshop.utils.CommonUtil;
 import com.finder.ecoshop.utils.PageTitleConstant;
 
 @Controller
@@ -35,7 +37,11 @@ public class BrandController {
 		if (brandId == null || brandId <= 0) {
 			model.addAttribute("brandDTO", new BrandDTO());
 		} else {
-			model.addAttribute("brandDTO", brandService.getBrandById(brandId));
+			BrandDTO brandDTO  = brandService.getBrandById(brandId);
+			if(!CommonUtil.isEmpty(brandDTO.getImagePath())) {
+				brandDTO.setImagePath(CommonConstant.IMAGE_PATH + brandDTO.getImagePath());
+			}
+			model.addAttribute("brandDTO", brandDTO);
 		}
 
 		model.addAttribute("brandList", brandService.getAllBannerList());
