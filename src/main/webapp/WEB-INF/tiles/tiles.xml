@@ -34,5 +34,13 @@
 	<definition name="category_search" extends="mainLayout">
 		<put-attribute name="body" value="/WEB-INF/views/category_search.jsp" />
 	</definition>
+	
+	<definition name="sub_category_setup" extends="mainLayout">
+		<put-attribute name="body" value="/WEB-INF/views/sub_category_setup.jsp" />
+	</definition>
+	
+	<definition name="error" extends="mainLayout">
+		<put-attribute name="body" value="/WEB-INF/views/error.jsp" />
+	</definition>
 
 </tiles-definitions>

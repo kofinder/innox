@@ -3,6 +3,7 @@ package com.finder.ecoshop.repository.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.finder.ecoshop.core.domain.SubCategory;
@@ -14,8 +15,9 @@ public class SubCategoryDaoImpl extends GenericDaoImpl<SubCategory, Long> implem
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SubCategory> getAllSubCategoryList() {
+	public List<SubCategory> getAllSubCategoryListByCatId(Long catId) {
 		Criteria c = this.getCurrentSession().createCriteria(SubCategory.class);
+		c.add(Restrictions.eq("category.id", catId));
 		return c.list();
 	}
 

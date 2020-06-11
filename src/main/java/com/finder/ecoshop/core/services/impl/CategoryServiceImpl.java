@@ -93,4 +93,20 @@ public class CategoryServiceImpl implements CategoryService{
 		return new CategoryDTO(categoryDao.get(category.getSeq()));
 	}
 
+	@Override
+	public List<CategoryDTO> searchCategoryByData(CategoryDTO categoryDTO) {
+		List<Category> categoryList = categoryDao.searchCategoryByData(categoryDTO);
+		if(categoryList == null || categoryList.isEmpty()) {
+			return new ArrayList<CategoryDTO>();
+		}
+		
+		List<CategoryDTO> dtoList = new ArrayList<CategoryDTO>();
+		categoryList.forEach(cat -> {
+			dtoList.add(new CategoryDTO(cat));
+		});
+		
+		logger.info("searchCategoryByData() >> End >> Category List : " + dtoList.size());
+		return dtoList;
+	}
+
 }

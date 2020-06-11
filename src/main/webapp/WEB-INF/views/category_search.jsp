@@ -79,7 +79,7 @@
 						<div class="card-body">
 							<!-- category search-->
 							<form:form role="form" id="category_search_form"
-								modelAttribute="searchCatDTO" action="category_setup.html"
+								modelAttribute="searchCatDTO" action="category_search.html"
 								method="POST" enctype="multipart/form-data">
 								<form:hidden path="seq" />
 								<div class="row">
@@ -107,9 +107,13 @@
 											<form:input path="sequenceNo" id="sequence_no"
 												placeholder="Sequence No" class="form-control" />
 										</div>
-										<div class="form-group" style="text-align: right;">
+										<div class="form-group"
+											style="text-align: right; margin-top: 55px;">
 											<button id="category-save" type="submit"
-												class="btn btn-primary">Search</button>
+												style="margin-right: 10px;" class="btn btn-primary">Search</button>
+
+											<button id="category-search-clear" type="button"
+												class="btn btn-default">Clear</button>
 										</div>
 									</div>
 								</div>
@@ -121,7 +125,7 @@
 					<div class="card card-default">
 
 						<div class="card-header">
-							<h3 class="card-title">Search</h3>
+							<h3 class="card-title">Category List</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -133,47 +137,39 @@
 
 						<div class="card-body">
 							<!-- category list -->
-							<div class="row" style="margin-top: 15px;">
-								<div class="col-12">
-									<div class="card">
-										<div class="card-header">
-											<h3 class="card-title">Category List</h3>
-										</div>
+							<div class="row">
 
-										<div class="card-body">
-											<div id="example1_wrapper"
-												class="dataTables_wrapper dt-bootstrap4">
-												<table id="example1"
-													class="table table-bordered table-striped dataTable dtr-inline"
-													role="grid" aria-describedby="example1_info">
+								<div class="card-body">
+									<div id="example1_wrapper"
+										class="dataTables_wrapper dt-bootstrap4">
+										<table id="example1"
+											class="table table-bordered table-striped dataTable dtr-inline"
+											role="grid" aria-describedby="example1_info">
 
-													<thead>
-														<tr role="row">
-															<td width="5%">Edit</td>
-															<td>No</td>
-															<td>Name</td>
-															<td>Sequence</td>
-															<td>Status</td>
-														</tr>
-													</thead>
-													<tbody>
-														<c:forEach items="${categoryList}" var="cat"
-															varStatus="status">
-															<tr>
-																<td><a
-																	href="category_setup.html?catId=${cat.seq}"> <i
-																		class="fas fa-edit"></i>
-																</a></td>
-																<td>${status.count}</td>
-																<td>${cat.name}</td>
-																<td>${cat.sequenceNo}</td>
-																<td>${cat.status}</td>
-															</tr>
-														</c:forEach>
-													</tbody>
-												</table>
-											</div>
-										</div>
+											<thead>
+												<tr role="row">
+													<td width="5%">Edit</td>
+													<td>No</td>
+													<td>Name</td>
+													<td>Sequence</td>
+													<td>Status</td>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${categoryList}" var="cat"
+													varStatus="status">
+													<tr>
+														<td><a href="category_setup.html?catId=${cat.seq}">
+																<i class="fas fa-edit"></i>
+														</a></td>
+														<td>${status.count}</td>
+														<td>${cat.name}</td>
+														<td>${cat.sequenceNo}</td>
+														<td>${cat.status}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
 									</div>
 								</div>
 								<!-- category list -->
@@ -182,9 +178,7 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- category list -->
-
 
 			<!-- /.container-fluid -->
 		</div>
@@ -216,6 +210,12 @@
 	$(document).ready(function() {
 		bsCustomFileInput.init();
 	});
+
+	$("#category-search-clear").click(function() {
+		$("#category_name").val('');
+		$("#status_id").val('-1');
+		$("#sequence_no").val('0');
+	});
 </script>
 
 <script>
@@ -226,6 +226,8 @@
 		});
 	});
 </script>
+
+
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
 	<!-- Control sidebar content goes here -->

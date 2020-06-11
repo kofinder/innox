@@ -38,7 +38,7 @@
 								<p>Dashboard</p>
 						</a></li>
 					</ul></li>
-					
+
 
 				<li class="nav-item has-treeview"><a href="#" class="nav-link">
 						<i class="nav-icon fas fa-shield-alt"></i>
@@ -55,7 +55,7 @@
 
 
 				<li class="nav-item has-treeview"><a href="#" class="nav-link">
-						<i class="nav-icon fas fa-rss-square"></i>
+						<i class="nav-icon fas fa-tags"></i>
 						<p>
 							Brand <i class="right fas fa-angle-left"></i>
 						</p>
@@ -66,7 +66,7 @@
 								<p>Banner Setup</p>
 						</a></li>
 					</ul></li>
-					
+
 				<li class="nav-item has-treeview"><a href="#" class="nav-link">
 						<i class="nav-icon fas fa-list-alt"></i>
 						<p>
@@ -78,14 +78,33 @@
 							class="nav-link"> <i class="far fa-circle nav-icon"></i>
 								<p>Category Setup</p>
 						</a></li>
-						
+
 						<li class="nav-item"><a href="category_search.html"
 							class="nav-link"> <i class="far fa-circle nav-icon"></i>
 								<p>Category Search</p>
 						</a></li>
 					</ul></li>
-					
-					
+
+
+				<li class="nav-item has-treeview"><a href="#" class="nav-link">
+						<i class="nav-icon fas fa-industry"></i>
+						<p>
+							Product <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item"><a href="prodcut_setup.html"
+							class="nav-link"> <i class="far fa-circle nav-icon"></i>
+								<p>Product Setup</p>
+						</a></li>
+
+						<li class="nav-item"><a href="product_search.html"
+							class="nav-link"> <i class="far fa-circle nav-icon"></i>
+								<p>Product Search</p>
+						</a></li>
+					</ul></li>
+
+
 			</ul>
 		</nav>
 		<!-- /.sidebar-menu -->

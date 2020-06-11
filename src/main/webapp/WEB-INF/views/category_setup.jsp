@@ -145,7 +145,7 @@
 														<div class="custom-file">
 															<form:input path="imageFile" type="file"
 																accept="image/x-png, image/jpeg"
-																class="custom-file-input" id="exampleInputFile" />
+																class="custom-file-input" id="exampleInputFile1" />
 															<label class="custom-file-label" for="exampleInputFile">Choose
 																file</label>
 														</div>
@@ -155,7 +155,7 @@
 													</div>
 													<div class="image show" style="margin-top: 20px;">
 														<c:if test="${not empty categoryDTO.imagePath}">
-															<img src="${categoryDTO.imagePath}" width="150px;"
+															<img src="${images}${categoryDTO.imagePath}" width="150px;"
 																height="150px;" class="img-circle elevation-2"
 																alt="Category Image">
 														</c:if>
@@ -246,9 +246,10 @@
 												<div class="card-body">
 													<form:form role="form" id="sub_category_setup_form"
 														modelAttribute="subCategoryDTO"
-														action="subCategory_setup.html" method="POST"
+														action="sub_category_setup.html" method="POST"
 														enctype="multipart/form-data">
-														<form:hidden path="seq" />
+														<form:hidden id="subSeq" path="seq" />
+														<input type="hidden" value="${categoryDTO.seq}" name="categorySeq">
 
 														<div class="form-row">
 															<div class="col-md-6">
@@ -282,7 +283,7 @@
 																		<div class="custom-file">
 																			<form:input path="imageFile" type="file"
 																				accept="image/x-png, image/jpeg"
-																				class="custom-file-input" id="exampleInputFile" />
+																				class="custom-file-input" id="exampleInputFile2" />
 																			<label class="custom-file-label"
 																				for="exampleInputFile">Choose file</label>
 																		</div>
@@ -292,7 +293,7 @@
 																	</div>
 																	<div class="image show" style="margin-top: 20px;">
 																		<c:if test="${not empty subCategoryDTO.imagePath}">
-																			<img src="${subCategoryDTO.imagePath}" width="150px;"
+																			<img src="${images}${subCategoryDTO.imagePath}" width="150px;"
 																				height="150px;" class="img-circle elevation-2"
 																				alt="Sub Category Image">
 																		</c:if>

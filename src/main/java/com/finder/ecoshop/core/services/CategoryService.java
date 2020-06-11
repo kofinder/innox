@@ -11,4 +11,6 @@ public interface CategoryService {
 	CategoryDTO getCategoryById(Long catId);
 	
 	CategoryDTO manageCategory(CategoryDTO categoryDTO);
+	
+	List<CategoryDTO> searchCategoryByData(CategoryDTO categoryDTO);
 }

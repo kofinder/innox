@@ -32,7 +32,7 @@ public class CategoryDTO implements Serializable {
 			this.seq = c.getSeq();
 			this.name = c.getName();
 			this.imagePath = c.getImagePath();
-			this.sequenceNo = c.getSequence();
+			this.sequenceNo = c.getSequence() == null ? 0 : c.getSequence();
 			this.status = c.getStatus() == null ? CommonStatus.INACTIVE.getCode() : c.getStatus();
 		}
 	}

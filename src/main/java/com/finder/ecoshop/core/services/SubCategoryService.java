@@ -6,8 +6,10 @@ import com.finder.ecoshop.core.dto.SubCategoryDTO;
 
 public interface SubCategoryService {
 	
-	List<SubCategoryDTO> getAllSubCategoryList();
+	List<SubCategoryDTO> getAllSubCategoryListByCatId(Long catId);
 	
 	SubCategoryDTO getSubCategoryById(Long subCatId);
+	
+	SubCategoryDTO subCategoryManage(SubCategoryDTO subCategoryDTO);
 
 }

@@ -6,5 +6,5 @@ import com.finder.ecoshop.core.domain.SubCategory;
 
 public interface SubCategoryDao extends GenericDao<SubCategory, Long>{
 	
-	List<SubCategory> getAllSubCategoryList();
+	List<SubCategory> getAllSubCategoryListByCatId(Long catId);
 }

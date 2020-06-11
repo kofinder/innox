@@ -25,6 +25,8 @@ public class SubCategoryDTO implements Serializable {
 
 	private CategoryDTO categoryDTO;
 
+	private long categorySeq;
+
 	public SubCategoryDTO() {
 		super();
 	}
@@ -34,7 +36,7 @@ public class SubCategoryDTO implements Serializable {
 			this.seq = sub.getSeq();
 			this.name = sub.getName();
 			this.imagePath = sub.getImagePath();
-			this.sequenceNo = sub.getSequence();
+			this.sequenceNo = sub.getSequence() == null ? 0 : sub.getSequence();
 			this.status = sub.getStatus() == null ? CommonStatus.INACTIVE.getCode() : sub.getStatus();
 			this.categoryDTO = new CategoryDTO(sub.getCategory());
 		}
@@ -94,6 +96,14 @@ public class SubCategoryDTO implements Serializable {
 
 	public void setCategoryDTO(CategoryDTO categoryDTO) {
 		this.categoryDTO = categoryDTO;
+	}
+
+	public long getCategorySeq() {
+		return categorySeq;
+	}
+
+	public void setCategorySeq(long categorySeq) {
+		this.categorySeq = categorySeq;
 	}
 
 }
