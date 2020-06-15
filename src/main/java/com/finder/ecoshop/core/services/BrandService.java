@@ -6,7 +6,7 @@ import com.finder.ecoshop.core.dto.BrandDTO;
 
 public interface BrandService {
 	
-	List<BrandDTO> getAllBannerList();
+	List<BrandDTO> getAllBrandList();
 	
 	BrandDTO saveBrand(BrandDTO brandDTO) throws Exception;
 	

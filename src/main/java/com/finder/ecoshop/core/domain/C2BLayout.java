@@ -9,25 +9,25 @@ public class C2BLayout extends CommonEntity implements Serializable {
 
 	private static final long serialVersionUID = -523376126934936281L;
 
-	@Column(name = "Name")
+	@Column(name = "name")
 	private String name;
 
-	@Column(name = "Description")
+	@Column(name = "description")
 	private String description;
 
-	@Column(name = "Price")
+	@Column(name = "price")
 	private BigDecimal price;
 
-	@Column(name = "ImagePath")
+	@Column(name = "image_path")
 	private String imagePath;
 
-	@Column(name = "Sequence")
+	@Column(name = "sequence_no")
 	private Integer sequence;
 
-	@Column(name = "Status")
+	@Column(name = "status")
 	private Integer status;
 
-	@Column(name = "CreatedBy")
+	@Column(name = "created_by_id")
 	private AdminUser createdBy;
 
 	public String getName() {

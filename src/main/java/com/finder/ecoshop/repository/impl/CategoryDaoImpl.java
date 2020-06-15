@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.finder.ecoshop.core.domain.Category;
 import com.finder.ecoshop.core.dto.CategoryDTO;
 import com.finder.ecoshop.repository.CategoryDao;
+import com.finder.ecoshop.utils.CommonStatus;
 import com.finder.ecoshop.utils.CommonUtil;
 
 @SuppressWarnings("deprecation")
@@ -21,6 +22,7 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements C
 	@Override
 	public List<Category> getAllCategoryList() {
 		Criteria c = this.getCurrentSession().createCriteria(Category.class);
+		c.add(Restrictions.eq("status", CommonStatus.ACTIVE.getCode()));
 		return c.list();
 	}
 

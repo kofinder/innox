@@ -93,7 +93,7 @@
 						</p>
 				</a>
 					<ul class="nav nav-treeview">
-						<li class="nav-item"><a href="prodcut_setup.html"
+						<li class="nav-item"><a href="product_setup.html"
 							class="nav-link"> <i class="far fa-circle nav-icon"></i>
 								<p>Product Setup</p>
 						</a></li>

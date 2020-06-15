@@ -14,24 +14,24 @@ public class SubCategory extends CommonEntity implements Serializable {
 
 	private static final long serialVersionUID = 2799110511713961866L;
 
-	@Column(name = "Name")
+	@Column(name = "name")
 	private String name;
 
-	@Column(name = "ImagePath")
+	@Column(name = "image_path")
 	private String imagePath;
 
-	@Column(name = "Sequence")
+	@Column(name = "sequence")
 	private Integer sequence;
 
-	@Column(name = "Status")
+	@Column(name = "status")
 	private Integer status;
 
 	@ManyToOne
-	@JoinColumn(name = "Category_Id")
+	@JoinColumn(name = "category_id")
 	private Category category;
 
 	@ManyToOne
-	@JoinColumn(name = "CreatedBy_Id")
+	@JoinColumn(name = "created_by_id")
 	private AdminUser createdBy;
 
 	public String getName() {

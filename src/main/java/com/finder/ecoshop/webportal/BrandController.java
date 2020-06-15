@@ -44,7 +44,7 @@ public class BrandController {
 			model.addAttribute("brandDTO", brandDTO);
 		}
 
-		model.addAttribute("brandList", brandService.getAllBannerList());
+		model.addAttribute("brandList", brandService.getAllBrandList());
 
 		logger.info("brandSetupGet() >> End");
 		return "brand_setup";

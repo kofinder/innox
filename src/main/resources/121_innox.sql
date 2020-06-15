@@ -21,24 +21,24 @@ USE `eco_shop`;
 DROP TABLE IF EXISTS `banner`;
 
 CREATE TABLE `banner` (
-  `Seq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  `imagePath` varchar(1000) DEFAULT NULL,
-  `SequenceNo` int(10) DEFAULT NULL,
-  `Status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Inactive',
-  `CreatedBy_Id` bigint(20) DEFAULT NULL,
-  `CreatedTime` datetime DEFAULT NULL,
-  `UpdatedTime` datetime DEFAULT NULL,
-  PRIMARY KEY (`Seq`),
-  KEY `banner_user_fk` (`CreatedBy_Id`),
-  CONSTRAINT `banner_user_fk` FOREIGN KEY (`CreatedBy_Id`) REFERENCES `user` (`userSeq`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `image_path` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `sequence_no` int(10) DEFAULT NULL,
+  `status` int(11) DEFAULT '1' COMMENT '1 = Active / 2 = Inactive',
+  `created_by_id` bigint(20) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_created_by_user` (`created_by_id`),
+  CONSTRAINT `fk_created_by_user` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `banner` */
 
-insert  into `banner`(`Seq`,`Name`,`Description`,`imagePath`,`SequenceNo`,`Status`,`CreatedBy_Id`,`CreatedTime`,`UpdatedTime`) values 
-(1,'Banner1','banner 1',NULL,1,1,1,'2020-06-06 17:27:01','2020-06-07 20:46:16'),
+insert  into `banner`(`id`,`name`,`description`,`image_path`,`sequence_no`,`status`,`created_by_id`,`created_time`,`updated_time`) values 
+(1,'Banner1','banner 1',NULL,1,0,1,'2020-06-06 17:27:01','2020-06-15 21:53:53'),
 (2,'Banner 2','banner','banner/banner_image/2/2_banner_image_32489102495500fernando-hernandez-JdoofvUDUwc-unsplash.jpg',2,1,NULL,NULL,NULL),
 (4,'Banner3','banner','banner/banner_image/4/4_banner_image_35045715112899fernando-hernandez-JdoofvUDUwc-unsplash.jpg',3,1,NULL,'2020-06-06 21:43:54','2020-06-07 20:48:22');
 
@@ -47,22 +47,22 @@ insert  into `banner`(`Seq`,`Name`,`Description`,`imagePath`,`SequenceNo`,`Statu
 DROP TABLE IF EXISTS `brand`;
 
 CREATE TABLE `brand` (
-  `Seq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `ImagePath` varchar(1000) DEFAULT NULL,
-  `Sequence` int(10) DEFAULT NULL,
-  `Status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Inactive',
-  `CreatedBy_Id` bigint(20) DEFAULT NULL,
-  `CreatedTime` datetime DEFAULT NULL,
-  `UpdatedTime` datetime DEFAULT NULL,
-  PRIMARY KEY (`Seq`),
-  KEY `brand_fk_createdBy` (`CreatedBy_Id`),
-  CONSTRAINT `brand_fk_createdBy` FOREIGN KEY (`CreatedBy_Id`) REFERENCES `user` (`userSeq`)
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `image_path` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `sequence_no` int(10) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Inactive',
+  `created_by_id` bigint(20) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `brand_fk_createdBy` (`created_by_id`),
+  CONSTRAINT `brand_fk_createdBy` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `brand` */
 
-insert  into `brand`(`Seq`,`Name`,`ImagePath`,`Sequence`,`Status`,`CreatedBy_Id`,`CreatedTime`,`UpdatedTime`) values 
+insert  into `brand`(`id`,`name`,`image_path`,`sequence_no`,`status`,`created_by_id`,`created_time`,`updated_time`) values 
 (1,'Brand 1','brand/brand_image/1/1_brand_image_13390427613100fernando-hernandez-JdoofvUDUwc-unsplash.jpg',1,1,NULL,'2020-06-07 22:18:55',NULL);
 
 /*Table structure for table `c2b_layout` */
@@ -70,17 +70,17 @@ insert  into `brand`(`Seq`,`Name`,`ImagePath`,`Sequence`,`Status`,`CreatedBy_Id`
 DROP TABLE IF EXISTS `c2b_layout`;
 
 CREATE TABLE `c2b_layout` (
-  `Seq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  `Price` decimal(15,2) DEFAULT NULL,
-  `ImagePath` varchar(1000) DEFAULT NULL,
-  `Sequence` int(1) DEFAULT NULL,
-  `Status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Inactive',
-  `CreatedBy` bigint(20) DEFAULT NULL,
-  `CreatedTime` datetime DEFAULT NULL,
-  `UpdatedTime` datetime DEFAULT NULL,
-  PRIMARY KEY (`Seq`)
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `price` decimal(15,2) DEFAULT NULL,
+  `image_path` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `sequence_no` int(1) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Inactive',
+  `created_by_id` bigint(20) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `c2b_layout` */
@@ -90,24 +90,24 @@ CREATE TABLE `c2b_layout` (
 DROP TABLE IF EXISTS `c2b_product`;
 
 CREATE TABLE `c2b_product` (
-  `Seq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `Product_Code` varchar(255) DEFAULT NULL,
-  `Price` decimal(15,2) DEFAULT NULL,
-  `Sequence` int(1) DEFAULT NULL,
-  `Status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Active',
-  `Category_Id` bigint(20) DEFAULT NULL,
-  `SubCategory_Id` bigint(20) DEFAULT NULL,
-  `CreatedBy` bigint(20) DEFAULT NULL,
-  `CreatedTime` datetime DEFAULT NULL,
-  `UpdatedTime` datetime DEFAULT NULL,
-  PRIMARY KEY (`Seq`),
-  KEY `cat_fk_` (`Category_Id`),
-  KEY `sub_cat_fk_` (`SubCategory_Id`),
-  KEY `create_fk_` (`CreatedBy`),
-  CONSTRAINT `cat_fk_` FOREIGN KEY (`Category_Id`) REFERENCES `category` (`Seq`),
-  CONSTRAINT `create_fk_` FOREIGN KEY (`CreatedBy`) REFERENCES `user` (`userSeq`),
-  CONSTRAINT `sub_cat_fk_` FOREIGN KEY (`SubCategory_Id`) REFERENCES `sub_category` (`Seq`)
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `product_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `price` decimal(15,2) DEFAULT NULL,
+  `sequence_no` int(1) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Active',
+  `category_id` bigint(20) DEFAULT NULL,
+  `sub_category_id` bigint(20) DEFAULT NULL,
+  `created_by_id` bigint(20) DEFAULT NULL,
+  `ceated_time` datetime DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cat_fk_` (`category_id`),
+  KEY `sub_cat_fk_` (`sub_category_id`),
+  KEY `create_fk_` (`created_by_id`),
+  CONSTRAINT `cat_fk_` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `create_fk_` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `sub_cat_fk_` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_category` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `c2b_product` */
@@ -117,68 +117,139 @@ CREATE TABLE `c2b_product` (
 DROP TABLE IF EXISTS `category`;
 
 CREATE TABLE `category` (
-  `Seq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `ImagePath` varchar(1000) DEFAULT NULL,
-  `Sequence` int(10) DEFAULT NULL,
-  `Status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Active',
-  `CreatedBy_Id` bigint(20) DEFAULT NULL,
-  `CreatedTime` datetime DEFAULT NULL,
-  `UpdatedTime` datetime DEFAULT NULL,
-  PRIMARY KEY (`Seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `image_path` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `sequence_no` int(10) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Active',
+  `created_by_id` bigint(20) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_createdBY` (`created_by_id`),
+  CONSTRAINT `fk_createdBY` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `category` */
+
+insert  into `category`(`id`,`name`,`image_path`,`sequence_no`,`status`,`created_by_id`,`created_time`,`updated_time`) values 
+(1,'Shirt','category/category_image/1/1_category_image_16181950059300Casual.png',1,1,1,'2020-06-08 22:46:10','2020-06-15 21:54:12'),
+(2,'Shoe','category/category_image/2/2_category_image_16201809540500Nike_Shoe_Red.png',2,1,NULL,'2020-06-10 23:57:18','2020-06-11 00:29:45'),
+(3,'Pants','category/category_image/3/3_category_image_16222207719800Supreme_Tee.png',3,2,NULL,'2020-06-11 00:22:22','2020-06-11 00:30:05');
+
+/*Table structure for table `product` */
+
+DROP TABLE IF EXISTS `product`;
+
+CREATE TABLE `product` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `brand_id` bigint(20) DEFAULT NULL,
+  `category_id` bigint(20) DEFAULT NULL,
+  `sub_category_id` bigint(20) DEFAULT NULL,
+  `name` bigint(20) DEFAULT NULL,
+  `code_number` varchar(100) CHARACTER SET utf8 COLLATE utf8_german2_ci DEFAULT NULL,
+  `price` decimal(15,2) DEFAULT '0.00',
+  `original_price` decimal(15,2) DEFAULT '0.00',
+  `discount_percent` double DEFAULT '0',
+  `quantity` int(10) DEFAULT NULL,
+  `is_promotion` tinyint(1) DEFAULT NULL,
+  `is_new_arrival` tinyint(1) DEFAULT NULL,
+  `is_popular` tinyint(1) DEFAULT NULL,
+  `overview` longtext CHARACTER SET utf8 COLLATE utf8_german2_ci,
+  `detail` longtext CHARACTER SET utf8 COLLATE utf8_german2_ci,
+  `status` int(1) DEFAULT NULL,
+  `created_by_id` bigint(20) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_brand_id` (`brand_id`),
+  KEY `fk_category_id` (`category_id`),
+  KEY `fk_sub_category_id` (`sub_category_id`),
+  KEY `fk_created_by` (`created_by_id`),
+  CONSTRAINT `fk_brand_id` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),
+  CONSTRAINT `fk_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `fk_created_by` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `fk_sub_category_id` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_category` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `product` */
+
+/*Table structure for table `product_image` */
+
+DROP TABLE IF EXISTS `product_image`;
+
+CREATE TABLE `product_image` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `color` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `size` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `image_path` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `created_by_id` bigint(20) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_product_id` (`product_id`),
+  KEY `fk_created_by_id` (`created_by_id`),
+  CONSTRAINT `fk_created_by_id` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `product_image` */
 
 /*Table structure for table `sub_category` */
 
 DROP TABLE IF EXISTS `sub_category`;
 
 CREATE TABLE `sub_category` (
-  `Seq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `ImagePath` varchar(1000) DEFAULT NULL,
-  `Sequence` int(1) DEFAULT NULL,
-  `Status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Inactive',
-  `Category_Id` bigint(20) DEFAULT NULL,
-  `CreatedBy_Id` bigint(20) DEFAULT NULL,
-  `CreatedTime` datetime DEFAULT NULL,
-  `UpdatedTime` datetime DEFAULT NULL,
-  PRIMARY KEY (`Seq`),
-  KEY `sub_fk_cat` (`Category_Id`),
-  KEY `sub_fk_created` (`CreatedBy_Id`),
-  CONSTRAINT `sub_fk_cat` FOREIGN KEY (`Category_Id`) REFERENCES `category` (`Seq`),
-  CONSTRAINT `sub_fk_created` FOREIGN KEY (`CreatedBy_Id`) REFERENCES `user` (`userSeq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `image_path` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `sequence` int(1) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '1 = Active / 2 = Inactive',
+  `category_id` bigint(20) DEFAULT NULL,
+  `created_by_id` bigint(20) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sub_fk_cat` (`category_id`),
+  KEY `sub_fk_created` (`created_by_id`),
+  CONSTRAINT `sub_fk_cat` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `sub_fk_created` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sub_category` */
+
+insert  into `sub_category`(`id`,`name`,`image_path`,`sequence`,`status`,`category_id`,`created_by_id`,`created_time`,`updated_time`) values 
+(1,'Man Shirt',NULL,1,1,1,1,'2020-06-08 23:38:07','2020-06-15 21:54:17'),
+(4,'Short Pants','sub_category/sub_category_image/4/4_sub_category_image_7061632760700Shirt_4.png',1,1,3,NULL,'2020-06-11 21:49:44','2020-06-11 22:24:11');
 
 /*Table structure for table `user` */
 
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-  `userSeq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `userName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `status` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `roles` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `avatar` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `draftFlag` tinyint(2) DEFAULT NULL,
-  `recordRegSeq` int(11) DEFAULT NULL,
-  `recordUpdateSeq` int(11) DEFAULT NULL,
-  `recordRegDate` date DEFAULT NULL,
-  `recordUpdDate` date DEFAULT NULL,
-  `recordTmpFlag` tinyint(2) DEFAULT NULL,
-  `recordDelFlag` tinyint(2) DEFAULT NULL,
-  PRIMARY KEY (`userSeq`),
-  UNIQUE KEY `user_seq_UNIQUE` (`userSeq`)
+  `draft_flag` tinyint(2) DEFAULT NULL,
+  `record_reg_seq` int(11) DEFAULT NULL,
+  `record_update_seq` int(11) DEFAULT NULL,
+  `record_reg_date` date DEFAULT NULL,
+  `record_upd_date` date DEFAULT NULL,
+  `record_tmp_flag` tinyint(2) DEFAULT NULL,
+  `record_del_flag` tinyint(2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_seq_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
-insert  into `user`(`userSeq`,`userName`,`password`,`email`,`status`,`roles`,`avatar`,`draftFlag`,`recordRegSeq`,`recordUpdateSeq`,`recordRegDate`,`recordUpdDate`,`recordTmpFlag`,`recordDelFlag`) values 
+insert  into `user`(`id`,`user_name`,`password`,`email`,`status`,`roles`,`avatar`,`draft_flag`,`record_reg_seq`,`record_update_seq`,`record_reg_date`,`record_upd_date`,`record_tmp_flag`,`record_del_flag`) values 
 (1,'Zay','$2a$10$N0eqNiuikWCy9ETQ1rdau.XEELcyEO7kukkfoiNISk/9F7gw6eB0W','zay@gmail.com','1','ADMIN',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

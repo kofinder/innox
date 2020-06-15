@@ -14,23 +14,23 @@ public class Banner extends CommonEntity implements Serializable {
 
 	private static final long serialVersionUID = 682299619732509195L;
 
-	@Column(name = "Name")
+	@Column(name = "name")
 	private String name;
 
-	@Column(name = "Description")
+	@Column(name = "description")
 	private String description;
 
-	@Column(name = "imagePath")
+	@Column(name = "image_path")
 	private String imagePath;
 
-	@Column(name = "SequenceNo")
+	@Column(name = "sequence_no")
 	private Integer sequenceNo;
 
-	@Column(name = "Status")
+	@Column(name = "status")
 	private Integer status;
 
 	@ManyToOne
-	@JoinColumn(name = "CreatedBy_Id")
+	@JoinColumn(name = "created_by_id")
 	private AdminUser createdBy;
 
 	public String getName() {

@@ -8,8 +8,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-
-<!-- Toastr -->
 <link rel="stylesheet" href="resources/plugins/toastr/toastr.min.css">
 
 <!-- DataTables -->
@@ -205,9 +203,6 @@
 
 <!-- Bootstrap 4 -->
 <script src="resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Toastr -->
-<script src="resources/plugins/toastr/toastr.min.js"></script>
 
 <!-- DataTables -->
 <script src="resources/plugins/datatables/jquery.dataTables.min.js"></script>

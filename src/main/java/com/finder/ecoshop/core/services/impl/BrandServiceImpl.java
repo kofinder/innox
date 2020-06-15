@@ -29,19 +29,6 @@ public class BrandServiceImpl implements BrandService{
 	private BrandDao brandDao;
 
 	@Override
-	public List<BrandDTO> getAllBannerList() {
-		List<Brand> brandList = brandDao.getAll();
-		if(brandList == null || brandList.isEmpty()) {
-			return new ArrayList<BrandDTO>();
-		}
-		List<BrandDTO> dtoList = new ArrayList<>();
-		brandList.forEach(brand -> {
-			dtoList.add(new BrandDTO(brand));
-		});
-		return dtoList;
-	}
-
-	@Override
 	public BrandDTO saveBrand(BrandDTO brandDTO) throws Exception {
 		Brand brand = null;
 		
@@ -88,6 +75,19 @@ public class BrandServiceImpl implements BrandService{
 			return new BrandDTO();
 		}
 		return new BrandDTO(brand);
+	}
+
+	@Override
+	public List<BrandDTO> getAllBrandList() {
+		List<Brand> brandList = brandDao.getAllBrandList();
+		if(brandList == null || brandList.isEmpty()) {
+			return new ArrayList<BrandDTO>();
+		}
+		List<BrandDTO> dtoList = new ArrayList<>();
+		brandList.forEach(brand -> {
+			dtoList.add(new BrandDTO(brand));
+		});
+		return dtoList;
 	}
 
 }

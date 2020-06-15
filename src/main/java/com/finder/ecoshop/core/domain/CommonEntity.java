@@ -16,13 +16,13 @@ public class CommonEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Seq")
+	@Column(name = "id")
 	private Long Seq;
 
-	@Column(name = "CreatedTime", updatable = false)
+	@Column(name = "created_time", updatable = false)
 	private Date createdTime;
 
-	@Column(name = "UpdatedTime")
+	@Column(name = "updated_time")
 	private Date updatedTime;
 
 	public Long getSeq() {

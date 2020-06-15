@@ -20,11 +20,11 @@ public class AdminUser implements Serializable {
 	private static final long serialVersionUID = 3041808915739574578L;
 
 	@Id
-	@Column(name = "userSeq")
+	@Column(name = "id")
 	@GeneratedValue()
 	private Integer userSeq;
 
-	@Column(name = "userName")
+	@Column(name = "user_name")
 	private String userName;
 
 	@Column(name = "password")
@@ -42,25 +42,25 @@ public class AdminUser implements Serializable {
 	@Column(name = "avatar")
 	private String avatar;
 
-	@Column(name = "draftFlag")
+	@Column(name = "draft_flag")
 	private Boolean draftFlag;
 
-	@Column(name = "recordRegSeq")
+	@Column(name = "record_reg_seq")
 	private Integer recordRegSeq;
 
-	@Column(name = "recordUpdateSeq")
+	@Column(name = "record_update_seq")
 	private Integer recordUpdateSeq;
 
-	@Column(name = "recordRegDate")
+	@Column(name = "record_reg_date")
 	private Date recordRegDate;
 
-	@Column(name = "recordUpdDate")
+	@Column(name = "record_upd_date")
 	private Date recordUpdDate;
 
-	@Column(name = "recordTmpFlag")
+	@Column(name = "record_tmp_flag")
 	private Boolean recordTmpFlag;
 
-	@Column(name = "recordDelFlag")
+	@Column(name = "record_del_flag")
 	private Boolean recordDelFlag;
 
 	public Integer getUserSeq() {

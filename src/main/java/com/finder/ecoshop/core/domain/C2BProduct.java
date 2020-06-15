@@ -11,30 +11,30 @@ public class C2BProduct extends CommonEntity implements Serializable {
 
 	private static final long serialVersionUID = 8945554868547322762L;
 
-	@Column(name = "Name")
+	@Column(name = "name")
 	private String name;
 
-	@Column(name = "Product_Code")
+	@Column(name = "product_code")
 	private String productCode;
 
-	@Column(name = "Price")
+	@Column(name = "price")
 	private BigDecimal price;
 
-	@Column(name = "Sequence")
+	@Column(name = "sequence_no")
 	private Integer sequence;
 
-	@Column(name = "Status")
+	@Column(name = "status")
 	private Integer status;
 
 	@ManyToOne
-	@JoinColumn(name = "Category_Id")
+	@JoinColumn(name = "category_id")
 	private Category category;
 
 	@ManyToOne
-	@JoinColumn(name = "SubCategory_Id")
+	@JoinColumn(name = "sub_category_id")
 	private SubCategory subCategory;
 
-	@Column(name = "CreatedBy")
+	@Column(name = "created_by_id")
 	private AdminUser createdBy;
 
 	public String getName() {
