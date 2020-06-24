@@ -146,8 +146,8 @@ CREATE TABLE `product` (
   `brand_id` bigint(20) DEFAULT NULL,
   `category_id` bigint(20) DEFAULT NULL,
   `sub_category_id` bigint(20) DEFAULT NULL,
-  `name` bigint(20) DEFAULT NULL,
-  `code_number` varchar(100) CHARACTER SET utf8 COLLATE utf8_german2_ci DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `code_number` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `price` decimal(15,2) DEFAULT '0.00',
   `original_price` decimal(15,2) DEFAULT '0.00',
   `discount_percent` double DEFAULT '0',
@@ -155,8 +155,12 @@ CREATE TABLE `product` (
   `is_promotion` tinyint(1) DEFAULT NULL,
   `is_new_arrival` tinyint(1) DEFAULT NULL,
   `is_popular` tinyint(1) DEFAULT NULL,
-  `overview` longtext CHARACTER SET utf8 COLLATE utf8_german2_ci,
-  `detail` longtext CHARACTER SET utf8 COLLATE utf8_german2_ci,
+  `overview` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `detail` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `image_path1` varchar(3000) DEFAULT NULL,
+  `image_path2` varchar(3000) DEFAULT NULL,
+  `image_path3` varchar(3000) DEFAULT NULL,
+  `image_path4` varchar(3000) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
   `created_by_id` bigint(20) DEFAULT NULL,
   `created_time` datetime DEFAULT NULL,
@@ -170,9 +174,12 @@ CREATE TABLE `product` (
   CONSTRAINT `fk_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
   CONSTRAINT `fk_created_by` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_sub_category_id` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product` */
+
+insert  into `product`(`id`,`brand_id`,`category_id`,`sub_category_id`,`name`,`code_number`,`price`,`original_price`,`discount_percent`,`quantity`,`is_promotion`,`is_new_arrival`,`is_popular`,`overview`,`detail`,`image_path1`,`image_path2`,`image_path3`,`image_path4`,`status`,`created_by_id`,`created_time`,`updated_time`) values 
+(2,1,1,1,'Man T-Shirt','PRD-001',16000.00,0.00,0,NULL,0,NULL,0,'Write some overview about your product !','Write some overview about your product !','product/product_image/2/2_product_image_9697653004300Vans.png','product/product_image/2/2_product_image_9676296366100Nike_Shirt.png','product/product_image/2/2_product_image_9687188775000Shoes.png','product/product_image/2/2_product_image_9687192190800Shirt_5.png',2,NULL,'2020-06-22 22:25:00','2020-06-24 22:30:16');
 
 /*Table structure for table `product_image` */
 
@@ -193,9 +200,32 @@ CREATE TABLE `product_image` (
   KEY `fk_created_by_id` (`created_by_id`),
   CONSTRAINT `fk_created_by_id` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product_image` */
+
+insert  into `product_image`(`id`,`product_id`,`description`,`color`,`size`,`image_path`,`created_by_id`,`created_time`,`updated_time`) values 
+(12,2,NULL,NULL,NULL,'product/product_image/2/12_product_image_52314906329600Dress.png',NULL,'2020-06-23 23:27:36','2020-06-23 23:27:36');
+
+/*Table structure for table `product_size` */
+
+DROP TABLE IF EXISTS `product_size`;
+
+CREATE TABLE `product_size` (
+  `Id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) DEFAULT NULL,
+  `size_name` varchar(100) DEFAULT NULL,
+  `created_by_id` bigint(20) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `product_id_fk_1` (`product_id`),
+  KEY `user_fk_id_1` (`created_by_id`),
+  CONSTRAINT `product_id_fk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  CONSTRAINT `user_fk_id_1` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `product_size` */
 
 /*Table structure for table `sub_category` */
 
@@ -216,7 +246,7 @@ CREATE TABLE `sub_category` (
   KEY `sub_fk_created` (`created_by_id`),
   CONSTRAINT `sub_fk_cat` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
   CONSTRAINT `sub_fk_created` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sub_category` */
 
@@ -230,12 +260,12 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `status` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `roles` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `avatar` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `user_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `email` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `status` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `roles` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `avatar` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `draft_flag` tinyint(2) DEFAULT NULL,
   `record_reg_seq` int(11) DEFAULT NULL,
   `record_update_seq` int(11) DEFAULT NULL,

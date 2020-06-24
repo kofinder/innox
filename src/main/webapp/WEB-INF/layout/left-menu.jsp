@@ -87,7 +87,7 @@
 
 
 				<li class="nav-item has-treeview"><a href="#" class="nav-link">
-						<i class="nav-icon fas fa-industry"></i>
+						<i class="nav-icon fas fa-sitemap"></i>
 						<p>
 							Product <i class="right fas fa-angle-left"></i>
 						</p>

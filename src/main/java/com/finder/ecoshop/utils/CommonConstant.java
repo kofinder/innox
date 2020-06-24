@@ -71,6 +71,10 @@ public class CommonConstant {
 	public static final String SUB_CATEGORY_IMAGE_DIRECTORY = "sub_category_image/";
 	public static final String SUB_CATEGORY_IMAGE_PERFIX = "sub_category_image";
 	
+	public static final String PRODUCT_DIRECTORY = "product/";
+	public static final String PRODUCT_IMAGE_DIRECTORY = "product_image/";
+	public static final String PRODUCT_IMAGE_PERFIX = "product_image";
+	
 	public static final int RECORD_LIMIT_PROMO_ITEM = 6;
 	public static final int RECORD_LIMIT_POPULAR = 6;
 	public static final int RECORD_LIMIT_NEW_ARRIVAL_ITEM = 6;

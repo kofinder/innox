@@ -1,5 +1,14 @@
 package com.finder.ecoshop.core.services;
 
-public interface ProductService {
+import java.util.List;
 
+import com.finder.ecoshop.core.dto.ProductDTO;
+
+public interface ProductService {
+	
+	ProductDTO manageProduct(ProductDTO productDTO);
+	
+	List<ProductDTO> productSearch(ProductDTO searchProductDTO);
+	
+	ProductDTO getProductDataById(Long prdId);
 }

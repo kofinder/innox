@@ -2,11 +2,14 @@ package com.finder.ecoshop.core.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;;
 
 @Entity
@@ -65,6 +68,21 @@ public class Product extends CommonEntity implements Serializable {
 
 	@Column(name = "created_by_id")
 	private AdminUser createdBy;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+	private List<ProductImage> productImageList;
+
+	@Column(name = "image_path1")
+	private String imagePath1;
+
+	@Column(name = "image_path2")
+	private String imagePath2;
+
+	@Column(name = "image_path3")
+	private String imagePath3;
+
+	@Column(name = "image_path4")
+	private String imagePath4;
 
 	public Brand getBrand() {
 		return brand;
@@ -192,6 +210,46 @@ public class Product extends CommonEntity implements Serializable {
 
 	public void setDetail(String detail) {
 		this.detail = detail;
+	}
+
+	public List<ProductImage> getProductImageList() {
+		return productImageList;
+	}
+
+	public void setProductImageList(List<ProductImage> productImageList) {
+		this.productImageList = productImageList;
+	}
+
+	public String getImagePath1() {
+		return imagePath1;
+	}
+
+	public void setImagePath1(String imagePath1) {
+		this.imagePath1 = imagePath1;
+	}
+
+	public String getImagePath2() {
+		return imagePath2;
+	}
+
+	public void setImagePath2(String imagePath2) {
+		this.imagePath2 = imagePath2;
+	}
+
+	public String getImagePath3() {
+		return imagePath3;
+	}
+
+	public void setImagePath3(String imagePath3) {
+		this.imagePath3 = imagePath3;
+	}
+
+	public String getImagePath4() {
+		return imagePath4;
+	}
+
+	public void setImagePath4(String imagePath4) {
+		this.imagePath4 = imagePath4;
 	}
 
 }

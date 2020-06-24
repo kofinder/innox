@@ -6,6 +6,7 @@ public class PageTitleConstant {
 	public static final String BRAND_TITLE = "Brand";
 	public static final String CATEGORY_TITLE = "Category";
 	public static final String PRODUCT = "Product";
+	public static final String PRODUCT_SEARCH = "Product Search";
 	
 
 }

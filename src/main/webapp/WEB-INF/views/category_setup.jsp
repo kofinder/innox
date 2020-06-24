@@ -107,11 +107,11 @@
 									<form:form role="form" id="category_setup_form"
 										modelAttribute="categoryDTO" action="category_setup.html"
 										method="POST" enctype="multipart/form-data">
-										
+
 										<form:hidden path="seq" />
 										<div class="row">
 											<div class="col-md-6">
-												<div class="form-group">
+												<div class="form-group" id="category_name_data">
 													<label for="categoryName">Category Name</label>
 													<form:input path="name" id="category_name"
 														placeholder="Category Name" class="form-control" />
@@ -129,7 +129,7 @@
 											</div>
 
 											<div class="col-md-6">
-												<div class="form-group">
+												<div class="form-group" id="sequence_no_data">
 													<label for="sequenceNo">Sequence No</label>
 													<form:input path="sequenceNo" id="sequence_no"
 														placeholder="Sequence No" class="form-control" />
@@ -151,16 +151,16 @@
 													</div>
 													<div class="image show" style="margin-top: 20px;">
 														<c:if test="${not empty categoryDTO.imagePath}">
-															<img src="${images}${categoryDTO.imagePath}" width="150px;"
-																height="150px;" class="img-circle elevation-2"
-																alt="Category Image">
+															<img src="${images}${categoryDTO.imagePath}"
+																width="150px;" height="150px;"
+																class="img-circle elevation-2" alt="Category Image">
 														</c:if>
 													</div>
 												</div>
 
 												<div class="form-group" style="text-align: right;">
 													<button id="category-save" type="submit"
-														class="btn btn-primary">Save</button>
+														class="btn btn-primary" onclick="checkCategroySetup()">Save</button>
 												</div>
 											</div>
 										</div>
@@ -245,11 +245,12 @@
 														action="sub_category_setup.html" method="POST"
 														enctype="multipart/form-data">
 														<form:hidden id="subSeq" path="seq" />
-														<input type="hidden" value="${categoryDTO.seq}" name="categorySeq">
+														<input type="hidden" value="${categoryDTO.seq}"
+															name="categorySeq">
 
 														<div class="form-row">
 															<div class="col-md-6">
-																<div class="form-group">
+																<div class="form-group" id="sub_category_name_data">
 																	<label for="categoryName"> Name</label>
 																	<form:input path="name" id="sub_category_name"
 																		placeholder="Category Name" class="form-control" />
@@ -267,7 +268,7 @@
 															</div>
 
 															<div class="col-md-6">
-																<div class="form-group">
+																<div class="form-group" id="sub_sequence_no_data">
 																	<label for="sequenceNo">Sequence No</label>
 																	<form:input path="sequenceNo" id="sub_sequence_no"
 																		placeholder="Sequence No" class="form-control" />
@@ -289,8 +290,9 @@
 																	</div>
 																	<div class="image show" style="margin-top: 20px;">
 																		<c:if test="${not empty subCategoryDTO.imagePath}">
-																			<img src="${images}${subCategoryDTO.imagePath}" width="150px;"
-																				height="150px;" class="img-circle elevation-2"
+																			<img src="${images}${subCategoryDTO.imagePath}"
+																				width="150px;" height="150px;"
+																				class="img-circle elevation-2"
 																				alt="Sub Category Image">
 																		</c:if>
 																	</div>
@@ -298,7 +300,7 @@
 
 																<div class="form-group" style="text-align: right;">
 																	<button id="sub_category_save" type="submit"
-																		class="btn btn-primary">Save</button>
+																		class="btn btn-primary" onclick="checkSubCategorySetupValid()">Save</button>
 																</div>
 															</div>
 
@@ -345,8 +347,8 @@
 																	varStatus="status">
 																	<tr>
 																		<td><a
-																			href="category_setup.html?catId=${categoryDTO.seq}&subCatId=${sub.seq}"> <i
-																				class="fas fa-edit"></i>
+																			href="category_setup.html?catId=${categoryDTO.seq}&subCatId=${sub.seq}">
+																				<i class="fas fa-edit"></i>
 																		</a></td>
 																		<td>${status.count}</td>
 																		<td>${sub.name}</td>
@@ -414,6 +416,70 @@
 			"autoWidth" : false,
 		});
 	});
+</script>
+
+<script>
+	function checkCategroySetup() {
+		checkCategorySetupValid();
+		if (errors == 0) {
+			return true;
+		}
+		event.preventDefault();
+	}
+
+	function checkSubCategroySetup() {
+		checkSubCategorySetupValid();
+		if (errors == 0) {
+			return true;
+		}
+		event.preventDefault();
+	}
+
+	function checkCategorySetupValid() {
+		errors = 0;
+		var nameErr = checkField("Name", $("#category_name").val(), true, null,
+				null, null);
+
+		var sequenceNoErr = checkField("Sequence No", $("#sequence_no").val(), true,
+				null, null, "n");
+
+		if (nameErr) {
+			showError("category_name_data", "category_name", nameErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("category_name_data", "category_name");
+		}
+
+		if (sequenceNoErr) {
+			showError("sequence_no_data", "sequence_no", sequenceNoErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("sequence_no_data", "sequence_no");
+		}
+	}
+
+	function checkSubCategorySetupValid() {
+		errors = 0;
+		var subNameErr = checkField("Name", $("#sub_category_name").val(), true, null,
+				null, null);
+
+		var subSequenceNoErr = checkField("Name", $("#sub_sequence_no_data").val(), true,
+				null, null, "n");
+
+		if (subNameErr) {
+			showError("sub_category_name_data", "sub_category_name", subNameErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("sub_category_name_data", "sub_category_name");
+		}
+
+		if (subSequenceNoErr) {
+			showError("sub_sequence_no_data", "sub_sequence_no", subSequenceNoErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("sub_sequence_no_data", "sub_sequence_no");
+		}
+	}
 </script>
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">

@@ -2,11 +2,15 @@ package com.finder.ecoshop.core.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finder.ecoshop.core.domain.Product;
+import com.finder.ecoshop.utils.CommonConstant;
 import com.finder.ecoshop.utils.CommonStatus;
+import com.finder.ecoshop.utils.CommonUtil;
 
 public class ProductDTO implements Serializable {
 
@@ -60,6 +64,10 @@ public class ProductDTO implements Serializable {
 
 	private String imagePath4;
 
+	private List<ProductImageDTO> productImageDTOs = new ArrayList<ProductImageDTO>();
+
+	private String priceDesc;
+
 	public ProductDTO() {
 		super();
 	}
@@ -82,6 +90,11 @@ public class ProductDTO implements Serializable {
 			this.status = product.getStatus() == null ? CommonStatus.INACTIVE.getCode() : product.getStatus();
 			this.overview = product.getOverview();
 			this.detail = product.getDetail();
+			this.priceDesc = CommonUtil.formatBigDecimalAsCurrency(product.getPrice(), CommonConstant.CURRENCY_CODE_KS);
+			this.imagePath1 = product.getImagePath1();
+			this.imagePath2 = product.getImagePath2();
+			this.imagePath3 = product.getImagePath3();
+			this.imagePath4 = product.getImagePath4();
 		}
 	}
 
@@ -276,7 +289,21 @@ public class ProductDTO implements Serializable {
 	public void setImagePath4(String imagePath4) {
 		this.imagePath4 = imagePath4;
 	}
-	
-	
+
+	public List<ProductImageDTO> getProductImageDTOs() {
+		return productImageDTOs;
+	}
+
+	public void setProductImageDTOs(List<ProductImageDTO> productImageDTOs) {
+		this.productImageDTOs = productImageDTOs;
+	}
+
+	public String getPriceDesc() {
+		return priceDesc;
+	}
+
+	public void setPriceDesc(String priceDesc) {
+		this.priceDesc = priceDesc;
+	}
 
 }

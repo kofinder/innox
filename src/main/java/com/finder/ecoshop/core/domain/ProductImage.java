@@ -3,9 +3,13 @@ package com.finder.ecoshop.core.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "product_image")
 public class ProductImage extends CommonEntity implements Serializable {
 
 	private static final long serialVersionUID = -3222065366653290927L;

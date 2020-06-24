@@ -149,13 +149,13 @@
 														Image 1</label>
 												</div>
 											</div>
-											<div class="image show" style="margin-top: 20px;">
+											<%-- <div class="image show" style="margin-top: 20px;">
 												<c:if test="${not empty productDTO.imagePath1}">
 													<img src="${images}${productDTO.imagePath1}" width="150px;"
 														height="150px;" class="img-circle elevation-2"
 														alt="Product Image1">
 												</c:if>
-											</div>
+											</div> --%>
 										</div>
 
 										<div class="col-sm-6">
@@ -168,13 +168,13 @@
 														Image 2</label>
 												</div>
 											</div>
-											<div class="image show" style="margin-top: 20px;">
+											<%-- <div class="image show" style="margin-top: 20px;">
 												<c:if test="${not empty productDTO.imagePath2}">
 													<img src="${images}${productDTO.imagePath2}" width="150px;"
 														height="150px;" class="img-circle elevation-2"
 														alt="Product Image1">
 												</c:if>
-											</div>
+											</div> --%>
 										</div>
 									</div>
 								</div>
@@ -271,13 +271,13 @@
 														Image 3</label>
 												</div>
 											</div>
-											<div class="image show" style="margin-top: 20px;">
+											<%-- <div class="image show" style="margin-top: 20px;">
 												<c:if test="${not empty productDTO.imagePath3}">
 													<img src="${images}${productDTO.imagePath3}" width="150px;"
 														height="150px;" class="img-circle elevation-2"
 														alt="Product Image3">
 												</c:if>
-											</div>
+											</div> --%>
 										</div>
 
 										<div class="col-sm-6">
@@ -290,18 +290,22 @@
 														Image 4</label>
 												</div>
 											</div>
-											<div class="image show" style="margin-top: 20px;">
+											<%-- <div class="image show" style="margin-top: 20px;">
 												<c:if test="${not empty productDTO.imagePath4}">
 													<img src="${images}${productDTO.imagePath4}" width="150px;"
 														height="150px;" class="img-circle elevation-2"
 														alt="Product Image4">
 												</c:if>
-											</div>
+											</div> --%>
 										</div>
 									</div>
 								</div>
 
+							</div>
+						</div>
 
+						<div class="row">
+							<div class="col-sm-6">
 								<!-- display if product edit -->
 								<c:if test="${productDTO.seq > 0}">
 									<div class="form-group">
@@ -313,8 +317,72 @@
 										</form:select>
 									</div>
 								</c:if>
+							</div>
+							<div class="col-sm-6"></div>
+						</div>
 
+						<div class="row">
+							<!-- product image list -->
+							<div class="col-sm-3">
+								<c:if test="${not empty productDTO.imagePath1}">
+									<div class="form-group">
+										<label for=exampleInputFile>Image 1</label>
+										<div class="image show" style="margin-top: 20px;">
+											<img src="${images}${productDTO.imagePath1}" width="150px;"
+												height="150px;" class="img-circle elevation-2"
+												alt="Product Image">
+										</div>
+									</div>
+								</c:if>
+							</div>
 
+							<div class="col-sm-3">
+								<c:if test="${not empty productDTO.imagePath2}">
+									<div class="form-group">
+										<label for=exampleInputFile>Image 2</label>
+										<div class="image show" style="margin-top: 20px;">
+											<img src="${images}${productDTO.imagePath2}" width="150px;"
+												height="150px;" class="img-circle elevation-2"
+												alt="Product Image">
+
+										</div>
+									</div>
+								</c:if>
+							</div>
+
+							<div class="col-sm-3">
+								<c:if test="${not empty productDTO.imagePath3}">
+									<div class="form-group">
+										<label for=exampleInputFile>Image 3</label>
+										<div class="image show" style="margin-top: 20px;">
+											<img src="${images}${productDTO.imagePath3}" width="150px;"
+												height="150px;" class="img-circle elevation-2"
+												alt="Product Image">
+										</div>
+									</div>
+								</c:if>
+							</div>
+
+							<div class="col-sm-3">
+								<c:if test="${not empty productDTO.imagePath4}">
+									<div class="form-group">
+										<label for=exampleInputFile>Image 4</label>
+										<div class="image show" style="margin-top: 20px;">
+											<img src="${images}${productDTO.imagePath4}" width="150px;"
+												height="150px;" class="img-circle elevation-2"
+												alt="Product Image">
+										</div>
+									</div>
+								</c:if>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12">
+								<!-- product save button -->
+								<div class="form-group" style="text-align: right;">
+									<button id="product_save" type="submit" class="btn btn-primary">Save</button>
+								</div>
 							</div>
 						</div>
 					</form:form>
