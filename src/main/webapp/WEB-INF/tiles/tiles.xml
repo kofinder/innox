@@ -10,6 +10,18 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
 	</definition>
+	
+	<definition name="login" template="/WEB-INF/views/login.jsp">
+		<put-list-attribute name="stylesheets">
+	        <add-attribute value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	    </put-list-attribute>
+	</definition>
+	
+	<definition name="register" template="/WEB-INF/views/register.jsp">
+		<put-list-attribute name="stylesheets">
+	        <add-attribute value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	    </put-list-attribute>
+	</definition>
 
 	<definition name="admin" extends="mainLayout">
 		<put-attribute name="body" value="/WEB-INF/views/dashboard.jsp" />

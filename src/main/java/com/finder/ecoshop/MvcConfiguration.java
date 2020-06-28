@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -31,14 +32,15 @@ public class MvcConfiguration implements WebMvcConfigurer {
 		tilesConfigurer.setCheckRefresh(true);
 		return tilesConfigurer;
 	}
+	
+	@Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("login");
+        registry.addViewController("/login").setViewName("login");
+    }
 
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
-		/* InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("/WEB-INF/views/");
-		resolver.setSuffix(".jsp");
-		resolver.setViewClass(JstlView.class);
-		registry.viewResolver(resolver); */
 		UrlBasedViewResolver tilesViewResolver = new UrlBasedViewResolver();
 		tilesViewResolver.setViewClass(TilesView.class);
 		registry.viewResolver(tilesViewResolver);
