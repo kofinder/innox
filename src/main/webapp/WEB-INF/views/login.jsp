@@ -47,7 +47,7 @@
 				<div class="card-body">
 					<h3 class="card-title text-center">121 INNOX</h3>
 					<div class="card-text">
-						<form name='f' action="login" method='POST' accept-charset="UTF-8">
+						<form name='f' action="j_spring_security_check" method='POST' accept-charset="UTF-8">
 							<div class="form-group">
 								<label for="username">UserName</label>
 								<input type="text" name="username" class="form-control form-control-sm" id="username" aria-describedby="username">

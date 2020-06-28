@@ -2,8 +2,15 @@ package com.finder.ecoshop.core.services;
 
 import java.util.List;
 
-import com.finder.ecoshop.core.domain.AdminUser;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService {
+import com.finder.ecoshop.core.domain.AdminUser;
+import com.finder.ecoshop.core.dto.UserDTO;
+
+public interface UserService extends UserDetailsService {
 	List<AdminUser> getAllUser();
+
+	AdminUser findByEmail(String email);
+
+	void save(UserDTO dto);
 }

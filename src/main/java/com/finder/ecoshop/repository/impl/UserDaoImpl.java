@@ -13,7 +13,7 @@ import com.finder.ecoshop.repository.UserDao;
 
 @SuppressWarnings("deprecation")
 @Repository
-public class UserDaoImpl extends GenericDaoImpl<AdminUser, Integer> implements UserDao{
+public class UserDaoImpl extends GenericDaoImpl<AdminUser, Integer> implements UserDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -30,6 +30,13 @@ public class UserDaoImpl extends GenericDaoImpl<AdminUser, Integer> implements U
 	public AdminUser findByUserName(String userName) {
 		Criteria c  = this.sessionFactory.getCurrentSession().createCriteria(AdminUser.class);
 		c.add(Restrictions.ne("userName", userName));
+		return (AdminUser) c.uniqueResult();
+	}
+
+	@Override
+	public AdminUser findByEmail(String email) {
+		Criteria c  = this.sessionFactory.getCurrentSession().createCriteria(AdminUser.class);
+		c.add(Restrictions.ne("email", email));
 		return (AdminUser) c.uniqueResult();
 	}
 

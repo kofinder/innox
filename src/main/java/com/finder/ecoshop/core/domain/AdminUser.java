@@ -1,12 +1,19 @@
 package com.finder.ecoshop.core.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,7 +28,7 @@ public class AdminUser implements Serializable {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue()
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userSeq;
 
 	@Column(name = "user_name")
@@ -36,8 +43,9 @@ public class AdminUser implements Serializable {
 	@Column(name = "status")
 	private String status;
 
-	@Column(name = "roles")
-	private String roles;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Collection<Role> roles;
 
 	@Column(name = "avatar")
 	private String avatar;
@@ -79,6 +87,14 @@ public class AdminUser implements Serializable {
 		this.userName = userName;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -95,11 +111,12 @@ public class AdminUser implements Serializable {
 		this.status = status;
 	}
 
-	public String getRoles() {
+
+	public Collection<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(String roles) {
+	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
 
@@ -165,14 +182,6 @@ public class AdminUser implements Serializable {
 
 	public void setRecordDelFlag(Boolean recordDelFlag) {
 		this.recordDelFlag = recordDelFlag;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 }
