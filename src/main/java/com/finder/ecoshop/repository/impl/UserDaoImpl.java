@@ -29,8 +29,11 @@ public class UserDaoImpl extends GenericDaoImpl<AdminUser, Integer> implements U
 	@Override
 	public AdminUser findByUserName(String userName) {
 		Criteria c  = this.sessionFactory.getCurrentSession().createCriteria(AdminUser.class);
-		c.add(Restrictions.ne("userName", userName));
-		return (AdminUser) c.uniqueResult();
+		c.add(Restrictions.eq("userName", userName));
+		c.setMaxResults(1);
+
+		Object usr = c.uniqueResult();
+		return (AdminUser) usr;
 	}
 
 	@Override

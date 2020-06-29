@@ -1,9 +1,9 @@
 package com.finder.ecoshop.core.services.impl;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,13 +41,8 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}
-
-		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
-
 		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
-				grantedAuthorities);
+				mapRolesToAuthorities(user.getRoles()));
 
 	}
 
@@ -62,13 +57,15 @@ public class UserServiceImpl implements UserService {
 		user.setUserName(dto.getUserName());
 		user.setEmail(dto.getEmail());
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
-		
-        user.setRoles(Arrays.asList(
-                new Role("ROLE_USER"),
-                new Role("ROLE_ADMIN")));
+
+		user.setRoles(Arrays.asList(new Role("ROLE_USER"), new Role("ROLE_ADMIN")));
 
 		userDao.save(user);
 
+	}
+
+	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
 
 }

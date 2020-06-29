@@ -20,11 +20,6 @@ public class AuthController {
 	@Autowired
 	private UserService userSerivce;
 
-	@GetMapping("/login")
-	public String login() {
-		return "login";
-	}
-
 	@GetMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("user", new UserDTO());
@@ -39,6 +34,6 @@ public class AuthController {
 		
 		userSerivce.save(user);
 
-		return "register";
+		return "login";
 	}
 }
