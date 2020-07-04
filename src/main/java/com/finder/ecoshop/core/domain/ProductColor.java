@@ -2,27 +2,27 @@ package com.finder.ecoshop.core.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "product_size")
-public class ProductSize extends CommonEntity implements Serializable {
-
-	private static final long serialVersionUID = -7000006822616877960L;
+@Table(name = "product_color")
+public class ProductColor extends CommonEntity implements Serializable{
+	
+	private static final long serialVersionUID = 8825406870628629381L;
 
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "size_id")
-	private Size size;
-
-	@ManyToOne
-	@JoinColumn(name = "created_by_id")
+	@JoinColumn(name = "color_id")
+	private Color color;
+	
+	@Column(name = "created_by_id")
 	private AdminUser createdBy;
 
 	public Product getProduct() {
@@ -33,12 +33,12 @@ public class ProductSize extends CommonEntity implements Serializable {
 		this.product = product;
 	}
 
-	public Size getSize() {
-		return size;
+	public Color getColor() {
+		return color;
 	}
 
-	public void setSize(Size size) {
-		this.size = size;
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public AdminUser getCreatedBy() {
@@ -48,5 +48,6 @@ public class ProductSize extends CommonEntity implements Serializable {
 	public void setCreatedBy(AdminUser createdBy) {
 		this.createdBy = createdBy;
 	}
-
+	
+	
 }

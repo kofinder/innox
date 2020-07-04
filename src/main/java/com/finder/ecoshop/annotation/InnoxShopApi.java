@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Documented
 @RestController
 @RequestMapping
-public @interface EcoShopApi {
+public @interface InnoxShopApi {
 	@AliasFor(annotation = RequestMapping.class, attribute = "path")
 	String apiPath();
 }

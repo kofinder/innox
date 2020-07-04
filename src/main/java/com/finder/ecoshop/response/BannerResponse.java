@@ -11,7 +11,7 @@ public class BannerResponse implements Serializable {
 
 	private static final long serialVersionUID = -5856358820315193782L;
 
-	private long id;
+	private long banner_id;
 
 	private String banner_name;
 
@@ -20,19 +20,19 @@ public class BannerResponse implements Serializable {
 	public BannerResponse() {
 		super();
 	}
-	
+
 	public BannerResponse(BannerDTO banner, HttpServletRequest request) {
-		this.id = banner.getSeq();
+		this.banner_id = banner.getSeq();
 		this.banner_name = banner.getName();
 		this.image_path = CommonUtil.prepareImagePath(banner.getImagePath(), request);
 	}
 
-	public long getId() {
-		return id;
+	public long getBanner_id() {
+		return banner_id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setBanner_id(long banner_id) {
+		this.banner_id = banner_id;
 	}
 
 	public String getBanner_name() {
@@ -50,7 +50,5 @@ public class BannerResponse implements Serializable {
 	public void setImage_path(String image_path) {
 		this.image_path = image_path;
 	}
-
-	
 
 }

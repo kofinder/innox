@@ -84,6 +84,16 @@ public class Product extends CommonEntity implements Serializable {
 	@Column(name = "image_path4")
 	private String imagePath4;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+	private List<ProductColor> productColorList;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+	private List<ProductSize> productSizeList;
+
+	private String size;
+
+	private String color;
+
 	public Brand getBrand() {
 		return brand;
 	}
@@ -250,6 +260,38 @@ public class Product extends CommonEntity implements Serializable {
 
 	public void setImagePath4(String imagePath4) {
 		this.imagePath4 = imagePath4;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public List<ProductColor> getProductColorList() {
+		return productColorList;
+	}
+
+	public void setProductColorList(List<ProductColor> productColorList) {
+		this.productColorList = productColorList;
+	}
+
+	public List<ProductSize> getProductSizeList() {
+		return productSizeList;
+	}
+
+	public void setProductSizeList(List<ProductSize> productSizeList) {
+		this.productSizeList = productSizeList;
 	}
 
 }

@@ -13,4 +13,6 @@ public interface CategoryService {
 	CategoryDTO manageCategory(CategoryDTO categoryDTO);
 	
 	List<CategoryDTO> searchCategoryByData(CategoryDTO categoryDTO);
+	
+	List<CategoryDTO> getFeatureCategoryList();
 }

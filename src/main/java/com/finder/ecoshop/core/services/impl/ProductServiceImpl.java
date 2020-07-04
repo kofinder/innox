@@ -12,11 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.finder.ecoshop.core.domain.Brand;
 import com.finder.ecoshop.core.domain.Category;
+import com.finder.ecoshop.core.domain.Color;
 import com.finder.ecoshop.core.domain.Product;
+import com.finder.ecoshop.core.domain.ProductColor;
+import com.finder.ecoshop.core.domain.ProductSize;
+import com.finder.ecoshop.core.domain.Size;
 import com.finder.ecoshop.core.domain.SubCategory;
 import com.finder.ecoshop.core.dto.ProductDTO;
 import com.finder.ecoshop.core.services.ProductService;
+import com.finder.ecoshop.repository.ProductColorDao;
 import com.finder.ecoshop.repository.ProductDao;
+import com.finder.ecoshop.repository.ProductSizeDao;
 import com.finder.ecoshop.utils.CommonConstant;
 import com.finder.ecoshop.utils.CommonStatus;
 import com.finder.ecoshop.utils.CommonUtil;
@@ -31,17 +37,24 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductDao productDao;
 
+	@Autowired
+	private ProductColorDao productColorDao;
+
+	@Autowired
+	private ProductSizeDao productSizeDao;
+
 	@Override
 	public ProductDTO manageProduct(ProductDTO productDTO) {
 
 		Product product = new Product();
-		
+
 		if (productDTO.getSeq() > 0) { // update
 			product = productDao.get(productDTO.getSeq());
 			product.setStatus(productDTO.getStatus());
 			product.setUpdatedTime(new Date());
 
 		} else { // save
+			product.setIsNewArrival(true);
 			product.setStatus(CommonStatus.ACTIVE.getCode());
 			product.setCreatedTime(new Date());
 		}
@@ -68,9 +81,49 @@ public class ProductServiceImpl implements ProductService {
 		product.setDiscountPercent(productDTO.getDiscountPercent());
 		product.setOverview(productDTO.getOverview());
 		product.setDetail(productDTO.getDetail());
+		product.setQuantity(productDTO.getQuantity());
+
+		product.setSize(productDTO.getSize());
+		product.setColor(productDTO.getColor());
 
 		productDao.saveOrUpdate(product);
 		logger.info("manageProduct() >> Product Save or Update is successful");
+
+		// product color reset
+		productColorDao.deleteByProductId(product.getSeq());
+
+		// save product color
+		for (Long c : productDTO.getPrdColorList()) {
+			ProductColor prdColor = new ProductColor();
+			prdColor.setProduct(product);
+
+			Color color = new Color();
+			color.setSeq(c);
+			prdColor.setColor(color);
+
+			prdColor.setCreatedTime(new Date());
+			prdColor.setUpdatedTime(new Date());
+
+			productColorDao.save(prdColor);
+		}
+
+		// product size reset
+		productSizeDao.deleteByProductId(product.getSeq());
+
+		// save product size
+		for (Long s : productDTO.getPrdSizeList()) {
+			ProductSize prdSize = new ProductSize();
+			prdSize.setProduct(product);
+
+			Size size = new Size();
+			size.setSeq(s);
+			prdSize.setSize(size);
+
+			prdSize.setCreatedTime(new Date());
+			prdSize.setUpdatedTime(new Date());
+
+			productSizeDao.save(prdSize);
+		}
 
 		if (!CommonUtil.isEmpty(productDTO.getImageFile1().getOriginalFilename())) {
 			try {
@@ -80,12 +133,12 @@ public class ProductServiceImpl implements ProductService {
 								+ CommonConstant.PRODUCT_IMAGE_DIRECTORY + product.getSeq() + "/",
 						CommonConstant.PRODUCT_IMAGE_PERFIX, product.getSeq());
 				product.setImagePath1(imageName);
-				
+
 				// delete old image path
-				if(!CommonUtil.isEmpty(oldImageName)) {
+				if (!CommonUtil.isEmpty(oldImageName)) {
 					ImagesUtil.deleteFile(CommonConstant.IMAGE_SAVE_DIRECTORY, oldImageName);
 				}
-				
+
 				productDao.merge(product);
 				logger.info("manageProduct() >> Product image 1 save is successful");
 			} catch (Exception e) {
@@ -102,10 +155,10 @@ public class ProductServiceImpl implements ProductService {
 						CommonConstant.PRODUCT_IMAGE_PERFIX, product.getSeq());
 				product.setImagePath2(imageName);
 
-				if(!CommonUtil.isEmpty(oldImageName)) {
+				if (!CommonUtil.isEmpty(oldImageName)) {
 					ImagesUtil.deleteFile(CommonConstant.IMAGE_SAVE_DIRECTORY, oldImageName);
 				}
-				
+
 				productDao.merge(product);
 				logger.info("manageProduct() >> Product image 2 save is successful");
 			} catch (Exception e) {
@@ -122,10 +175,10 @@ public class ProductServiceImpl implements ProductService {
 						CommonConstant.PRODUCT_IMAGE_PERFIX, product.getSeq());
 				product.setImagePath3(imageName);
 
-				if(!CommonUtil.isEmpty(oldImageName)) {
+				if (!CommonUtil.isEmpty(oldImageName)) {
 					ImagesUtil.deleteFile(CommonConstant.IMAGE_SAVE_DIRECTORY, oldImageName);
 				}
-				
+
 				productDao.merge(product);
 				logger.info("manageProduct() >> Product image 3 save is successful");
 			} catch (Exception e) {
@@ -142,10 +195,10 @@ public class ProductServiceImpl implements ProductService {
 						CommonConstant.PRODUCT_IMAGE_PERFIX, product.getSeq());
 				product.setImagePath4(imageName);
 
-				if(!CommonUtil.isEmpty(oldImageName)) {
+				if (!CommonUtil.isEmpty(oldImageName)) {
 					ImagesUtil.deleteFile(CommonConstant.IMAGE_SAVE_DIRECTORY, oldImageName);
 				}
-				
+
 				productDao.merge(product);
 				logger.info("manageProduct() >> Product image 4 save is successful");
 			} catch (Exception e) {
@@ -161,10 +214,10 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDTO> productSearch(ProductDTO searchProductDTO) {
 		logger.info("productSearch() >> Start");
 		List<Product> productList = productDao.productSearch(searchProductDTO);
-		if(productList == null || productList.isEmpty()) {
+		if (productList == null || productList.isEmpty()) {
 			return new ArrayList<ProductDTO>();
 		}
-		
+
 		List<ProductDTO> dtoList = new ArrayList<ProductDTO>();
 		productList.forEach(product -> {
 			dtoList.add(new ProductDTO(product));
@@ -177,12 +230,38 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDTO getProductDataById(Long prdId) {
 		logger.info("getProductDataById() >> Start >> Product Id : " + prdId);
 		Product product = productDao.get(prdId);
-		if(product == null) {
+		if (product == null) {
 			return null;
 		}
-		
+
 		ProductDTO productDTO = new ProductDTO(product);
 		return productDTO;
+	}
+
+	@Override
+	public List<ProductDTO> getPopularProductList() {
+		List<Product> entityList = productDao.getPopularProductList();
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<>();
+		}
+		List<ProductDTO> dtoList = new ArrayList<ProductDTO>();
+		entityList.forEach(entity -> {
+			dtoList.add(new ProductDTO(entity));
+		});
+		return dtoList;
+	}
+
+	@Override
+	public List<ProductDTO> getProductListByPageNo(int pageNo) {
+		List<Product> entityList = productDao.getProductListByPageNo(pageNo);
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<ProductDTO>();
+		}
+		List<ProductDTO> dtoList = new ArrayList<ProductDTO>();
+		entityList.forEach(entity -> {
+			dtoList.add(new ProductDTO(entity));
+		});
+		return dtoList;
 	}
 
 }

@@ -68,6 +68,18 @@ public class ProductDTO implements Serializable {
 
 	private String priceDesc;
 
+	private String size;
+
+	private String color;
+
+	private List<ProductColorDTO> productColorList = new ArrayList<ProductColorDTO>();
+
+	private List<ProductSizeDTO> productSizeList = new ArrayList<ProductSizeDTO>();
+
+	private List<Long> prdColorList = new ArrayList<Long>();
+
+	private List<Long> prdSizeList = new ArrayList<Long>();
+
 	public ProductDTO() {
 		super();
 	}
@@ -95,6 +107,18 @@ public class ProductDTO implements Serializable {
 			this.imagePath2 = product.getImagePath2();
 			this.imagePath3 = product.getImagePath3();
 			this.imagePath4 = product.getImagePath4();
+			this.size = product.getSize();
+			this.color = product.getColor();
+
+			product.getProductColorList().forEach(color -> {
+				prdColorList.add(color.getColor().getSeq());
+			});
+			
+			product.getProductSizeList().forEach(size -> {
+				if(size.getSize() != null && size.getSize().getSeq() != null) {
+					prdSizeList.add(size.getSize().getSeq());
+				}
+			});
 		}
 	}
 
@@ -304,6 +328,54 @@ public class ProductDTO implements Serializable {
 
 	public void setPriceDesc(String priceDesc) {
 		this.priceDesc = priceDesc;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public List<ProductColorDTO> getProductColorList() {
+		return productColorList;
+	}
+
+	public void setProductColorList(List<ProductColorDTO> productColorList) {
+		this.productColorList = productColorList;
+	}
+
+	public List<ProductSizeDTO> getProductSizeList() {
+		return productSizeList;
+	}
+
+	public void setProductSizeList(List<ProductSizeDTO> productSizeList) {
+		this.productSizeList = productSizeList;
+	}
+
+	public List<Long> getPrdColorList() {
+		return prdColorList;
+	}
+
+	public void setPrdColorList(List<Long> prdColorList) {
+		this.prdColorList = prdColorList;
+	}
+
+	public List<Long> getPrdSizeList() {
+		return prdSizeList;
+	}
+
+	public void setPrdSizeList(List<Long> prdSizeList) {
+		this.prdSizeList = prdSizeList;
 	}
 
 }

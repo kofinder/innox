@@ -9,17 +9,23 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.finder.ecoshop.annotation.EcoShopApi;
+import com.finder.ecoshop.annotation.InnoxShopApi;
 import com.finder.ecoshop.core.dto.BannerDTO;
+import com.finder.ecoshop.core.dto.CategoryDTO;
+import com.finder.ecoshop.core.dto.ProductDTO;
 import com.finder.ecoshop.core.services.BannerService;
+import com.finder.ecoshop.core.services.CategoryService;
+import com.finder.ecoshop.core.services.ProductService;
 import com.finder.ecoshop.exception.ProcessException;
 import com.finder.ecoshop.exception.ProcessException.ErrorType;
 import com.finder.ecoshop.response.BannerResponse;
+import com.finder.ecoshop.response.CategoryResponse;
 import com.finder.ecoshop.response.HomePageResponse;
+import com.finder.ecoshop.response.ProductResponse;
 import com.finder.ecoshop.response.Response;
 import com.finder.ecoshop.utils.JsonUtil;
 
-@EcoShopApi(apiPath = EcoShopApiConstant.API_RESOURCES_NAME)
+@InnoxShopApi(apiPath = InnoxApiConstant.API_RESOURCES_NAME)
 public class HomeApiController {
 	
 	private final Logger logger = LogManager.getLogger(this.getClass());
@@ -27,7 +33,13 @@ public class HomeApiController {
 	@Autowired
 	private BannerService bannerService;
 	
-	@GetMapping(path = EcoShopApiConstant.API_HOME_PAGE_DATA)
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private CategoryService categoryService;
+	
+	@GetMapping(path = InnoxApiConstant.API_HOME_PAGE_DATA)
 	public String homePageData(HttpServletRequest request) {
 		String result = "";
 		ProcessException pe = null;
@@ -39,6 +51,18 @@ public class HomeApiController {
 			bannerDtoList.forEach(banner -> {
 				BannerResponse bannerResponse = new BannerResponse(banner, request);
 				response.getBanner_list().add(bannerResponse);
+			});
+			
+			List<ProductDTO> productList = productService.getPopularProductList();
+			productList.forEach(product -> {
+				ProductResponse productResponse = new ProductResponse(product, request);
+				response.getProduct_list().add(productResponse);
+			});
+			
+			List<CategoryDTO> categoryList = categoryService.getFeatureCategoryList();
+			categoryList.forEach(category -> {
+				CategoryResponse categoryResponse = new CategoryResponse(category, request);
+				response.getCategory_list().add(categoryResponse);
 			});
 			
 			apiResponse.setData(response);

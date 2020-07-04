@@ -19,7 +19,9 @@ import com.finder.ecoshop.core.dto.ProductDTO;
 import com.finder.ecoshop.core.dto.ProductImageDTO;
 import com.finder.ecoshop.core.services.BrandService;
 import com.finder.ecoshop.core.services.CategoryService;
+import com.finder.ecoshop.core.services.ColorService;
 import com.finder.ecoshop.core.services.ProductService;
+import com.finder.ecoshop.core.services.SizeService;
 import com.finder.ecoshop.core.services.SubCategoryService;
 import com.finder.ecoshop.utils.CommonConstant;
 import com.finder.ecoshop.utils.CommonStatus;
@@ -42,6 +44,12 @@ public class ProductController {
 
 	@Autowired
 	private SubCategoryService subCategoryService;
+	
+	@Autowired
+	private ColorService colorService;
+	
+	@Autowired
+	private SizeService sizeService;
 
 	@ModelAttribute(name = "images")
 	public String getImageServerPath() {
@@ -98,5 +106,7 @@ public class ProductController {
 		model.addAttribute("subCategroyList", subCategoryService.getAllSubCategoryListByCatId(Long.valueOf(1)));
 		model.addAttribute("brandList", brandService.getAllBrandList());
 		model.addAttribute("statusList", CommonStatus.values());
+		model.addAttribute("colorList", colorService.getAllColorList());
+		model.addAttribute("sizeList", sizeService.getAllSize());
 	}
 }

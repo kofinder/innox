@@ -5,9 +5,15 @@ public class FieldError {
 	private String fieldCode;
 
 	private String errorMessage;
+	
+	public FieldError(String fieldErrorCode, String errorMessage) {
+		super();
+		this.fieldCode = fieldErrorCode;
+		this.errorMessage = errorMessage;
+	}
 
 	public enum FieldCode {
-		CUSTOMER_ID("2000");
+		CUSTOMER_ID("2000"), PAGE_NO("20001");
 
 		private String code;
 
@@ -26,7 +32,7 @@ public class FieldError {
 
 	public enum ErrorMessage {
 
-		CUSTOMER_ID_REQUIRED("Customer id is required");
+		CUSTOMER_ID_REQUIRED("Customer id is required"), PAGE_NO_REQUIRED("Page no is required");
 
 		private String message;
 

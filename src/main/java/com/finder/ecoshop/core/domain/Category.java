@@ -30,6 +30,8 @@ public class Category extends CommonEntity implements Serializable {
 	@JoinColumn(name = "created_by_id")
 	private AdminUser createdBy;
 
+	private int feature;
+
 	public String getName() {
 		return name;
 	}
@@ -68,6 +70,14 @@ public class Category extends CommonEntity implements Serializable {
 
 	public void setCreatedBy(AdminUser createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public int getFeature() {
+		return feature;
+	}
+
+	public void setFeature(int feature) {
+		this.feature = feature;
 	}
 
 }

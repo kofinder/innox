@@ -10,5 +10,7 @@ public interface CategoryDao extends GenericDao<Category, Long>{
 	List<Category> getAllCategoryList();
 	
 	List<Category> searchCategoryByData(CategoryDTO categoryDTO);
+	
+	List<Category> getFeatureCategoryList();
 
 }

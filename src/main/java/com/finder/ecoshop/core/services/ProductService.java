@@ -11,4 +11,8 @@ public interface ProductService {
 	List<ProductDTO> productSearch(ProductDTO searchProductDTO);
 	
 	ProductDTO getProductDataById(Long prdId);
+	
+	List<ProductDTO> getPopularProductList();
+	
+	List<ProductDTO> getProductListByPageNo(int pageNo);
 }

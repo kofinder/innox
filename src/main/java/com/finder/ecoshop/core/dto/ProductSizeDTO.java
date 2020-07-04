@@ -12,17 +12,17 @@ public class ProductSizeDTO implements Serializable {
 
 	private ProductDTO productDTO;
 
-	private String sizeName;
+	private SizeDTO sizeDTO;
 
 	public ProductSizeDTO() {
 		super();
 	}
 
-	public ProductSizeDTO(ProductSize size) {
-		if (size != null) {
-			this.seq = size.getSeq();
-			this.productDTO = new ProductDTO(size.getProduct());
-			this.sizeName = size.getSizeName();
+	public ProductSizeDTO(ProductSize prdSize) {
+		if (prdSize != null) {
+			this.seq = prdSize.getSeq();
+			this.productDTO = new ProductDTO(prdSize.getProduct());
+			this.sizeDTO = new SizeDTO(prdSize.getSize());
 		}
 	}
 
@@ -42,12 +42,12 @@ public class ProductSizeDTO implements Serializable {
 		this.productDTO = productDTO;
 	}
 
-	public String getSizeName() {
-		return sizeName;
+	public SizeDTO getSizeDTO() {
+		return sizeDTO;
 	}
 
-	public void setSizeName(String sizeName) {
-		this.sizeName = sizeName;
+	public void setSizeDTO(SizeDTO sizeDTO) {
+		this.sizeDTO = sizeDTO;
 	}
 
 }

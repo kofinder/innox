@@ -85,6 +85,8 @@ public class CommonConstant {
 
 	public static final int SHOW_COMMENT_COUNT = 5;
 	
+	public static final int ROW_PER_PAGE = 12;
+	
 	public static final String UI_MESSGAE = "message";
 	public static final String UI_ERROR_MESSGAE = "errorMsg";
 

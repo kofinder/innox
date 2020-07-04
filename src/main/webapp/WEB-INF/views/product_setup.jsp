@@ -80,7 +80,7 @@
 
 						<div class="row">
 							<div class="col-md-6">
-								<div class="form-group">
+								<div class="form-group" id="prd_name_date">
 									<label for="productName">Product Name</label>
 									<form:input path="name" id="product_name"
 										placeholder="Product Name" class="form-control" />
@@ -90,17 +90,17 @@
 									<label for="brand">Brand</label>
 									<form:select class="form-control" path="brandDTO.seq"
 										id="brand_id">
-										<form:option value="-1">--- Please Select One ---</form:option>
+										<%-- 	<form:option value="-1">--- Please Select One ---</form:option> --%>
 										<form:options items="${brandList}" itemValue="seq"
 											itemLabel="name" />
 									</form:select>
 								</div>
 
-								<div class="form-group">
+								<div class="form-group" id="sub_category_data">
 									<label for="subCategroy">Sub Category</label>
 									<form:select class="form-control" path="subCategoryDTO.seq"
 										id="sub_category_id">
-										<form:option value="-1">--- Please Select One ---</form:option>
+										<%-- <form:option value="-1">--- Please Select One ---</form:option> --%>
 										<form:options items="${subCategroyList}" itemValue="seq"
 											itemLabel="name" />
 									</form:select>
@@ -109,31 +109,34 @@
 								<div class="form-group">
 									<label for="popular">Popular</label>
 									<div class="custom-control custom-radio">
-										<input class="custom-control-input" type="radio"
-											id="popular_radio1" name="popular"
-											value="${productDTO.popular}"> <label
-											for="popular_radio1" class="custom-control-label">Yes</label>
+										<form:radiobutton class="custom-control-input"
+											id="popular_radio1" path="popular" value="true" />
+										<label for="popular_radio1" class="custom-control-label">Yes</label>
 									</div>
 									<div class="custom-control custom-radio">
-										<input class="custom-control-input" type="radio"
+										<form:radiobutton class="custom-control-input"
+											id="popular_radio2" path="popular" value="false" />
+										<!-- <input class="custom-control-input" type="radio"
 											id="popular_radio2" name="popular"
-											value="${productDTO.popular}" checked="checked"> <label
-											for="popular_radio2" class="custom-control-label">No</label>
+											value="false"> -->
+										<label for="popular_radio2" class="custom-control-label">No</label>
 									</div>
 								</div>
 
-								<div class="form-group">
+								<div class="form-group" id="quantity_data">
 									<label for="quantity">Quantity</label>
 									<form:input path="quantity" id="quantity_id"
 										placeholder="Quantity" class="form-control" />
 								</div>
 
-								<div class="form-group">
-									<label for="overview">Overview</label>
-									<form:textarea path="overview" rows="4" class="form-control"
-										id="overview_id" aria-required="true" wrap="hard"></form:textarea>
-									<p class="text-sm mb-0">Write some overview about your
-										product !</p>
+								<div class="form-group" id="size_data">
+									<label for="size">Size : </label>
+									<form:checkboxes items="${sizeList}" path="prdSizeList"
+											itemValue="seq" itemLabel="sizeName"
+											cssStyle="font-weight: normal;" />
+									<%-- <form:input path="size" id="size_id" placeholder="Prodcut Size"
+										class="form-control" />
+									<p class="text-sm mb-0">Example : S,M,XL...</p> --%>
 								</div>
 
 								<div class="form-group">
@@ -179,11 +182,22 @@
 									</div>
 								</div>
 
+								<!-- display if product edit -->
+								<c:if test="${productDTO.seq > 0}">
+									<div class="form-group">
+										<label for="status">Status</label>
+										<form:select class="form-control" path="status" id="status_id">
+											<form:options items="${statusList}" itemValue="code"
+												itemLabel="desc" />
+										</form:select>
+									</div>
+								</c:if>
+
 							</div>
 							<!-- end of col-md-6 -->
 
 							<div class="col-md-6">
-								<div class="form-group">
+								<div class="form-group" id="prd_code_data">
 									<label for="codeNumber">Product Code</label>
 									<form:input path="codeNumber" id="product_code"
 										placeholder="Product Code" class="form-control" />
@@ -193,13 +207,13 @@
 									<label for="category">Category</label>
 									<form:select class="form-control" path="categoryDTO.seq"
 										id="category_id">
-										<form:option value="-1">--- Please Select One ---</form:option>
+										<%-- <form:option value="-1">--- Please Select One ---</form:option> --%>
 										<form:options items="${categroyList}" itemValue="seq"
 											itemLabel="name" />
 									</form:select>
 								</div>
 
-								<div class="form-group">
+								<div class="form-group" id="price_data">
 									<label for="price">Price</label>
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -216,21 +230,21 @@
 								<div class="form-group">
 									<label for="promotion">Promotion</label>
 									<div class="custom-control custom-radio">
-										<input class="custom-control-input" type="radio"
-											id="promotion_radio1" name="promotion"
-											value="${productDTO.promotion}"> <label
-											for="promotion_radio1" class="custom-control-label">Yes</label>
+										<form:radiobutton class="custom-control-input"
+											id="promotion_radio1" path="promotion" value="true" />
+										<label for="promotion_radio1" class="custom-control-label"
+											style="font-weight: normal">Yes</label>
 									</div>
 									<div class="custom-control custom-radio">
-										<input class="custom-control-input" type="radio"
-											id="promotion_radio2" name="promotion"
-											value="${productDTO.promotion}" checked="checked"> <label
-											for="promotion_radio2" class="custom-control-label">No</label>
+										<form:radiobutton class="custom-control-input"
+											id="promotion_radio2" path="promotion" value="false" />
+										<label for="promotion_radio2" class="custom-control-label"
+											style="font-weight: normal">No</label>
 									</div>
 								</div>
 
 
-								<div class="form-group">
+								<div class="form-group" id="original_price_data">
 									<label for="originalPrice">Original Price</label>
 									<div class="row">
 										<div class="col-sm-8">
@@ -238,8 +252,8 @@
 												placeholder="Original Price" class="form-control" />
 										</div>
 										<div class="col-sm-4">
-											<div class="input-group">
-												<form:input path="discountPercent" id="discount_percent_od"
+											<div class="input-group" id="discount_data">
+												<form:input path="discountPercent" id="discount_percent_id"
 													placeholder="Discount Percent" class="form-control"
 													spellcheck="false" data-ms-editor="true" />
 												<div class="input-group-append">
@@ -250,12 +264,15 @@
 									</div>
 								</div>
 
-								<div class="form-group">
-									<label for="detail">Detail</label>
-									<form:textarea path="detail" rows="4" class="form-control"
-										id="detail_id" aria-required="true" wrap="hard"></form:textarea>
-									<p class="text-sm mb-0">Write some overview about your
-										product !</p>
+								<div class="form-group clearfix" id="color_data"
+									style="margin-top: 10px;">
+									<label for="color">Color : </label>
+									<div class="icheck-primary d-inline"
+										style="font-weight: normal;">
+										<form:checkboxes items="${colorList}" path="prdColorList"
+											itemValue="seq" itemLabel="colorName"
+											cssStyle="font-weight: normal;" />
+									</div>
 								</div>
 
 								<div class="form-group">
@@ -301,10 +318,18 @@
 									</div>
 								</div>
 
+								<div class="form-group">
+									<label for="detail">Detail</label>
+									<form:textarea path="detail" rows="4" class="form-control"
+										id="detail_id" aria-required="true" wrap="hard"></form:textarea>
+									<p class="text-sm mb-0">Write some overview about your
+										product !</p>
+								</div>
+
 							</div>
 						</div>
 
-						<div class="row">
+						<%-- <div class="row">
 							<div class="col-sm-6">
 								<!-- display if product edit -->
 								<c:if test="${productDTO.seq > 0}">
@@ -319,7 +344,7 @@
 								</c:if>
 							</div>
 							<div class="col-sm-6"></div>
-						</div>
+						</div> --%>
 
 						<div class="row">
 							<!-- product image list -->
@@ -381,7 +406,8 @@
 							<div class="col-sm-12">
 								<!-- product save button -->
 								<div class="form-group" style="text-align: right;">
-									<button id="product_save" type="submit" class="btn btn-primary">Save</button>
+									<button id="product_save" type="submit" class="btn btn-primary"
+										onclick="checkProductSetup()">Save</button>
 								</div>
 							</div>
 						</div>
@@ -420,6 +446,8 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		bsCustomFileInput.init();
+		/* $("#icheck-primary").find("label")
+		css("margin-right", "10px"); */
 	});
 </script>
 
@@ -430,6 +458,105 @@
 			"autoWidth" : false,
 		});
 	});
+</script>
+
+<script>
+	function checkProductSetup() {
+		checkProductSetupValid();
+		if (errors == 0) {
+			return true;
+		}
+		event.preventDefault();
+	}
+
+	function checkProductSetupValid() {
+		errors = 0;
+
+		var prdNameErr = checkField("Product Name", $("#product_name").val(),
+				true, null, null, null);
+
+		var prdCodeErr = checkField("Product Code", $("#product_code").val(),
+				true, null, null, null);
+
+		var priceErr = checkField("Product Price", $("#price_id").val(), true,
+				null, null, "n");
+
+		var qtyErr = checkField("Product Qty", $("#quantity_id").val(), true,
+				null, null, "n");
+
+		var originalPriceErr = checkField("Original Price", $(
+				"#original_price_id").val(), true, null, null, "n");
+
+		/* var prdSizeErr = checkField("Product Size", $("#size_id").val(), true,
+				null, null, null); */
+
+		/* var prdColorErr = checkField("Product Color", $("#color_id").val(),
+				true, null, null, null); */
+
+		if (prdNameErr) {
+			showError("prd_name_date", "product_name", prdNameErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("prd_name_date", "product_name");
+		}
+
+		if (prdCodeErr) {
+			showError("prd_code_data", "product_code", prdCodeErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("prd_code_data", "product_code");
+		}
+
+		if (priceErr) {
+			showError("price_data", "price_id", priceErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("price_data", "price_id");
+		}
+
+		if (qtyErr) {
+			showError("quantity_data", "quantity_id", qtyErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("quantity_data", "quantity_id");
+		}
+
+		if ($("#original_price_id").val() != ''
+				&& $("#original_price_id").val() > 0) {
+			if (originalPriceErr) {
+				showError("original_price_data", "original_price_id",
+						originalPriceErr);
+				errors = 1;
+			} else {
+				removeErrorMsg("original_price_data", "original_price_id");
+			}
+		}
+
+		/* if (prdSizeErr) {
+			showError("size_data", "size_id", prdSizeErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("size_data", "size_id");
+		}
+ */
+		/* if (prdColorErr) {
+			showError("color_data", "color_id", prdColorErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("color_data", "color_id");
+		} */
+
+		if ($.isNumeric($("#original_price_id").val())) {
+			if (!$.isNumeric($("#discount_percent_id").val())) {
+				showError("discount_data", "discount_percent_id",
+						"Invalid discount percent");
+				errors = 1;
+			} else {
+				removeErrorMsg("discount_data", "discount_percent_id");
+			}
+		}
+
+	}
 </script>
 
 <!-- Control Sidebar -->

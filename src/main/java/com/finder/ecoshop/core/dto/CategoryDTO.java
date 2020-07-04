@@ -23,6 +23,8 @@ public class CategoryDTO implements Serializable {
 
 	private int status;
 
+	private int feature;
+
 	public CategoryDTO() {
 		super();
 	}
@@ -34,6 +36,7 @@ public class CategoryDTO implements Serializable {
 			this.imagePath = c.getImagePath();
 			this.sequenceNo = c.getSequence() == null ? 0 : c.getSequence();
 			this.status = c.getStatus() == null ? CommonStatus.INACTIVE.getCode() : c.getStatus();
+			this.feature = c.getFeature();
 		}
 	}
 
@@ -83,6 +86,14 @@ public class CategoryDTO implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public int getFeature() {
+		return feature;
+	}
+
+	public void setFeature(int feature) {
+		this.feature = feature;
 	}
 
 }
