@@ -112,7 +112,7 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public List<CategoryDTO> getFeatureCategoryList() {
 		List<Category> entityList = categoryDao.getFeatureCategoryList();
-		if(entityList == null && entityList.isEmpty()) {
+		if(entityList == null || entityList.isEmpty()) {
 			return new ArrayList<CategoryDTO>();
 		}
 		List<CategoryDTO> dtoList = new ArrayList<CategoryDTO>();

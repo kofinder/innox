@@ -36,7 +36,6 @@ public class GenericDaoImpl<T,Key extends Serializable> implements GenericDao<T,
 		return sessionFactory.getCurrentSession();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public T get(Key id)
 	{
 		return (T)getCurrentSession().get(daoType, id);

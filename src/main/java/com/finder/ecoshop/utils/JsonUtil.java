@@ -55,6 +55,5 @@ public class JsonUtil {
 			response.setResponseMessage(pe.getMessage());
 		}
 		return gson.toJson(response);
-		
 	}
 }

@@ -453,6 +453,7 @@ public class CommonUtil {
 	                    System.out.println("file : " + entry.getName() + " => " + destPath);
 	                }
 	            }
+	            zipFile.close();
 	            return entryName;
 	        } catch(Exception e){
 	        	e.printStackTrace();

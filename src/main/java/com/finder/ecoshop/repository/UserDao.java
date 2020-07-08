@@ -2,15 +2,15 @@ package com.finder.ecoshop.repository;
 
 import java.util.List;
 
-import com.finder.ecoshop.core.domain.AdminUser;
+import com.finder.ecoshop.core.domain.User;
 
 
-public interface UserDao extends GenericDao<AdminUser, Integer>{
+public interface UserDao extends GenericDao<User, Integer>{
 	
-	List<AdminUser> getAllUser();
+	List<User> getAllUser();
 	
-	AdminUser findByUserName(String userName);
+	User findByUserName(String userName);
 	
-	AdminUser findByEmail(String email);
+	User findByEmail(String email);
 
 }

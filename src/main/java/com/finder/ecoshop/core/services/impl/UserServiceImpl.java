@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.finder.ecoshop.core.domain.AdminUser;
+import com.finder.ecoshop.core.domain.User;
 import com.finder.ecoshop.core.domain.Role;
 import com.finder.ecoshop.core.dto.UserDTO;
 import com.finder.ecoshop.core.services.UserService;
@@ -30,14 +30,14 @@ public class UserServiceImpl implements UserService {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
-	public List<AdminUser> getAllUser() {
+	public List<User> getAllUser() {
 		return userDao.getAllUser();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		AdminUser user = userDao.findByUserName(username);
+		User user = userDao.findByUserName(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}
@@ -47,13 +47,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public AdminUser findByEmail(String email) {
+	public User findByEmail(String email) {
 		return userDao.findByEmail(email);
 	}
 
 	@Override
 	public void save(UserDTO dto) {
-		AdminUser user = new AdminUser();
+		User user = new User();
 		user.setUserName(dto.getUserName());
 		user.setEmail(dto.getEmail());
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));

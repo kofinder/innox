@@ -1,6 +1,7 @@
 package com.finder.ecoshop.webportal;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,19 +13,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finder.ecoshop.core.dto.ProductDTO;
 import com.finder.ecoshop.core.dto.ProductImageDTO;
+import com.finder.ecoshop.core.dto.SubCategoryDTO;
 import com.finder.ecoshop.core.services.BrandService;
 import com.finder.ecoshop.core.services.CategoryService;
 import com.finder.ecoshop.core.services.ColorService;
 import com.finder.ecoshop.core.services.ProductService;
 import com.finder.ecoshop.core.services.SizeService;
 import com.finder.ecoshop.core.services.SubCategoryService;
+import com.finder.ecoshop.response.CommonAjaxResponse;
 import com.finder.ecoshop.utils.CommonConstant;
 import com.finder.ecoshop.utils.CommonStatus;
+import com.finder.ecoshop.utils.JsonUtil;
 import com.finder.ecoshop.utils.MessageEnum;
 import com.finder.ecoshop.utils.PageTitleConstant;
 
@@ -99,11 +105,22 @@ public class ProductController {
 		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT_SEARCH);
 		return "product_search";
 	}
+	
+	@PostMapping("/subCategoryByCategoryAjax")
+	@ResponseBody
+	public Object getSubCategoryByCategoryAjax(@RequestBody Long categoryId) {
+		System.out.println("getSubCategoryByCategoryAjax() >> Category Id : " + categoryId);
+		List<SubCategoryDTO> subCategoryList = subCategoryService.getAllSubCategoryListByCatId(categoryId);
+		CommonAjaxResponse<List<SubCategoryDTO>> response = new CommonAjaxResponse<List<SubCategoryDTO>>();
+		response.setResponseCode("200");
+		response.setResponseMessage("Data retrieval is successful");
+		response.setData(subCategoryList);
+		return JsonUtil.toJSON(response);
+	}
 
 	private void CommonModelSetUp(Model model) {
 		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT);
 		model.addAttribute("categroyList", categoryService.getAllCategoryList());
-		model.addAttribute("subCategroyList", subCategoryService.getAllSubCategoryListByCatId(Long.valueOf(1)));
 		model.addAttribute("brandList", brandService.getAllBrandList());
 		model.addAttribute("statusList", CommonStatus.values());
 		model.addAttribute("colorList", colorService.getAllColorList());

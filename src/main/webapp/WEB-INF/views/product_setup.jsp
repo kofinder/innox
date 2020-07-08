@@ -101,6 +101,7 @@
 									<form:select class="form-control" path="subCategoryDTO.seq"
 										id="sub_category_id">
 										<%-- <form:option value="-1">--- Please Select One ---</form:option> --%>
+										<form:option value="-1">--- Please Select One ---</form:option>
 										<form:options items="${subCategroyList}" itemValue="seq"
 											itemLabel="name" />
 									</form:select>
@@ -132,8 +133,8 @@
 								<div class="form-group" id="size_data">
 									<label for="size">Size : </label>
 									<form:checkboxes items="${sizeList}" path="prdSizeList"
-											itemValue="seq" itemLabel="sizeName"
-											cssStyle="font-weight: normal;" />
+										itemValue="seq" itemLabel="sizeName"
+										cssStyle="font-weight: normal;" />
 									<%-- <form:input path="size" id="size_id" placeholder="Prodcut Size"
 										class="form-control" />
 									<p class="text-sm mb-0">Example : S,M,XL...</p> --%>
@@ -487,6 +488,10 @@
 		var originalPriceErr = checkField("Original Price", $(
 				"#original_price_id").val(), true, null, null, "n");
 
+		var subCategoryErr = checkField("Sub Category", $(
+				"#sub_category_id option:selected").val(), true, null, null,
+				's');
+
 		/* var prdSizeErr = checkField("Product Size", $("#size_id").val(), true,
 				null, null, null); */
 
@@ -505,6 +510,13 @@
 			errors = 1;
 		} else {
 			removeErrorMsg("prd_code_data", "product_code");
+		}
+
+		if (subCategoryErr) {
+			showError("sub_category_data", "sub_category_id", subCategoryErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("sub_category_data", "sub_category_id")
 		}
 
 		if (priceErr) {
@@ -538,7 +550,7 @@
 		} else {
 			removeErrorMsg("size_data", "size_id");
 		}
- */
+		 */
 		/* if (prdColorErr) {
 			showError("color_data", "color_id", prdColorErr);
 			errors = 1;
@@ -557,6 +569,29 @@
 		}
 
 	}
+
+	$("#category_id").on("change", function() {
+		$.ajax({
+			method : 'POST',
+			contentType : 'application/json',
+			url : 'subCategoryByCategoryAjax.html',
+			dataType : 'json',
+			async : true,
+			data : $("#category_id").val(),
+			success : function(data) {
+				$('#sub_category_id').html('');
+				$.each(data.data, function(i, cam) {
+					$("#sub_category_id").append($("<option></option>", {
+						value : cam.seq,
+						text : cam.name
+					}))
+				});
+			},
+			error : function(e) {
+				console.log("ERROR >>  ", e);
+			}
+		});
+	});
 </script>
 
 <!-- Control Sidebar -->

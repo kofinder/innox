@@ -32,7 +32,7 @@ public class SubCategory extends CommonEntity implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "created_by_id")
-	private AdminUser createdBy;
+	private User createdBy;
 
 	public String getName() {
 		return name;
@@ -74,11 +74,11 @@ public class SubCategory extends CommonEntity implements Serializable {
 		this.category = category;
 	}
 
-	public AdminUser getCreatedBy() {
+	public User getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(AdminUser createdBy) {
+	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
 

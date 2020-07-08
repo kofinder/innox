@@ -8,39 +8,39 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.finder.ecoshop.core.domain.AdminUser;
+import com.finder.ecoshop.core.domain.User;
 import com.finder.ecoshop.repository.UserDao;
 
 @SuppressWarnings("deprecation")
 @Repository
-public class UserDaoImpl extends GenericDaoImpl<AdminUser, Integer> implements UserDao {
+public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements UserDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<AdminUser> getAllUser() {
-		Criteria c  = this.getCurrentSession().createCriteria(AdminUser.class);
+	public List<User> getAllUser() {
+		Criteria c  = this.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.ne("userSeq", 0));
 		return c.list();
 	}
 
 	@Override
-	public AdminUser findByUserName(String userName) {
-		Criteria c  = this.sessionFactory.getCurrentSession().createCriteria(AdminUser.class);
+	public User findByUserName(String userName) {
+		Criteria c  = this.sessionFactory.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.eq("userName", userName));
 		c.setMaxResults(1);
 
 		Object usr = c.uniqueResult();
-		return (AdminUser) usr;
+		return (User) usr;
 	}
 
 	@Override
-	public AdminUser findByEmail(String email) {
-		Criteria c  = this.sessionFactory.getCurrentSession().createCriteria(AdminUser.class);
+	public User findByEmail(String email) {
+		Criteria c  = this.sessionFactory.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.ne("email", email));
-		return (AdminUser) c.uniqueResult();
+		return (User) c.uniqueResult();
 	}
 
 }

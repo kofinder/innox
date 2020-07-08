@@ -67,7 +67,7 @@ public class Product extends CommonEntity implements Serializable {
 	private String detail;
 
 	@Column(name = "created_by_id")
-	private AdminUser createdBy;
+	private User createdBy;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
 	private List<ProductImage> productImageList;
@@ -190,11 +190,11 @@ public class Product extends CommonEntity implements Serializable {
 		this.status = status;
 	}
 
-	public AdminUser getCreatedBy() {
+	public User getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(AdminUser createdBy) {
+	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
 

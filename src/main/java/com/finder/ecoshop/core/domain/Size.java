@@ -22,7 +22,7 @@ public class Size extends CommonEntity implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "created_by_id")
-	private AdminUser createdBy;
+	private User createdBy;
 
 	public String getSizeCode() {
 		return sizeCode;
@@ -40,11 +40,11 @@ public class Size extends CommonEntity implements Serializable {
 		this.sizeName = sizeName;
 	}
 
-	public AdminUser getCreatedBy() {
+	public User getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(AdminUser createdBy) {
+	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
 
