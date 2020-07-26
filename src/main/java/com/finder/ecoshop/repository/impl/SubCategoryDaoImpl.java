@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.finder.ecoshop.core.domain.SubCategory;
 import com.finder.ecoshop.repository.SubCategoryDao;
+import com.finder.ecoshop.utils.CommonStatus;
 
 @SuppressWarnings("deprecation")
 @Repository
@@ -18,6 +19,14 @@ public class SubCategoryDaoImpl extends GenericDaoImpl<SubCategory, Long> implem
 	public List<SubCategory> getAllSubCategoryListByCatId(Long catId) {
 		Criteria c = this.getCurrentSession().createCriteria(SubCategory.class);
 		c.add(Restrictions.eq("category.id", catId));
+		return c.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SubCategory> getAllActiveSubCategoryList() {
+		Criteria c = this.getCurrentSession().createCriteria(SubCategory.class);
+		c.add(Restrictions.eq("status", CommonStatus.ACTIVE.getCode()));
 		return c.list();
 	}
 

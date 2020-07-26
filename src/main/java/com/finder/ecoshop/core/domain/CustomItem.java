@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 /**
  * 
- * @author Kywee Zay
+ * @author Zay Maung Maung Myint
  *
  */
 @Entity
@@ -36,6 +36,13 @@ public class CustomItem extends CommonEntity implements Serializable {
 
 	@Column(name = "item_price")
 	private BigDecimal itemPrice;
+
+	@ManyToOne
+	@JoinColumn(name = "created_by_id")
+	private User user;
+
+	@Column(name = "sequence_no")
+	private Integer sequenceNo;
 
 	public CustomProduct getCustomProduct() {
 		return customProduct;
@@ -75,6 +82,22 @@ public class CustomItem extends CommonEntity implements Serializable {
 
 	public void setItemPrice(BigDecimal itemPrice) {
 		this.itemPrice = itemPrice;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Integer getSequenceNo() {
+		return sequenceNo;
+	}
+
+	public void setSequenceNo(Integer sequenceNo) {
+		this.sequenceNo = sequenceNo;
 	}
 
 }

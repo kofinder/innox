@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finder.ecoshop.core.domain.CustomProduct;
+import com.finder.ecoshop.utils.CommonStatus;
 
 public class CustomProductDTO implements Serializable {
 
@@ -27,6 +28,8 @@ public class CustomProductDTO implements Serializable {
 
 	private UserDTO userDTO;
 
+	private int status;
+
 	public CustomProductDTO() {
 		super();
 	}
@@ -39,6 +42,7 @@ public class CustomProductDTO implements Serializable {
 			this.productName = customPrd.getProdcutName();
 			this.initialPrice = customPrd.getInitialPrice() == null ? BigDecimal.ZERO : customPrd.getInitialPrice();
 			this.imagePath = customPrd.getImagePath();
+			this.status = customPrd.getStatus() == null ? CommonStatus.ACTIVE.getCode() : customPrd.getStatus();
 		}
 	}
 
@@ -104,6 +108,14 @@ public class CustomProductDTO implements Serializable {
 
 	public void setUserDTO(UserDTO userDTO) {
 		this.userDTO = userDTO;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

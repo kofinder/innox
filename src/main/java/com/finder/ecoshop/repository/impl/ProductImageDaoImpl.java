@@ -17,7 +17,7 @@ public class ProductImageDaoImpl extends GenericDaoImpl<ProductImage, Long> impl
 	@Override
 	public List<ProductImage> getProductImageListByPrdId(long prdId) {
 		Criteria c = this.getCurrentSession().createCriteria(ProductImage.class);
-		c.add(Restrictions.eq("product.Seq", prdId));
+		c.add(Restrictions.eq("product.seq", prdId));
 		return c.list();
 	}
 

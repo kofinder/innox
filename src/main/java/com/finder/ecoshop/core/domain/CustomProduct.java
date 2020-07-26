@@ -8,9 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+
 /**
  * 
- * @author Kywee Zay
+ * @author Zay Maung Maung Myint
  *
  */
 @Entity
@@ -38,6 +40,9 @@ public class CustomProduct extends CommonEntity implements Serializable {
 
 	@Column(name = "created_by_id")
 	private User user;
+
+	@Column(name = "statue")
+	private Integer status;
 
 	public Category getCategory() {
 		return category;
@@ -85,6 +90,14 @@ public class CustomProduct extends CommonEntity implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }

@@ -21,7 +21,8 @@ public enum MessageEnum {
 	UPDATE_FAILED("Updating Failed !."),
 	SAVE_FAILED("Saving Failed !"),
 	PHONE_NUMBER_EXIST("Phone number is already exist!"),
-	TITLE_EXIST("Title is already exist!");
+	TITLE_EXIST("Title is already exist!"),
+	LAYOUT_NAME_EXIST("Item layout is alread exist");
 	
 	
 	private String desc;

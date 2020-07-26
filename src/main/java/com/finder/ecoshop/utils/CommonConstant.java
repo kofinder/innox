@@ -75,6 +75,14 @@ public class CommonConstant {
 	public static final String PRODUCT_IMAGE_DIRECTORY = "product_image/";
 	public static final String PRODUCT_IMAGE_PERFIX = "product_image";
 	
+	public static final String CUSTOM_PRODUCT_DIRECTORY = "custom_product/";
+	public static final String CUSTOM_PRODUCT_IMAGE_DIRECTORY = "custom_product_image/";
+	public static final String CUSTOM_PRODUCT_IMAGE_PERFIX = "custom_product_image";
+	
+	public static final String CUSTOM_LAYOUT_DIRECTORY = "custom_layout/";
+	public static final String CUSTOM_LAYOUT_IMAGE_DIRECTORY = "custom_layout_image/";
+	public static final String CUSTOM_LAYOUT_IMAGE_PERFIX = "custom_layout_image";
+	
 	public static final int RECORD_LIMIT_PROMO_ITEM = 6;
 	public static final int RECORD_LIMIT_POPULAR = 6;
 	public static final int RECORD_LIMIT_NEW_ARRIVAL_ITEM = 6;

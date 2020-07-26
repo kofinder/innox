@@ -72,7 +72,6 @@ public class CategoryController {
 	@PostMapping("/category_setup.html")
 	public String categorySetupPost(@ModelAttribute(name = "categoryDTO") CategoryDTO categoryDTO,
 			RedirectAttributes attributes, HttpServletRequest request) {
-		// TODO implement category setup
 		try {
 			CategoryDTO categoryDto = categoryService.manageCategory(categoryDTO);
 			if (categoryDto != null) {

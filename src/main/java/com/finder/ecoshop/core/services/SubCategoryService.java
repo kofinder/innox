@@ -11,5 +11,7 @@ public interface SubCategoryService {
 	SubCategoryDTO getSubCategoryById(Long subCatId);
 	
 	SubCategoryDTO subCategoryManage(SubCategoryDTO subCategoryDTO);
+	
+	List<SubCategoryDTO> getAllActiveSubCategoryList();
 
 }

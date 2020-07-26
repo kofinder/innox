@@ -22,7 +22,7 @@ import com.finder.ecoshop.utils.ImagesUtil;
 @Service
 @Transactional
 public class SubCategoryServiceImpl implements SubCategoryService {
-	
+
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
@@ -50,7 +50,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 	public SubCategoryDTO getSubCategoryById(Long subCatId) {
 		logger.info("getSubCategoryById() >> " + subCatId);
 		SubCategory subCategory = subCategoryDao.get(subCatId);
-		if(subCategory != null) {
+		if (subCategory != null) {
 			return new SubCategoryDTO(subCategory);
 		}
 		logger.info("getSubCategoryById() >> NULL");
@@ -61,38 +61,39 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 	public SubCategoryDTO subCategoryManage(SubCategoryDTO subCategoryDTO) {
 		logger.info("subCategoryManage() >> Start");
 		SubCategory subCategory = null;
-		
-		if(subCategoryDTO.getSeq() > 0) {
+
+		if (subCategoryDTO.getSeq() > 0) {
 			// update
 			subCategory = subCategoryDao.get(subCategoryDTO.getSeq());
 			subCategory.setName(subCategoryDTO.getName());
 			subCategory.setStatus(subCategoryDTO.getStatus());
 			subCategory.setSequence(subCategoryDTO.getSequenceNo());
-			subCategory.setUpdatedTime(new Date());	
-			
+			subCategory.setUpdatedTime(new Date());
+
 			subCategoryDao.update(subCategory);
 			logger.info("subCategoryManage() >> Update successful");
-		}else {
+		} else {
 			// save
 			subCategory = new SubCategory();
 			subCategory.setName(subCategoryDTO.getName());
 			subCategory.setStatus(subCategoryDTO.getStatus());
 			subCategory.setSequence(subCategoryDTO.getSequenceNo());
-			
+
 			Category category = new Category();
 			category.setSeq(subCategoryDTO.getCategorySeq());
 			subCategory.setCategory(category);
-			
+
 			subCategory.setCreatedTime(new Date());
-			
+
 			subCategoryDao.save(subCategory);
 			logger.info("subCategoryManage() >> Save successful");
 		}
-		
-		if(!CommonUtil.isEmpty(subCategoryDTO.getImageFile().getOriginalFilename())) {
+
+		if (!CommonUtil.isEmpty(subCategoryDTO.getImageFile().getOriginalFilename())) {
 			try {
-				String imageName = ImagesUtil.uploadMultipartFile(subCategoryDTO.getImageFile(), 
-						CommonConstant.SUB_CATEGORY_DIRECTORY + CommonConstant.SUB_CATEGORY_IMAGE_DIRECTORY + subCategory.getSeq() + "/", 
+				String imageName = ImagesUtil.uploadMultipartFile(subCategoryDTO.getImageFile(),
+						CommonConstant.SUB_CATEGORY_DIRECTORY + CommonConstant.SUB_CATEGORY_IMAGE_DIRECTORY
+								+ subCategory.getSeq() + "/",
 						CommonConstant.SUB_CATEGORY_IMAGE_PERFIX, subCategory.getSeq());
 				subCategory.setImagePath(imageName);
 			} catch (Exception e) {
@@ -100,9 +101,23 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 			}
 			subCategoryDao.merge(subCategory);
 		}
-		
+
 		logger.info("subCategoryManage() >> End >> Sub Cateogry id : " + subCategory.getSeq());
 		return new SubCategoryDTO(subCategoryDao.get(subCategory.getSeq()));
+	}
+
+	@Override
+	public List<SubCategoryDTO> getAllActiveSubCategoryList() {
+		List<SubCategory> entityList = subCategoryDao.getAllActiveSubCategoryList();
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<SubCategoryDTO>();
+		}
+
+		List<SubCategoryDTO> dtoList = new ArrayList<SubCategoryDTO>();
+		entityList.forEach(entity -> {
+			dtoList.add(new SubCategoryDTO(entity));
+		});
+		return dtoList;
 	}
 
 }

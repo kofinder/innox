@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finder.ecoshop.core.domain.CustomItemLayout;
+import com.finder.ecoshop.utils.CommonStatus;
 
 public class CustomItemLayoutDTO implements Serializable {
 
@@ -25,6 +26,12 @@ public class CustomItemLayoutDTO implements Serializable {
 
 	private UserDTO userDTO;
 
+	private long customProductId;
+
+	private long customItemId;
+	
+	private int status;
+
 	public CustomItemLayoutDTO() {
 		super();
 	}
@@ -36,6 +43,7 @@ public class CustomItemLayoutDTO implements Serializable {
 			this.layoutName = itemLayout.getLayoutName();
 			this.layoutPrice = itemLayout.getLayoutPrice() == null ? BigDecimal.ZERO : itemLayout.getLayoutPrice();
 			this.layoutImage = itemLayout.getLayoutImage();
+			this.status = itemLayout.getStatue() == null ? CommonStatus.ACTIVE.getCode() : itemLayout.getStatue();
 		}
 	}
 
@@ -93,6 +101,30 @@ public class CustomItemLayoutDTO implements Serializable {
 
 	public void setUserDTO(UserDTO userDTO) {
 		this.userDTO = userDTO;
+	}
+
+	public long getCustomProductId() {
+		return customProductId;
+	}
+
+	public void setCustomProductId(long customProductId) {
+		this.customProductId = customProductId;
+	}
+
+	public long getCustomItemId() {
+		return customItemId;
+	}
+
+	public void setCustomItemId(long customItemId) {
+		this.customItemId = customItemId;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

@@ -2,9 +2,12 @@ package com.finder.ecoshop.core.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.finder.ecoshop.core.domain.User;
+import com.finder.ecoshop.utils.CommonStatus;
+
 public class UserDTO {
 
-	private long id;
+	private long seq;
 
 	private String userName;
 
@@ -32,12 +35,32 @@ public class UserDTO {
 
 	private boolean recordDelFlag;
 
-	public long getId() {
-		return id;
+	public UserDTO() {
+		super();
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public UserDTO(User user) {
+		if (user != null) {
+			this.seq = user.getUserSeq();
+			this.userName = user.getUserName();
+			this.password = user.getPassword();
+			this.email = user.getEmail();
+			this.status = user.getStatus() == null ? CommonStatus.ACTIVE.getCode() : user.getStatus();
+			this.avatar = user.getAvatar();
+			this.draftFlag = user.getDraftFlag();
+			this.recordRegSeq = user.getRecordRegSeq();
+			this.recordUpdateSeq = user.getRecordUpdateSeq();
+			this.recordTmpFlag = user.getRecordTmpFlag();
+			this.recordDelFlag = user.getRecordDelFlag();
+		}
+	}
+
+	public long getSeq() {
+		return seq;
+	}
+
+	public void setSeq(long seq) {
+		this.seq = seq;
 	}
 
 	public String getUserName() {

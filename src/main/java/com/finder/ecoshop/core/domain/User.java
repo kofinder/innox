@@ -41,7 +41,7 @@ public class User implements Serializable {
 	private String email;
 
 	@Column(name = "status")
-	private String status;
+	private Integer status;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -103,14 +103,13 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
-
 
 	public Collection<Role> getRoles() {
 		return roles;

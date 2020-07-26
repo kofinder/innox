@@ -23,6 +23,8 @@ public class CustomItemDTO implements Serializable {
 
 	private UserDTO userDTO;
 
+	private int sequenceNo;
+
 	public CustomItemDTO() {
 		super();
 	}
@@ -35,6 +37,7 @@ public class CustomItemDTO implements Serializable {
 			this.itemCode = customItem.getItemCode();
 			this.itemName = customItem.getItemName();
 			this.itemPrice = customItem.getItemPrice() == null ? BigDecimal.ZERO : customItem.getItemPrice();
+			this.sequenceNo = customItem.getSequenceNo() == null ? 0 : customItem.getSequenceNo();
 		}
 	}
 
@@ -92,6 +95,14 @@ public class CustomItemDTO implements Serializable {
 
 	public void setUserDTO(UserDTO userDTO) {
 		this.userDTO = userDTO;
+	}
+
+	public int getSequenceNo() {
+		return sequenceNo;
+	}
+
+	public void setSequenceNo(int sequenceNo) {
+		this.sequenceNo = sequenceNo;
 	}
 
 }

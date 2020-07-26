@@ -36,6 +36,9 @@ public class CustomItemLayout extends CommonEntity implements Serializable {
 	@Column(name = "created_by_id")
 	private User user;
 
+	@Column(name = "status")
+	private Integer statue;
+
 	public CustomItem getCustomItem() {
 		return customItem;
 	}
@@ -74,6 +77,14 @@ public class CustomItemLayout extends CommonEntity implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Integer getStatue() {
+		return statue;
+	}
+
+	public void setStatue(Integer statue) {
+		this.statue = statue;
 	}
 
 }

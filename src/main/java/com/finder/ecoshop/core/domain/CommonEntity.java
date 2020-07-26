@@ -17,7 +17,7 @@ public class CommonEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long Seq;
+	private Long seq;
 
 	@Column(name = "created_time", updatable = false)
 	private Date createdTime;
@@ -26,11 +26,11 @@ public class CommonEntity implements Serializable {
 	private Date updatedTime;
 
 	public Long getSeq() {
-		return Seq;
+		return seq;
 	}
 
 	public void setSeq(Long seq) {
-		Seq = seq;
+		this.seq = seq;
 	}
 
 	public Date getCreatedTime() {
