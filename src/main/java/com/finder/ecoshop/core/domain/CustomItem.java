@@ -2,11 +2,14 @@ package com.finder.ecoshop.core.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -43,6 +46,9 @@ public class CustomItem extends CommonEntity implements Serializable {
 
 	@Column(name = "sequence_no")
 	private Integer sequenceNo;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customItem")
+	private List<CustomItemSize> customItemSizeList;
 
 	public CustomProduct getCustomProduct() {
 		return customProduct;
@@ -98,6 +104,14 @@ public class CustomItem extends CommonEntity implements Serializable {
 
 	public void setSequenceNo(Integer sequenceNo) {
 		this.sequenceNo = sequenceNo;
+	}
+
+	public List<CustomItemSize> getCustomItemSizeList() {
+		return customItemSizeList;
+	}
+
+	public void setCustomItemSizeList(List<CustomItemSize> customItemSizeList) {
+		this.customItemSizeList = customItemSizeList;
 	}
 
 }

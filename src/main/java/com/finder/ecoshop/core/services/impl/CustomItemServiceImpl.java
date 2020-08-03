@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 
 import com.finder.ecoshop.core.domain.Color;
 import com.finder.ecoshop.core.domain.CustomItem;
+import com.finder.ecoshop.core.domain.CustomItemSize;
 import com.finder.ecoshop.core.domain.CustomProduct;
+import com.finder.ecoshop.core.domain.Size;
 import com.finder.ecoshop.core.dto.CustomItemDTO;
 import com.finder.ecoshop.core.services.CustomItemService;
 import com.finder.ecoshop.repository.CustomItemDao;
+import com.finder.ecoshop.repository.CustomItemSizeDao;
 
 @Service
 @Transactional
@@ -26,6 +29,9 @@ public class CustomItemServiceImpl implements CustomItemService {
 
 	@Autowired
 	private CustomItemDao customItemDao;
+
+	@Autowired
+	private CustomItemSizeDao customItemSizeDao;
 
 	@Override
 	public List<CustomItemDTO> getCustomItemListByCustomProductId(long id) {
@@ -69,7 +75,27 @@ public class CustomItemServiceImpl implements CustomItemService {
 		customItem.setColor(color);
 
 		customItemDao.saveOrUpdate(customItem);
-		logger.info("customItemManage() >> End >> Custom Item Id : " + customItem.getSeq());
+		logger.info("customItemManage() >> Custom Item Save Success >> Custom Item Id : " + customItem.getSeq());
+
+		// custom item size reset
+		customItemSizeDao.deleteDataByCustomItemId(customItem.getSeq());
+
+		// save custom item size
+		for (Long s : customItemDTO.getCusItemSizeList()) {
+			CustomItemSize cusItemSize = new CustomItemSize();
+
+			cusItemSize.setCustomItem(customItem);
+
+			Size size = new Size();
+			size.setSeq(s);
+			cusItemSize.setSize(size);
+
+			cusItemSize.setCreatedTime(new Date());
+			cusItemSize.setUpdatedTime(new Date());
+
+			customItemSizeDao.save(cusItemSize);
+		}
+		logger.info("customItemManage() >> End >> Custom Item Size Save Success");
 		return new CustomItemDTO(customItem);
 	}
 

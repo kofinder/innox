@@ -6,16 +6,15 @@ import org.springframework.stereotype.Repository;
 import com.finder.ecoshop.core.domain.ProductSize;
 import com.finder.ecoshop.repository.ProductSizeDao;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({ "unchecked", "deprecation" })
 @Repository
-public class ProductSizeDaoImpl extends GenericDaoImpl<ProductSize, Long> implements ProductSizeDao{
+public class ProductSizeDaoImpl extends GenericDaoImpl<ProductSize, Long> implements ProductSizeDao {
 
 	@Override
 	public void deleteByProductId(long prdId) {
 		String sqlStr = "DELETE FROM product_size WHERE product_id = " + prdId;
-		@SuppressWarnings("unchecked")
 		SQLQuery<ProductSize> query = this.getCurrentSession().createSQLQuery(sqlStr);
 		query.executeUpdate();
-	} 
+	}
 
 }

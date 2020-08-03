@@ -1,7 +1,12 @@
 package com.finder.ecoshop.repository;
 
-import com.finder.ecoshop.core.domain.CustomProduct;
+import java.util.List;
 
-public interface CustomProductDao extends GenericDao<CustomProduct, Long>{
+import com.finder.ecoshop.core.domain.CustomProduct;
+import com.finder.ecoshop.core.dto.CustomProductDTO;
+
+public interface CustomProductDao extends GenericDao<CustomProduct, Long> {
+
+	List<CustomProduct> searchCustomProduct(CustomProductDTO searchCusPrdDTO);
 
 }

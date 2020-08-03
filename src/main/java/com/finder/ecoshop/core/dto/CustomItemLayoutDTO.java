@@ -29,8 +29,12 @@ public class CustomItemLayoutDTO implements Serializable {
 	private long customProductId;
 
 	private long customItemId;
-	
+
 	private int status;
+
+	private String statusDesc;
+
+	private int sequenceNo;
 
 	public CustomItemLayoutDTO() {
 		super();
@@ -44,6 +48,8 @@ public class CustomItemLayoutDTO implements Serializable {
 			this.layoutPrice = itemLayout.getLayoutPrice() == null ? BigDecimal.ZERO : itemLayout.getLayoutPrice();
 			this.layoutImage = itemLayout.getLayoutImage();
 			this.status = itemLayout.getStatue() == null ? CommonStatus.ACTIVE.getCode() : itemLayout.getStatue();
+			this.sequenceNo = itemLayout.getSequenceNo() == null ? 0 : itemLayout.getSequenceNo();
+			this.statusDesc = CommonStatus.getDescByCode(this.status);
 		}
 	}
 
@@ -125,6 +131,22 @@ public class CustomItemLayoutDTO implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public int getSequenceNo() {
+		return sequenceNo;
+	}
+
+	public void setSequenceNo(int sequenceNo) {
+		this.sequenceNo = sequenceNo;
+	}
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 
 }

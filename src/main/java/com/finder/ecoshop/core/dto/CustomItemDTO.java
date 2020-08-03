@@ -2,6 +2,8 @@ package com.finder.ecoshop.core.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.finder.ecoshop.core.domain.CustomItem;
 
@@ -25,6 +27,10 @@ public class CustomItemDTO implements Serializable {
 
 	private int sequenceNo;
 
+	private List<Long> cusItemSizeList = new ArrayList<Long>();
+
+	private int sizeCategoryId;
+
 	public CustomItemDTO() {
 		super();
 	}
@@ -38,6 +44,13 @@ public class CustomItemDTO implements Serializable {
 			this.itemName = customItem.getItemName();
 			this.itemPrice = customItem.getItemPrice() == null ? BigDecimal.ZERO : customItem.getItemPrice();
 			this.sequenceNo = customItem.getSequenceNo() == null ? 0 : customItem.getSequenceNo();
+
+			customItem.getCustomItemSizeList().forEach(size -> {
+				if (size != null && size.getSeq() != null && size.getSize() != null
+						&& size.getSize().getSeq() != null) {
+					this.cusItemSizeList.add(size.getSize().getSeq());
+				}
+			});
 		}
 	}
 
@@ -103,6 +116,22 @@ public class CustomItemDTO implements Serializable {
 
 	public void setSequenceNo(int sequenceNo) {
 		this.sequenceNo = sequenceNo;
+	}
+
+	public List<Long> getCusItemSizeList() {
+		return cusItemSizeList;
+	}
+
+	public void setCusItemSizeList(List<Long> cusItemSizeList) {
+		this.cusItemSizeList = cusItemSizeList;
+	}
+
+	public int getSizeCategoryId() {
+		return sizeCategoryId;
+	}
+
+	public void setSizeCategoryId(int sizeCategoryId) {
+		this.sizeCategoryId = sizeCategoryId;
 	}
 
 }

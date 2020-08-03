@@ -1,5 +1,7 @@
 package com.finder.ecoshop.webportal;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,9 +23,11 @@ import com.finder.ecoshop.core.services.ColorService;
 import com.finder.ecoshop.core.services.CustomItemLayoutService;
 import com.finder.ecoshop.core.services.CustomItemService;
 import com.finder.ecoshop.core.services.CustomProductService;
+import com.finder.ecoshop.core.services.SizeService;
 import com.finder.ecoshop.core.services.SubCategoryService;
 import com.finder.ecoshop.utils.CommonConstant;
 import com.finder.ecoshop.utils.CommonStatus;
+import com.finder.ecoshop.utils.ItemSizeCategoryEnum;
 import com.finder.ecoshop.utils.MessageEnum;
 import com.finder.ecoshop.utils.PageTitleConstant;
 
@@ -49,6 +53,9 @@ public class CustomProductController {
 
 	@Autowired
 	private ColorService colorService;
+	
+	@Autowired
+	private SizeService sizeService;
 
 	@ModelAttribute(name = "images")
 	public String getRootImagePath() {
@@ -164,12 +171,12 @@ public class CustomProductController {
 			HttpServletRequest request) {
 
 		try {
-			// TODO add javascript validation process
 			CustomItemDTO customItemDTO = new CustomItemDTO();
 			customItemDTO.setSeq(customItemId);
 			customItemLayoutDTO.setCustomItemDTO(customItemDTO);
 
-			if (customLayoutService.isValidLayoutName(customItemId, customItemLayoutDTO.getLayoutName()) == 1) {
+			if (customLayoutService.isValidLayoutName(customItemId, customItemLayoutDTO.getLayoutName(),
+					customItemLayoutDTO.getSeq()) == 1) {
 				CustomItemLayoutDTO customItemLayoutDto = customLayoutService
 						.manageCustomItemLayout(customItemLayoutDTO);
 
@@ -179,7 +186,7 @@ public class CustomProductController {
 					attributes.addFlashAttribute(CommonConstant.UI_MESSGAE, MessageEnum.SAVE_FAILED.getDesc());
 				}
 			} else {
-				attributes.addFlashAttribute("CustomItemLayoutDTO", customItemLayoutDTO);
+				attributes.addFlashAttribute("customItemLayoutDTO", customItemLayoutDTO);
 				attributes.addFlashAttribute(CommonConstant.UI_MESSGAE, MessageEnum.LAYOUT_NAME_EXIST.getDesc());
 			}
 
@@ -198,14 +205,35 @@ public class CustomProductController {
 	@GetMapping(value = "/custom_product_search")
 	public String customProductSearchGet(Model model, HttpServletRequest request) {
 		commomModelSetup(model);
+		model.addAttribute("searchCusPrdDTO", new CustomProductDTO());
+		model.addAttribute("cusProductList", new ArrayList<CustomProductDTO>());
 		return "custom_product_search";
 	}
 
+	@PostMapping(value = "custom_product_search")
+	public String customProductSearchPost(@ModelAttribute(name = "searchCusPrdDTO") CustomProductDTO searchCusPrdDTO,
+			Model model, HttpServletRequest request) {
+		commomModelSetup(model);
+		model.addAttribute("searchCusPrdDTO", searchCusPrdDTO);
+
+		if (searchCusPrdDTO.getCategoryDTO() != null && searchCusPrdDTO.getCategoryDTO().getSeq() > 0) {
+			model.addAttribute("subCategroyList",
+					subCategoryService.getAllSubCategoryListByCatId(searchCusPrdDTO.getCategoryDTO().getSeq()));
+		}
+
+		model.addAttribute("cusProductList", customProductService.searchCustomProduct(searchCusPrdDTO));
+
+		return "custom_product_search";
+	}
+
+	// TODO To implement custom product search
 	private void commomModelSetup(Model model) {
 		model.addAttribute("pageTitle", PageTitleConstant.CUSTOM_PRODUCT);
 		model.addAttribute("categroyList", categoryService.getAllCategoryList());
 		model.addAttribute("statusList", CommonStatus.values());
 		model.addAttribute("colorList", colorService.getAllColorList());
+		model.addAttribute("sizeCategoryList", ItemSizeCategoryEnum.values());
+		model.addAttribute("itemSizeList", sizeService.getAllSize());
 	}
 
 }

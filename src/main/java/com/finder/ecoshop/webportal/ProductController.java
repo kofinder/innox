@@ -50,10 +50,10 @@ public class ProductController {
 
 	@Autowired
 	private SubCategoryService subCategoryService;
-	
+
 	@Autowired
 	private ColorService colorService;
-	
+
 	@Autowired
 	private SizeService sizeService;
 
@@ -70,7 +70,10 @@ public class ProductController {
 		CommonModelSetUp(model);
 
 		if (productId != null && productId.compareTo(0L) > 0) {
-			model.addAttribute("productDTO", productService.getProductDataById(productId));
+			ProductDTO productDTO = productService.getProductDataById(productId);
+			model.addAttribute("productDTO", productDTO);
+			model.addAttribute("subCategroyList",
+					subCategoryService.getAllSubCategoryListByCatId(productDTO.getCategoryDTO().getSeq()));
 		} else {
 			ProductDTO productDTO = new ProductDTO();
 			productDTO.setProductImageDTOs(new ArrayList<ProductImageDTO>());
@@ -105,7 +108,7 @@ public class ProductController {
 		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT_SEARCH);
 		return "product_search";
 	}
-	
+
 	@PostMapping("/subCategoryByCategoryAjax")
 	@ResponseBody
 	public Object getSubCategoryByCategoryAjax(@RequestBody Long categoryId) {

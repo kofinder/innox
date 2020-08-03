@@ -70,6 +70,7 @@ public class CustomItemLayoutServiceImpl implements CustomItemLayoutService {
 		layoutEntity.setUpdatedTime(new Date());
 		layoutEntity.setLayoutName(customItemLayoutDTO.getLayoutName());
 		layoutEntity.setLayoutPrice(customItemLayoutDTO.getLayoutPrice());
+		layoutEntity.setSequenceNo(customItemLayoutDTO.getSequenceNo());
 
 		customLayoutDao.save(layoutEntity);
 		logger.info("manageCustomItemLayout() >> Save or Update is successful");
@@ -99,8 +100,8 @@ public class CustomItemLayoutServiceImpl implements CustomItemLayoutService {
 	}
 
 	@Override
-	public int isValidLayoutName(long customItemId, String layoutName) {
-		return customLayoutDao.isValidLayoutName(customItemId, layoutName);
+	public int isValidLayoutName(long customItemId, String layoutName, long seq) {
+		return customLayoutDao.isValidLayoutName(customItemId, layoutName, seq);
 	}
 
 	@Override

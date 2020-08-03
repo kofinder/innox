@@ -8,6 +8,6 @@ public interface CustomerItemLayoutDao extends GenericDao<CustomItemLayout, Long
 
 	List<CustomItemLayout> getCustomItemLayoutListByItemId(long customItemId);
 	
-	int isValidLayoutName(long customItemId, String layoutName);
+	int isValidLayoutName(long customItemId, String layoutName, long seq);
 
 }

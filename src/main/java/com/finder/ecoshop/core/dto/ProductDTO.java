@@ -96,7 +96,7 @@ public class ProductDTO implements Serializable {
 			this.originalPrice = product.getOriginalPrice() == null ? BigDecimal.ZERO : product.getOriginalPrice();
 			this.discountPercent = product.getDiscountPercent() == null ? 0.00 : product.getDiscountPercent();
 			this.quantity = product.getQuantity() == null ? 0 : product.getQuantity();
-			this.promotion = product.getIsPopular() == null ? false : product.getIsPopular();
+			this.promotion = product.getIsPromotion() == null ? false : product.getIsPromotion();
 			this.newArrival = product.getIsNewArrival() == null ? false : product.getIsNewArrival();
 			this.popular = product.getIsPopular() == null ? false : product.getIsPopular();
 			this.status = product.getStatus() == null ? CommonStatus.INACTIVE.getCode() : product.getStatus();

@@ -107,7 +107,7 @@
 										action="custom_product_setup.html" method="POST"
 										enctype="multipart/form-data">
 
-										<form:hidden path="seq" />
+										<form:hidden id="prdId" path="seq" />
 
 										<div class="row">
 											<div class="col-sm-6">
@@ -205,7 +205,7 @@
 										modelAttribute="customItemDTO" action="custom_item_setup.html"
 										method="POST" enctype="multipart/form-data">
 
-										<form:hidden path="seq" />
+										<form:hidden id="itemId" path="seq" />
 										<input type="hidden" value="${customProductDTO.seq}"
 											name="customProductId">
 
@@ -231,6 +231,13 @@
 															itemLabel="colorName" />
 													</form:select>
 												</div>
+
+												<div class="form-group">
+													<label for="color">Item Size : </label>
+													<form:checkboxes items="${itemSizeList}" path="cusItemSizeList"
+														itemValue="seq" itemLabel="sizeName"
+														cssStyle="font-weight: normal;" />
+												</div>
 											</div>
 
 											<div class="col-sm-6">
@@ -246,6 +253,15 @@
 													<form:input path="sequenceNo" id="cus_item_sequence"
 														placeholder="Sequence No" class="form-control" />
 												</div>
+
+												<div class="form-group">
+													<label for="sizeCategory">Size Category</label>
+													<form:select class="form-control" path="sizeCategoryId"
+														id="size_category_id">
+														<form:options items="${sizeCategoryList}" itemValue="code"
+															itemLabel="desc" />
+													</form:select>
+												</div>
 											</div>
 										</div>
 
@@ -254,7 +270,7 @@
 												<!-- custom item save button -->
 												<div class="form-group" style="text-align: right;">
 													<button id="custom_item_setup" type="submit"
-														class="btn btn-primary">Save</button>
+														class="btn btn-primary" onclick="checkCustomItemSetup()">Save</button>
 												</div>
 											</div>
 										</div>
@@ -327,7 +343,8 @@
 										action="custom_layout_setup.html" method="POST"
 										enctype="multipart/form-data">
 
-										<form:hidden path="seq" />
+										<form:hidden id="layoutId" path="seq" />
+
 										<input type="hidden" value="${customProductDTO.seq}"
 											name="customProductId">
 										<input type="hidden" value="${customItemDTO.seq}"
@@ -347,7 +364,7 @@
 														<div class="custom-file">
 															<form:input path="layoutImageFile" type="file"
 																accept="image/x-png, image/jpeg"
-																class="custom-file-input" id="exampleInputFile1" />
+																class="custom-file-input" id="exampleInputFile2" />
 															<label class="custom-file-label" for="exampleInputFile">Choose
 																file</label>
 														</div>
@@ -363,6 +380,17 @@
 														</c:if>
 													</div>
 												</div>
+
+												<c:if test="${customItemLayoutDTO.seq > 0}">
+													<div class="form-group">
+														<label for="status">Status</label>
+														<form:select class="form-control" path="status"
+															id="layout_status_id">
+															<form:options items="${statusList}" itemValue="code"
+																itemLabel="desc" />
+														</form:select>
+													</div>
+												</c:if>
 											</div>
 
 											<div class="col-sm-6">
@@ -371,17 +399,12 @@
 													<form:input path="layoutPrice" id="cus_layout_price"
 														placeholder="Layout Price" class="form-control" />
 												</div>
-												
-												<c:if test="${customItemLayoutDTO.seq > 0}">
-													<div class="form-group">
-														<label for="status">Status</label>
-														<form:select class="form-control" path="status"
-															id="status_id">
-															<form:options items="${statusList}" itemValue="code"
-																itemLabel="desc" />
-														</form:select>
-													</div>
-												</c:if>
+
+												<div class="form-group" id="cus_layout_sequence_data">
+													<label for="sequenceNo">Layout Sequence</label>
+													<form:input path="sequenceNo" id="cus_layout_sequence"
+														placeholder="Layout Sequence No" class="form-control" />
+												</div>
 											</div>
 										</div>
 
@@ -389,8 +412,8 @@
 											<div class="col-sm-12">
 												<!-- custom item layout save button -->
 												<div class="form-group" style="text-align: right;">
-													<button id="custom_item_layout_setup" type="submit"
-														class="btn btn-primary">Save</button>
+													<button id="custom_layout_setup" type="submit"
+														class="btn btn-primary" onclick="checkCustomLayoutSetup()">Save</button>
 												</div>
 											</div>
 										</div>
@@ -424,19 +447,24 @@
 															<td>No</td>
 															<td>Name</td>
 															<td>Price</td>
+															<td>Sequence No</td>
+															<td>Status</td>
 														</tr>
 													</thead>
 													<tbody>
 														<c:forEach items="${customItemLayoutList}"
 															var="cusItemLayout" varStatus="status">
 															<tr>
-																<td><a href="custom_product_setup?customPrdId=${customProductDTO.seq}
+																<td><a
+																	href="custom_product_setup?customPrdId=${customProductDTO.seq}
 																&customItemId=${customItemDTO.seq}&customLayoutId=${cusItemLayout.seq}">
-																 <i class="fas fa-edit"></i>
+																		<i class="fas fa-edit"></i>
 																</a></td>
 																<td>${status.count}</td>
 																<td>${cusItemLayout.layoutName}</td>
 																<td>${cusItemLayout.layoutPrice}</td>
+																<td>${cusItemLayout.sequenceNo}</td>
+																<td>${cusItemLayout.statusDesc}</td>
 															</tr>
 														</c:forEach>
 													</tbody>
@@ -493,9 +521,28 @@
 </script>
 
 <script>
+	// custom product setup
 	function checkCustomProductSetup() {
 		checkCustomProductSetupValid();
 		if (errors == 0) {
+			return true;
+		}
+		event.preventDefault();
+	}
+
+	// custom item setup
+	function checkCustomItemSetup() {
+		checkCustomItemSetupValid();
+		if (itemErrors == 0) {
+			return true;
+		}
+		event.preventDefault();
+	}
+
+	// custom layout setup
+	function checkCustomLayoutSetup() {
+		checkCustomLayoutSetupValid();
+		if (layoutErrors == 0) {
 			return true;
 		}
 		event.preventDefault();
@@ -535,6 +582,87 @@
 			errors = 1;
 		} else {
 			removeErrorMsg("cus_product_price_data", "cus_product_price");
+		}
+	}
+
+	function checkCustomItemSetupValid() {
+		itemErrors = 0;
+
+		var cusItemCodeErr = checkField("Custom Item Code", $("#cus_item_code")
+				.val(), true, null, null, null);
+
+		var cusItemNameErr = checkField("Custom Item Name", $("#cus_item_name")
+				.val(), true, null, null, null);
+
+		var cusItemPriceErr = checkField("Custom Item Price", $(
+				"#cus_item_price").val(), true, null, null, "n");
+
+		var cusItemSeqErr = checkField("Custom Item Sequence", $(
+				"#cus_item_sequence").val(), true, null, null, "n");
+
+		if (cusItemCodeErr) {
+			showError("cus_item_code_data", "cus_item_code", cusItemCodeErr);
+			itemErrors = 1;
+		} else {
+			removeErrorMsg("cus_item_code_data", "cus_item_code");
+		}
+
+		if (cusItemNameErr) {
+			showError("cus_item_name_data", "cus_item_name", cusItemNameErr);
+			itemErrors = 1;
+		} else {
+			removeErrorMsg("cus_item_name_data", "cus_item_name");
+		}
+
+		if (cusItemPriceErr) {
+			showError("cus_itme_price_data", "cus_item_price", cusItemPriceErr);
+			itemErrors = 1;
+		} else {
+			removeErrorMsg("cus_itme_price_data", "cus_item_price");
+		}
+
+		if (cusItemSeqErr) {
+			showError("cus_itme_sequence_data", "cus_item_sequence",
+					cusItemSeqErr);
+			itemErrors = 1;
+		} else {
+			removeErrorMsg("cus_itme_sequence_data", "cus_item_sequence");
+		}
+	}
+
+	function checkCustomLayoutSetupValid() {
+		layoutErrors = 0;
+
+		var layoutNameErr = checkField("Custom Layout", $("#cus_layout_price")
+				.val(), true, null, null, null);
+
+		var layoutPriceErr = checkField("Custom Layout Price", $(
+				"#cus_layout_price").val(), true, null, null, "n");
+
+		var layoutSequenceErr = checkField("Custom Layout Sequence", $(
+				"#cus_layout_sequence").val(), true, null, null, "n");
+
+		if (layoutNameErr) {
+			showError("cus_layout_name_data", "cus_layout_name", layoutNameErr);
+			layoutErrors = 1;
+		} else {
+			removeErrorMsg("cus_layout_name_data", "cus_layout_name");
+		}
+
+		if (layoutPriceErr) {
+			showError("cus_layout_price_data", "cus_layout_price",
+					layoutPriceErr);
+			layoutErrors = 1;
+		} else {
+			removeErrorMsg("cus_layout_price_data", "cus_layout_price");
+		}
+
+		if (layoutSequenceErr) {
+			showError("cus_layout_sequence_data", "cus_layout_sequence",
+					layoutSequenceErr);
+			layoutErrors = 1;
+		} else {
+			removeErrorMsg("cus_layout_sequence_data", "cus_layout_sequence");
 		}
 	}
 

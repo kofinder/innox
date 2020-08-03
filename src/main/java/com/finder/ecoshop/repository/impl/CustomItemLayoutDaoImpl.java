@@ -22,10 +22,13 @@ public class CustomItemLayoutDaoImpl extends GenericDaoImpl<CustomItemLayout, Lo
 	}
 
 	@Override
-	public int isValidLayoutName(long customItemId, String layoutName) {
+	public int isValidLayoutName(long customItemId, String layoutName, long seq) {
 		Criteria c = this.getCurrentSession().createCriteria(CustomItemLayout.class);
 		c.add(Restrictions.eq("customItem.id", customItemId));
 		c.add(Restrictions.eq("layoutName", layoutName));
+		if(seq > 0) {
+			c.add(Restrictions.ne("id", seq));
+		}
 		return c.uniqueResult() == null ? 1 : 0;
 	}
 

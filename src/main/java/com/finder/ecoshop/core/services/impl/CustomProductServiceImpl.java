@@ -1,6 +1,8 @@
 package com.finder.ecoshop.core.services.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -105,6 +107,20 @@ public class CustomProductServiceImpl implements CustomProductService {
 		}
 		CustomProductDTO dto = new CustomProductDTO(entity);
 		return dto;
+	}
+
+	@Override
+	public List<CustomProductDTO> searchCustomProduct(CustomProductDTO searchCusPrdDTO) {
+		List<CustomProduct> entityList = customProductDao.searchCustomProduct(searchCusPrdDTO);
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<CustomProductDTO>();
+		}
+
+		List<CustomProductDTO> dtoList = new ArrayList<CustomProductDTO>();
+		entityList.forEach(entity -> {
+			dtoList.add(new CustomProductDTO(entity));
+		});
+		return dtoList;
 	}
 
 }

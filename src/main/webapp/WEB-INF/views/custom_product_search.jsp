@@ -71,10 +71,69 @@
 								</button>
 							</div>
 						</div>
-						
+
+						<!-- custom product search -->
+						<div class="card-body">
+							<form:form role="form" id="custom_product_search"
+								modelAttribute="searchCusPrdDTO"
+								action="custom_product_search.html" method="POST">
+
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="CategoryName">Category</label>
+											<form:select class="form-control" path="categoryDTO.seq"
+												id="category_id">
+												<form:option value="-1">--- Please Select One ---</form:option>
+												<form:options items="${categroyList}" itemValue="seq"
+													itemLabel="name" />
+											</form:select>
+										</div>
+
+										<div class="form-group">
+											<label for="productName">Custom Product Name</label>
+											<form:input path="productName" id="cus_prd_name"
+												placeholder="Custom Product Name" class="form-control" />
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="subCategroy">Sub Category</label>
+											<form:select class="form-control" path="subCategoryDTO.seq"
+												id="sub_category_id">
+												<form:option value="-1">--- Please Select One ---</form:option>
+												<form:options items="${subCategroyList}" itemValue="seq"
+													itemLabel="name" />
+											</form:select>
+										</div>
+
+										<div class="form-group">
+											<label for="status">Status</label>
+											<form:select class="form-control" path="status"
+												id="status_id">
+												<form:option value="-1">--- Please Select One ---</form:option>
+												<form:options items="${statusList}" itemValue="code"
+													itemLabel="desc" />
+											</form:select>
+										</div>
+
+										<div class="form-group"
+											style="text-align: right; margin-top: 10px;">
+											<button id="custom_product_search_btn" type="submit"
+												style="margin-right: 10px;" class="btn btn-primary">Search</button>
+
+											<button id="custom_product_search_clear" type="button"
+												onclick="clearSearchData()" class="btn btn-default">Clear</button>
+										</div>
+									</div>
+								</div>
+
+							</form:form>
+						</div>
 					</div>
 
-					<%-- <div class="card card-default">
+					<div class="card card-default">
 
 						<div class="card-header">
 							<h3 class="card-title">Product List</h3>
@@ -88,7 +147,7 @@
 						</div>
 
 						<div class="card-body">
-							<!-- category list -->
+							<!-- custom product list -->
 							<div class="row">
 
 								<div class="card-body">
@@ -101,32 +160,27 @@
 											<thead>
 												<tr role="row">
 													<td width="5%">Edit</td>
-													<td> No </td>
-													<td> Name </td>
-													<td> Code </td>
-													<td> Price </td>
-													<td> Qty </td>
-													<td>Brand</td>
-													<td>Category</td>
-													<td>Sub Catrgory</td>
+													<td>No</td>
+													<td>Category Name</td>
+													<td>Sub Category Name</td>
+													<td>Product Name</td>
+													<td>Price</td>
 													<td>Status</td>
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach items="${productList}" var="prd"
+												<c:forEach items="${cusProductList}" var="cusPrd"
 													varStatus="status">
 													<tr>
-														<td><a href="product_setup.html?prdId=${prd.seq}">
+														<td><a
+															href="custom_product_setup.html?customPrdId=${cusPrd.seq}">
 																<i class="fas fa-edit"></i>
 														</a></td>
 														<td>${status.count}</td>
-														<td>${prd.name}</td>
-														<td>${prd.codeNumber}</td>
-														<td>${prd.priceDesc}</td>
-														<td>${prd.quantity}</td>
-														<td>${prd.brandDTO.name}</td>
-														<td>${prd.categoryDTO.name}</td>
-														<td>${prd.subCategoryDTO.name}</td>
+														<td>${cusPrd.categoryDTO.name}</td>
+														<td>${cusPrd.subCategoryDTO.name}</td>
+														<td>${cusPrd.productName}</td>
+														<td>${cusPrd.initialPrice}</td>
 														<td>${prd.status}</td>
 													</tr>
 												</c:forEach>
@@ -136,10 +190,10 @@
 								</div>
 							</div>
 						</div>
-					</div> --%>
+					</div>
 				</div>
 			</div>
-			<!-- category list -->
+			<!-- custom product list -->
 
 			<!-- /.container-fluid -->
 		</div>
@@ -183,6 +237,43 @@
 			"autoWidth" : false,
 		});
 	});
+</script>
+
+<script>
+	$("#category_id").on("change", function() {
+		$.ajax({
+			method : 'POST',
+			contentType : 'application/json',
+			url : 'subCategoryByCategoryAjax.html',
+			dataType : 'json',
+			async : true,
+			data : $("#category_id").val(),
+			success : function(data) {
+				$('#sub_category_id').html('');
+				$.each(data.data, function(i, cam) {
+					$("#sub_category_id").append($("<option></option>", {
+						value : cam.seq,
+						text : cam.name
+					}))
+				});
+			},
+			error : function(e) {
+				console.log("ERROR >>  ", e);
+			}
+		});
+	});
+
+	function clearSearchData() {
+		console.log("Clear....");
+		$("#category_id").val(-1);
+		$('#sub_category_id').html('');
+		$("#sub_category_id").append($("<option></option>", {
+			value : -1,
+			text : "--- Please Select One ---"
+		}))
+		$("#status_id").val(-1);
+		$("#cus_prd_name").val("");
+	}
 </script>
 
 

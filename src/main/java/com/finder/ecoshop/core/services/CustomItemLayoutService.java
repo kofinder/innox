@@ -10,7 +10,7 @@ public interface CustomItemLayoutService {
 	
 	CustomItemLayoutDTO manageCustomItemLayout(CustomItemLayoutDTO customItemLayoutDTO)throws Exception;
 	
-	int isValidLayoutName(long customItemId, String layoutName);
+	int isValidLayoutName(long customItemId, String layoutName, long seq);
 	
 	CustomItemLayoutDTO getCustomItemLayoutbyId(long customLayoutId);
 

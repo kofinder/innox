@@ -39,6 +39,9 @@ public class CustomItemLayout extends CommonEntity implements Serializable {
 	@Column(name = "status")
 	private Integer statue;
 
+	@Column(name = "sequence_no")
+	private Integer sequenceNo;
+
 	public CustomItem getCustomItem() {
 		return customItem;
 	}
@@ -85,6 +88,14 @@ public class CustomItemLayout extends CommonEntity implements Serializable {
 
 	public void setStatue(Integer statue) {
 		this.statue = statue;
+	}
+
+	public Integer getSequenceNo() {
+		return sequenceNo;
+	}
+
+	public void setSequenceNo(Integer sequenceNo) {
+		this.sequenceNo = sequenceNo;
 	}
 
 }

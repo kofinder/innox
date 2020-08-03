@@ -30,6 +30,8 @@ public class CustomProductDTO implements Serializable {
 
 	private int status;
 
+	private String statusDesc;
+
 	public CustomProductDTO() {
 		super();
 	}
@@ -43,6 +45,7 @@ public class CustomProductDTO implements Serializable {
 			this.initialPrice = customPrd.getInitialPrice() == null ? BigDecimal.ZERO : customPrd.getInitialPrice();
 			this.imagePath = customPrd.getImagePath();
 			this.status = customPrd.getStatus() == null ? CommonStatus.ACTIVE.getCode() : customPrd.getStatus();
+			this.statusDesc = CommonStatus.getDescByCode(this.status);
 		}
 	}
 
@@ -116,6 +119,14 @@ public class CustomProductDTO implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 
 }
