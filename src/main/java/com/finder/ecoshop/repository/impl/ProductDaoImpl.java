@@ -14,19 +14,18 @@ import com.finder.ecoshop.repository.ProductDao;
 import com.finder.ecoshop.utils.CommonConstant;
 import com.finder.ecoshop.utils.CommonStatus;
 import com.finder.ecoshop.utils.PopularEnum;
+import com.finder.ecoshop.utils.PromotionEnum;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({ "deprecation", "unchecked" })
 @Repository
-public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements ProductDao{
+public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements ProductDao {
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> productSearch(ProductDTO searchProductDTO) {
 		Criteria c = this.getCurrentSession().createCriteria(Product.class);
 		return c.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getPopularProductList() {
 		String sqlStr = "from Product where isPopular = " + PopularEnum.POPULAR.getCode();
@@ -34,21 +33,27 @@ public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements Pro
 		return query.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getProductListByPageNo(int pageNo) {
 		Criteria c = this.getCurrentSession().createCriteria(Product.class);
-		if(pageNo > 0) {
+		if (pageNo > 0) {
 			int startIndex = (pageNo - 1) * CommonConstant.ROW_PER_PAGE;
-			if(startIndex > -1) {
+			if (startIndex > -1) {
 				c.setFirstResult(startIndex);
 				c.setMaxResults(CommonConstant.ROW_PER_PAGE);
 			}
 		}
-		
+
 		c.add(Restrictions.eq("status", CommonStatus.ACTIVE.getCode()));
 		c.addOrder(Order.asc("name"));
 		return c.list();
+	}
+
+	@Override
+	public List<Product> getPromotionProductList() {
+		String sqlStr = "from Product where isPromotion = " + PromotionEnum.PROMOTION.getCode();
+		Query<Product> query = this.getCurrentSession().createQuery(sqlStr);
+		return query.list();
 	}
 
 }

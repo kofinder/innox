@@ -363,7 +363,7 @@ public class CommonUtil {
 
 	public static String prepareImagePath(String imagePath, HttpServletRequest req) {
 		String urlScheme = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort();
-		String basePath = urlScheme + "/" + CommonConstant.IMAGE_PATH + "/";
+		String basePath = urlScheme + CommonConstant.IMAGE_PATH;
 
 		if (!isEmpty(imagePath)) {
 			return basePath + imagePath;

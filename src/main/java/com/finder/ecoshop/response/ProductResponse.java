@@ -1,6 +1,7 @@
 package com.finder.ecoshop.response;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,7 +19,11 @@ public class ProductResponse implements Serializable {
 
 	private String image_path;
 
-	private String price_desc;
+	private String price_text;
+
+	private String origninal_price_text;
+
+	private String discount_percentage_text;
 
 	public ProductResponse() {
 		super();
@@ -28,7 +33,14 @@ public class ProductResponse implements Serializable {
 		this.prodcut_id = dto.getSeq();
 		this.product_name = dto.getName();
 		this.image_path = CommonUtil.prepareImagePath(dto.getImagePath1(), request);
-		this.price_desc = CommonUtil.formatBigDecimalAsCurrency(dto.getPrice(), CommonConstant.CURRENCY_CODE_KS);
+		this.price_text = CommonUtil.formatBigDecimalAsCurrency(dto.getPrice(), CommonConstant.CURRENCY_CODE_KS);
+
+		if (dto.isPromotion()) {
+			this.origninal_price_text = CommonUtil.formatBigDecimalAsCurrency(dto.getOriginalPrice(),
+					CommonConstant.CURRENCY_CODE_KS);
+			this.discount_percentage_text = CommonUtil.formatBigDecimalAsCurrency(
+					new BigDecimal(dto.getDiscountPercent()), CommonConstant.PERCENTAGE_CODE);
+		}
 	}
 
 	public long getProdcut_id() {
@@ -55,12 +67,28 @@ public class ProductResponse implements Serializable {
 		this.image_path = image_path;
 	}
 
-	public String getPrice_desc() {
-		return price_desc;
+	public String getPrice_text() {
+		return price_text;
 	}
 
-	public void setPrice_desc(String price_desc) {
-		this.price_desc = price_desc;
+	public void setPrice_text(String price_text) {
+		this.price_text = price_text;
+	}
+
+	public String getOrigninal_price_text() {
+		return origninal_price_text;
+	}
+
+	public void setOrigninal_price_text(String origninal_price_text) {
+		this.origninal_price_text = origninal_price_text;
+	}
+
+	public String getDiscount_percentage_text() {
+		return discount_percentage_text;
+	}
+
+	public void setDiscount_percentage_text(String discount_percentage_text) {
+		this.discount_percentage_text = discount_percentage_text;
 	}
 
 }

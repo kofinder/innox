@@ -15,4 +15,6 @@ public interface ProductService {
 	List<ProductDTO> getPopularProductList();
 	
 	List<ProductDTO> getProductListByPageNo(int pageNo);
+	
+	List<ProductDTO> getPromotionProductList();
 }

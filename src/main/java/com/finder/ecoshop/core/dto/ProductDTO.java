@@ -113,9 +113,9 @@ public class ProductDTO implements Serializable {
 			product.getProductColorList().forEach(color -> {
 				prdColorList.add(color.getColor().getSeq());
 			});
-			
+
 			product.getProductSizeList().forEach(size -> {
-				if(size.getSize() != null && size.getSize().getSeq() != null) {
+				if (size.getSize() != null && size.getSize().getSeq() != null) {
 					prdSizeList.add(size.getSize().getSeq());
 				}
 			});

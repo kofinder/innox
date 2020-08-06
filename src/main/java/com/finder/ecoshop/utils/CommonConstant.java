@@ -87,6 +87,7 @@ public class CommonConstant {
 	public static final int RECORD_LIMIT_POPULAR = 6;
 	public static final int RECORD_LIMIT_NEW_ARRIVAL_ITEM = 6;
 	public static final String CURRENCY_CODE_KS = "Ks";
+	public static final String PERCENTAGE_CODE = "%";
 	
 	// should be only 5 or 10
 	public static final int SHOW_PAGINATION_COUNT = 5;

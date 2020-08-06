@@ -264,4 +264,19 @@ public class ProductServiceImpl implements ProductService {
 		return dtoList;
 	}
 
+	@Override
+	public List<ProductDTO> getPromotionProductList() {
+		List<Product> entityList = productDao.getPromotionProductList();
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<ProductDTO>();
+		}
+
+		List<ProductDTO> prdDtoList = new ArrayList<ProductDTO>();
+		entityList.forEach(entity -> {
+			prdDtoList.add(new ProductDTO(entity));
+		});
+		logger.info("getPromotionProductList() >> " + prdDtoList.size());
+		return prdDtoList;
+	}
+
 }

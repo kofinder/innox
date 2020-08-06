@@ -12,7 +12,9 @@ public class HomePageResponse implements Serializable {
 
 	private List<CategoryResponse> category_list = new ArrayList<CategoryResponse>();
 
-	private List<ProductResponse> product_list = new ArrayList<ProductResponse>();
+	private List<ProductResponse> popular_product_list = new ArrayList<ProductResponse>();
+
+	private List<ProductResponse> promotion_product_list = new ArrayList<ProductResponse>();
 
 	public List<BannerResponse> getBanner_list() {
 		return banner_list;
@@ -30,12 +32,20 @@ public class HomePageResponse implements Serializable {
 		this.category_list = category_list;
 	}
 
-	public List<ProductResponse> getProduct_list() {
-		return product_list;
+	public List<ProductResponse> getPopular_product_list() {
+		return popular_product_list;
 	}
 
-	public void setProduct_list(List<ProductResponse> product_list) {
-		this.product_list = product_list;
+	public void setPopular_product_list(List<ProductResponse> popular_product_list) {
+		this.popular_product_list = popular_product_list;
+	}
+
+	public List<ProductResponse> getPromotion_product_list() {
+		return promotion_product_list;
+	}
+
+	public void setPromotion_product_list(List<ProductResponse> promotion_product_list) {
+		this.promotion_product_list = promotion_product_list;
 	}
 
 }
