@@ -9,11 +9,11 @@
 		<version>2.2.7.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.finder.ecoshop</groupId>
-	<artifactId>ecoshop</artifactId>
+	<groupId>com.finder.innox</groupId>
+	<artifactId>innox</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>ecoshop</name>
+	<name>innox</name>
 	<description>online shopping project for Spring Boot</description>
 
 	<properties>
@@ -146,7 +146,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>ecoshop</finalName>
+		<finalName>innox</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
