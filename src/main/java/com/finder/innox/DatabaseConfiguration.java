@@ -22,7 +22,7 @@ public class DatabaseConfiguration {
 		LocalSessionFactoryBean sessionFactory  = new LocalSessionFactoryBean();
 		
 		sessionFactory.setDataSource(datasource);
-		sessionFactory.setPackagesToScan("com.finder.ecoshop.core.domain");
+		sessionFactory.setPackagesToScan("com.finder.innox.core.domain");
 		
 		Properties hibernateProperties  = new Properties();
 		hibernateProperties.setProperty("hibernate.jdbc.fetch_size", "50");
