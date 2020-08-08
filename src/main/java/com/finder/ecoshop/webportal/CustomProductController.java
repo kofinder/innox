@@ -218,7 +218,7 @@ public class CustomProductController {
 
 		if (searchCusPrdDTO.getCategoryDTO() != null && searchCusPrdDTO.getCategoryDTO().getSeq() > 0) {
 			model.addAttribute("subCategroyList",
-					subCategoryService.getAllSubCategoryListByCatId(searchCusPrdDTO.getCategoryDTO().getSeq()));
+					subCategoryService.getAllSubCategoryListByCatId(searchCusPrdDTO.getCategoryDTO().getSeq(), 0));
 		}
 
 		model.addAttribute("cusProductList", customProductService.searchCustomProduct(searchCusPrdDTO));

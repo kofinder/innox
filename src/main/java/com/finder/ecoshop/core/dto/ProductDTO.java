@@ -72,9 +72,9 @@ public class ProductDTO implements Serializable {
 
 	private String color;
 
-	private List<ProductColorDTO> productColorList = new ArrayList<ProductColorDTO>();
+	private List<ColorDTO> productColorList = new ArrayList<ColorDTO>();
 
-	private List<ProductSizeDTO> productSizeList = new ArrayList<ProductSizeDTO>();
+	private List<SizeDTO> productSizeList = new ArrayList<SizeDTO>();
 
 	private List<Long> prdColorList = new ArrayList<Long>();
 
@@ -112,13 +112,14 @@ public class ProductDTO implements Serializable {
 
 			product.getProductColorList().forEach(color -> {
 				prdColorList.add(color.getColor().getSeq());
+				productColorList.add(new ColorDTO(color.getColor()));
 			});
 
 			product.getProductSizeList().forEach(size -> {
-				if (size.getSize() != null && size.getSize().getSeq() != null) {
-					prdSizeList.add(size.getSize().getSeq());
-				}
+				prdSizeList.add(size.getSize().getSeq());
+				productSizeList.add(new SizeDTO(size.getSize()));
 			});
+
 		}
 	}
 
@@ -346,19 +347,19 @@ public class ProductDTO implements Serializable {
 		this.color = color;
 	}
 
-	public List<ProductColorDTO> getProductColorList() {
+	public List<ColorDTO> getProductColorList() {
 		return productColorList;
 	}
 
-	public void setProductColorList(List<ProductColorDTO> productColorList) {
+	public void setProductColorList(List<ColorDTO> productColorList) {
 		this.productColorList = productColorList;
 	}
 
-	public List<ProductSizeDTO> getProductSizeList() {
+	public List<SizeDTO> getProductSizeList() {
 		return productSizeList;
 	}
 
-	public void setProductSizeList(List<ProductSizeDTO> productSizeList) {
+	public void setProductSizeList(List<SizeDTO> productSizeList) {
 		this.productSizeList = productSizeList;
 	}
 

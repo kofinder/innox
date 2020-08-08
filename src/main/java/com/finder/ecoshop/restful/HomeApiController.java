@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.finder.ecoshop.annotation.InnoxShopApi;
 import com.finder.ecoshop.core.dto.BannerDTO;
@@ -39,7 +39,7 @@ public class HomeApiController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@GetMapping(path = InnoxApiConstant.API_HOME_PAGE_DATA)
+	@PostMapping(path = InnoxApiConstant.API_HOME_PAGE_DATA)
 	public String homePageData(HttpServletRequest request) {
 		String result = "";
 		ProcessException pe = null;
@@ -67,6 +67,7 @@ public class HomeApiController {
 				response.getPromotion_product_list().add(productResponse);
 			});
 
+			// feature category list
 			List<CategoryDTO> categoryList = categoryService.getFeatureCategoryList();
 			categoryList.forEach(category -> {
 				CategoryResponse categoryResponse = new CategoryResponse(category, request);

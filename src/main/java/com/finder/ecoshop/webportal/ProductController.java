@@ -73,7 +73,7 @@ public class ProductController {
 			ProductDTO productDTO = productService.getProductDataById(productId);
 			model.addAttribute("productDTO", productDTO);
 			model.addAttribute("subCategroyList",
-					subCategoryService.getAllSubCategoryListByCatId(productDTO.getCategoryDTO().getSeq()));
+					subCategoryService.getAllSubCategoryListByCatId(productDTO.getCategoryDTO().getSeq(), 0));
 		} else {
 			ProductDTO productDTO = new ProductDTO();
 			productDTO.setProductImageDTOs(new ArrayList<ProductImageDTO>());
@@ -113,7 +113,7 @@ public class ProductController {
 	@ResponseBody
 	public Object getSubCategoryByCategoryAjax(@RequestBody Long categoryId) {
 		System.out.println("getSubCategoryByCategoryAjax() >> Category Id : " + categoryId);
-		List<SubCategoryDTO> subCategoryList = subCategoryService.getAllSubCategoryListByCatId(categoryId);
+		List<SubCategoryDTO> subCategoryList = subCategoryService.getAllSubCategoryListByCatId(categoryId, 0);
 		CommonAjaxResponse<List<SubCategoryDTO>> response = new CommonAjaxResponse<List<SubCategoryDTO>>();
 		response.setResponseCode("200");
 		response.setResponseMessage("Data retrieval is successful");

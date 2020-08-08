@@ -1,7 +1,6 @@
 package com.finder.ecoshop.response;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +16,13 @@ public class ProductResponse implements Serializable {
 
 	private String product_name;
 
-	private String image_path;
+	private String image_path1;
+
+	private String image_path2;
+
+	private String image_path3;
+
+	private String image_path4;
 
 	private String price_text;
 
@@ -32,14 +37,30 @@ public class ProductResponse implements Serializable {
 	public ProductResponse(ProductDTO dto, HttpServletRequest request) {
 		this.prodcut_id = dto.getSeq();
 		this.product_name = dto.getName();
-		this.image_path = CommonUtil.prepareImagePath(dto.getImagePath1(), request);
+
+		if (!CommonUtil.isEmpty(dto.getImagePath1())) {
+			this.image_path1 = CommonUtil.prepareImagePath(dto.getImagePath1(), request);
+		}
+
+		if (!CommonUtil.isEmpty(dto.getImagePath2())) {
+			this.image_path2 = CommonUtil.prepareImagePath(dto.getImagePath2(), request);
+		}
+
+		if (!CommonUtil.isEmpty(dto.getImagePath3())) {
+			this.image_path3 = CommonUtil.prepareImagePath(dto.getImagePath3(), request);
+		}
+
+		if (!CommonUtil.isEmpty(dto.getImagePath4())) {
+			this.image_path4 = CommonUtil.prepareImagePath(dto.getImagePath4(), request);
+		}
+
 		this.price_text = CommonUtil.formatBigDecimalAsCurrency(dto.getPrice(), CommonConstant.CURRENCY_CODE_KS);
 
 		if (dto.isPromotion()) {
 			this.origninal_price_text = CommonUtil.formatBigDecimalAsCurrency(dto.getOriginalPrice(),
 					CommonConstant.CURRENCY_CODE_KS);
-			this.discount_percentage_text = CommonUtil.formatBigDecimalAsCurrency(
-					new BigDecimal(dto.getDiscountPercent()), CommonConstant.PERCENTAGE_CODE);
+			this.discount_percentage_text = CommonUtil.formatDiscountPercentage(dto.getDiscountPercent(),
+					CommonConstant.PERCENTAGE_CODE);
 		}
 	}
 
@@ -59,12 +80,36 @@ public class ProductResponse implements Serializable {
 		this.product_name = product_name;
 	}
 
-	public String getImage_path() {
-		return image_path;
+	public String getImage_path1() {
+		return image_path1;
 	}
 
-	public void setImage_path(String image_path) {
-		this.image_path = image_path;
+	public void setImage_path1(String image_path1) {
+		this.image_path1 = image_path1;
+	}
+
+	public String getImage_path2() {
+		return image_path2;
+	}
+
+	public void setImage_path2(String image_path2) {
+		this.image_path2 = image_path2;
+	}
+
+	public String getImage_path3() {
+		return image_path3;
+	}
+
+	public void setImage_path3(String image_path3) {
+		this.image_path3 = image_path3;
+	}
+
+	public String getImage_path4() {
+		return image_path4;
+	}
+
+	public void setImage_path4(String image_path4) {
+		this.image_path4 = image_path4;
 	}
 
 	public String getPrice_text() {

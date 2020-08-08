@@ -53,7 +53,7 @@ public class CategoryController {
 		if (catId != null && catId > 0) {
 			model.addAttribute("categoryDTO", categoryService.getCategoryById(catId));
 
-			model.addAttribute("subCategoryList", subCategoryService.getAllSubCategoryListByCatId(catId));
+			model.addAttribute("subCategoryList", subCategoryService.getAllSubCategoryListByCatId(catId, 0));
 		} else {
 			model.addAttribute("categoryDTO", new CategoryDTO());
 		}

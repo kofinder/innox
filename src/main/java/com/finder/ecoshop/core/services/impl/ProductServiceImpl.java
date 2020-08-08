@@ -1,5 +1,6 @@
 package com.finder.ecoshop.core.services.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -277,6 +278,34 @@ public class ProductServiceImpl implements ProductService {
 		});
 		logger.info("getPromotionProductList() >> " + prdDtoList.size());
 		return prdDtoList;
+	}
+
+	@Override
+	public List<ProductDTO> getProductListBySubCatgory(long subCategoryId) {
+		List<Product> entityList = productDao.getProductListBySubCatgory(subCategoryId);
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<ProductDTO>();
+		}
+		List<ProductDTO> dtoList = new ArrayList<ProductDTO>();
+		entityList.forEach(entity -> {
+			dtoList.add(new ProductDTO(entity));
+		});
+		return dtoList;
+	}
+
+	@Override
+	public List<ProductDTO> searchProductList(String keyword, BigDecimal startPrice, BigDecimal endPrice, Long category,
+			Long subCategory) {
+		List<Product> entityList = productDao.searchProductList(keyword, startPrice, endPrice, category, subCategory);
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<ProductDTO>();
+		}
+
+		List<ProductDTO> dtoList = new ArrayList<ProductDTO>();
+		entityList.forEach(entity -> {
+			dtoList.add(new ProductDTO(entity));
+		});
+		return dtoList;
 	}
 
 }

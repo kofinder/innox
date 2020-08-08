@@ -29,9 +29,9 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 	private SubCategoryDao subCategoryDao;
 
 	@Override
-	public List<SubCategoryDTO> getAllSubCategoryListByCatId(Long catId) {
+	public List<SubCategoryDTO> getAllSubCategoryListByCatId(Long catId, int status) {
 		logger.info("getAllSubCategoryListByCatId() >> " + catId);
-		List<SubCategory> entityList = subCategoryDao.getAllSubCategoryListByCatId(catId);
+		List<SubCategory> entityList = subCategoryDao.getAllSubCategoryListByCatId(catId, 0);
 
 		if (entityList == null || entityList.isEmpty()) {
 			logger.info("getAllSubCategoryListByCatId() >> NULL");

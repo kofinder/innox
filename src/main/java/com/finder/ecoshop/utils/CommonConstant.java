@@ -51,8 +51,8 @@ public class CommonConstant {
 	public static final String USER_IMAGE_DIRECTORY = "user_image/";
 	public static final String USER_IMAGE_PREFIX = "user_image";
 	public static final String USER_DIRECTORY = "user/";
-	public static final String IMAGE_RESOURCES_PATH = "resources/images";
-	public static final String DEFAULT_LOGO = "innox_logo.png";
+	public static final String IMAGE_RESOURCES_PATH = "resources/img";
+	public static final String DEFAULT_LOGO = "innox_logo.jpg";
 	
 	
 	public static final String BANNER_DIRECTORY = "banner/";

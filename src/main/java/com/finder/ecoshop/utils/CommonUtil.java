@@ -33,8 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.HtmlUtils;
 
 public class CommonUtil {
-	
-	
+
 	public static String changeDateToString(String format, Date date) {
 		if (date == null) {
 			return null;
@@ -46,7 +45,7 @@ public class CommonUtil {
 
 		return new SimpleDateFormat(format).format(date);
 	}
-	
+
 	public static String changedTimeToString(String format, Time time) {
 		if (time == null) {
 			return null;
@@ -126,7 +125,6 @@ public class CommonUtil {
 		cal.set(Calendar.SECOND, 59);
 		return cal.getTime();
 	}
-	
 
 	// check null or empty string
 	public static boolean isEmpty(String str) {
@@ -136,7 +134,7 @@ public class CommonUtil {
 
 		return false;
 	}
-	
+
 	public static boolean isValidDateFormat(String format, String dateString) {
 		if (format == null || format.trim().isEmpty()) {
 			format = CommonConstant.STD_DATE_TIME_FORMAT;
@@ -167,7 +165,7 @@ public class CommonUtil {
 		Pattern pattern = Pattern.compile(regex);
 		return pattern.matcher(dateTimeString).matches();
 	}
-	
+
 	public static String getTodayOrYesterdayStringWithTime(Date date) {
 		if (date == null) {
 			return "";
@@ -381,6 +379,14 @@ public class CommonUtil {
 		return df.format(amount) + " " + currencyCode;
 	}
 
+	public static String formatDiscountPercentage(Double discount, String discountCode) {
+		if (discount == null || discount <= 0) {
+			return "";
+		}
+		DecimalFormat df = new DecimalFormat("#");
+		return String.format("%s%s %s", "-", df.format(discount), discountCode);
+	}
+
 	public static synchronized String generateTransactionRefNo() {
 		int rN = new Random().nextInt(9) + 1;
 		return rN + "" + new Date().getTime();
@@ -411,56 +417,53 @@ public class CommonUtil {
 			return 0;
 		}
 	}
-	
-	public static void multipartZipFileSave(MultipartFile clientFile,String basePath) throws IOException{		
+
+	public static void multipartZipFileSave(MultipartFile clientFile, String basePath) throws IOException {
 		String fileName = clientFile.getOriginalFilename();
 		File dest = new File(basePath, fileName);
 		FileUtils.writeByteArrayToFile(dest, clientFile.getBytes());
 	}
-	
-	 public static String unzipForImage(String zipFileDir, String zipFileName,String unzipDir) {
-		 	if(!new File(unzipDir).exists()){
-		 		new File(unzipDir).mkdirs();
-		 	}
-	        String zipFilePath = zipFileDir + File.separator + zipFileName;
-	        String entryName = "";
-	        try{
-	            System.out.println("zipFilePath = " + zipFilePath);
-	            ZipFile zipFile = new ZipFile(zipFilePath);
 
-	            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+	public static String unzipForImage(String zipFileDir, String zipFileName, String unzipDir) {
+		if (!new File(unzipDir).exists()) {
+			new File(unzipDir).mkdirs();
+		}
+		String zipFilePath = zipFileDir + File.separator + zipFileName;
+		String entryName = "";
+		try {
+			System.out.println("zipFilePath = " + zipFilePath);
+			ZipFile zipFile = new ZipFile(zipFilePath);
 
-	            while(entries.hasMoreElements()){
-	                ZipEntry entry = entries.nextElement();
-	                if(entry.isDirectory()){
-	                    System.out.print("dir  : " + entry.getName());
-	                    entryName = entry.getName();
-	                    String destPath = unzipDir + File.separator + entry.getName();
-	                    System.out.println(" => " + destPath);
-	                    File file = new File(destPath);
-	                    file.mkdirs();
-	                } else {
-	                    String destPath = unzipDir + File.separator + entry.getName();
-	                	try(InputStream inputStream = zipFile.getInputStream(entry);
-	                        FileOutputStream outputStream = new FileOutputStream(destPath);
-	                    ){
-	                        int data = inputStream.read();
-	                        while(data != -1){
-	                            outputStream.write(data);
-	                            data = inputStream.read();
-	                        }
-	                    }
-	                    System.out.println("file : " + entry.getName() + " => " + destPath);
-	                }
-	            }
-	            zipFile.close();
-	            return entryName;
-	        } catch(Exception e){
-	        	e.printStackTrace();
-	            throw new RuntimeException("Error unzipping file " + zipFilePath, e);
-	        }
-	    }
-	
-	
+			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = entries.nextElement();
+				if (entry.isDirectory()) {
+					System.out.print("dir  : " + entry.getName());
+					entryName = entry.getName();
+					String destPath = unzipDir + File.separator + entry.getName();
+					System.out.println(" => " + destPath);
+					File file = new File(destPath);
+					file.mkdirs();
+				} else {
+					String destPath = unzipDir + File.separator + entry.getName();
+					try (InputStream inputStream = zipFile.getInputStream(entry);
+							FileOutputStream outputStream = new FileOutputStream(destPath);) {
+						int data = inputStream.read();
+						while (data != -1) {
+							outputStream.write(data);
+							data = inputStream.read();
+						}
+					}
+					System.out.println("file : " + entry.getName() + " => " + destPath);
+				}
+			}
+			zipFile.close();
+			return entryName;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Error unzipping file " + zipFilePath, e);
+		}
+	}
 
 }

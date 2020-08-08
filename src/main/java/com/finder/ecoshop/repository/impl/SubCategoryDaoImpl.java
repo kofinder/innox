@@ -16,9 +16,13 @@ public class SubCategoryDaoImpl extends GenericDaoImpl<SubCategory, Long> implem
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SubCategory> getAllSubCategoryListByCatId(Long catId) {
+	public List<SubCategory> getAllSubCategoryListByCatId(Long catId, int status) {
 		Criteria c = this.getCurrentSession().createCriteria(SubCategory.class);
 		c.add(Restrictions.eq("category.id", catId));
+		
+		if(status > 0) {
+			c.add(Restrictions.eq("status", status));
+		}
 		return c.list();
 	}
 
