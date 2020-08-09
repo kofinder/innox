@@ -41,11 +41,11 @@ public class CommonConstant {
 	public static final String STD_DATE_FORMAT_dd_MMM_yyyy = "dd MMM yyyy";
 	public static final String STD_TIME_FORMAT_HH_MM_SS = "HH:mm:ss";
 	
-	public static final String ROOT_DIRECTORY = "/home/jameslwin/images/"; 
+	public static final String ROOT_DIRECTORY = "E:\\usr/innox/images/"; 
 	public static final String IMAGE_PATH = "/images/";
 	public static final String BASE_PATH = "innox";
 	public static final String IMAGE_SUFFIX = ".png";
-	public static final String IMAGE_SAVE_DIRECTORY = "/home/jameslwin/images/";
+	public static final String IMAGE_SAVE_DIRECTORY = "/usr/innox/images/";
 	public static final String USER_DOCUMENT_DIRECTORY = "user_document/";
 	public static final String USER_DOCUMENT_PREFIX = "userdocument";
 	public static final String USER_IMAGE_DIRECTORY = "user_image/";

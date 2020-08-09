@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.finder.innox.annotation.InnoxShopApi;
 import com.finder.innox.core.dto.BannerDTO;
@@ -39,7 +39,7 @@ public class HomeApiController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@PostMapping(path = InnoxApiConstant.API_HOME_PAGE_DATA)
+	@GetMapping(path = InnoxApiConstant.API_HOME_PAGE_DATA)
 	public String homePageData(HttpServletRequest request) {
 		String result = "";
 		ProcessException pe = null;

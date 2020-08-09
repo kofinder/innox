@@ -1,5 +1,6 @@
 package com.finder.innox.restful;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finder.innox.annotation.InnoxShopApi;
@@ -17,15 +17,14 @@ import com.finder.innox.core.dto.ProductDTO;
 import com.finder.innox.core.services.ProductService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
-import com.finder.innox.request.ProductRequest;
 import com.finder.innox.response.ProductDetailResponse;
 import com.finder.innox.response.ProductListResponse;
 import com.finder.innox.response.ProductResponse;
 import com.finder.innox.response.Response;
 import com.finder.innox.utils.FieldError;
-import com.finder.innox.utils.JsonUtil;
 import com.finder.innox.utils.FieldError.ErrorMessage;
 import com.finder.innox.utils.FieldError.FieldCode;
+import com.finder.innox.utils.JsonUtil;
 
 @InnoxShopApi(apiPath = InnoxApiConstant.API_RESOURCES_NAME)
 public class ProductApiController {
@@ -35,7 +34,7 @@ public class ProductApiController {
 	@Autowired
 	private ProductService productService;
 
-	@PostMapping(path = InnoxApiConstant.API_PRODUCT_LIST)
+	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST)
 	public String getProductList(@RequestParam(name = "pageNo") int pageNo, HttpServletRequest request) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
@@ -72,8 +71,9 @@ public class ProductApiController {
 		return result;
 	}
 
-	@PostMapping(path = InnoxApiConstant.API_PRODUCT_LIST_BY_SUB_CATEGORY)
-	public String getProductListBySubCategory(@RequestBody ProductRequest productRequest, HttpServletRequest request) {
+	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST_BY_SUB_CATEGORY)
+	public String getProductListBySubCategory(@RequestParam(name = "sub_category_id") Long sub_category_id,
+			HttpServletRequest request) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -81,14 +81,13 @@ public class ProductApiController {
 
 		try {
 			ProductListResponse response = new ProductListResponse();
-			if (productRequest.getSub_category_id() == null || productRequest.getSub_category_id() <= 0) {
+			if (sub_category_id == null || sub_category_id <= 0) {
 				errorList.add(new FieldError(FieldCode.SUB_CATEGORY_ID.getCode(),
 						ErrorMessage.SUB_CATEGORY_ID_REQUIRED.getMessage()));
 			}
 
 			if (errorList.size() == 0) {
-				List<ProductDTO> productDtoList = productService
-						.getProductListBySubCatgory(productRequest.getSub_category_id());
+				List<ProductDTO> productDtoList = productService.getProductListBySubCatgory(sub_category_id);
 
 				productDtoList.forEach(prodcut -> {
 					ProductResponse productResponse = new ProductResponse(prodcut, request);
@@ -112,16 +111,21 @@ public class ProductApiController {
 		return result;
 	}
 
-	@PostMapping(path = InnoxApiConstant.API_PRODUCT_LIST_SEARCH)
-	public String productListSearch(@RequestBody ProductRequest searchProduct, HttpServletRequest request) {
+	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST_SEARCH)
+	public String productListSearch(@RequestParam(name = "keyword", required = false) String searchKeyword,
+			@RequestParam(name = "startPrice", required = false) BigDecimal startPrice,
+			@RequestParam(name = "endPrice", required = false) BigDecimal endPrice,
+			@RequestParam(name = "category_id", required = false) Long category_id,
+			@RequestParam(name = "sub_category_id", required = false) Long sub_category_id,
+			HttpServletRequest request) {
+
 		String result = "";
 		ProcessException pe = null;
 		Response<ProductListResponse> apiReeponse = new Response<ProductListResponse>();
 		try {
 			ProductListResponse response = new ProductListResponse();
-			List<ProductDTO> dtoList = productService.searchProductList(searchProduct.getSearchKeyword(),
-					searchProduct.getStartPrice(), searchProduct.getEndPrice(), searchProduct.getCategory_id(),
-					searchProduct.getSub_category_id());
+			List<ProductDTO> dtoList = productService.searchProductList(searchKeyword, startPrice, endPrice,
+					category_id, sub_category_id);
 
 			dtoList.forEach(dto -> {
 				ProductResponse productResponse = new ProductResponse(dto, request);
@@ -140,8 +144,8 @@ public class ProductApiController {
 		return result;
 	}
 
-	@PostMapping(path = InnoxApiConstant.API_PRODUCT_DETAIL)
-	public String productDetail(@RequestBody ProductRequest productRequest, HttpServletRequest request) {
+	@GetMapping(path = InnoxApiConstant.API_PRODUCT_DETAIL)
+	public String productDetail(@RequestParam(name = "product_id") Long product_id, HttpServletRequest request) {
 		String result = "";
 		ProcessException pe = null;
 		List<FieldError> errorList = new ArrayList<FieldError>();
@@ -149,14 +153,14 @@ public class ProductApiController {
 
 		try {
 
-			if (productRequest.getProduct_id() == null || productRequest.getProduct_id() <= 0) {
+			if (product_id == null || product_id <= 0) {
 				errorList.add(
 						new FieldError(FieldCode.PRODUCT_ID.getCode(), ErrorMessage.PRODUCT_ID_REQUIRED.getMessage()));
 			}
 
 			if (errorList.size() == 0) {
 
-				ProductDTO productDtoDetail = productService.getProductDataById(productRequest.getProduct_id());
+				ProductDTO productDtoDetail = productService.getProductDataById(product_id);
 
 				if (productDtoDetail != null) {
 					ProductDetailResponse response = new ProductDetailResponse(productDtoDetail, request);
