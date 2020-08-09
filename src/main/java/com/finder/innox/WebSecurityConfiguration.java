@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.finder.innox.core.services.UserService;
 
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -67,7 +66,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // Config for Login Form
         http.authorizeRequests().and().formLogin()//
             // Submit URL of login page.
-            .loginProcessingUrl("/j_spring_security_check") // Submit URL
+        	.loginProcessingUrl("/j_spring_security_check") // Submit URL
             .loginPage("/login")//
             .defaultSuccessUrl("/dashboard")//
             .failureUrl("/login?error=true")//
