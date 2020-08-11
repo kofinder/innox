@@ -50,28 +50,28 @@ public class HomeApiController {
 			List<BannerDTO> bannerDtoList = bannerService.getAllBannerList();
 			bannerDtoList.forEach(banner -> {
 				BannerResponse bannerResponse = new BannerResponse(banner, request);
-				response.getBanner_list().add(bannerResponse);
+				response.getBanners().add(bannerResponse);
 			});
 
 			// popular product list
 			List<ProductDTO> productList = productService.getPopularProductList();
 			productList.forEach(product -> {
 				ProductResponse productResponse = new ProductResponse(product, request);
-				response.getPopular_product_list().add(productResponse);
+				response.getPopular_products().add(productResponse);
 			});
 
 			// promotion product list
 			List<ProductDTO> promotionList = productService.getPromotionProductList();
 			promotionList.forEach(promotion -> {
 				ProductResponse productResponse = new ProductResponse(promotion, request);
-				response.getPromotion_product_list().add(productResponse);
+				response.getPromotion_products().add(productResponse);
 			});
 
 			// feature category list
 			List<CategoryDTO> categoryList = categoryService.getFeatureCategoryList();
 			categoryList.forEach(category -> {
 				CategoryResponse categoryResponse = new CategoryResponse(category, request);
-				response.getCategory_list().add(categoryResponse);
+				response.getCategorys().add(categoryResponse);
 			});
 
 			apiResponse.setData(response);

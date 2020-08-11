@@ -28,6 +28,8 @@ public class ProductDetailResponse implements Serializable {
 
 	private String image_path4;
 
+	private List<String> images = new ArrayList<String>();
+
 	private String price_text;
 
 	private String origninal_price_text;
@@ -52,24 +54,28 @@ public class ProductDetailResponse implements Serializable {
 
 	public ProductDetailResponse(ProductDTO product, HttpServletRequest request) {
 		super();
-		
+
 		this.product_id = product.getSeq();
 		this.product_name = product.getName();
 
 		if (!CommonUtil.isEmpty(product.getImagePath1())) {
-			this.image_path1 = CommonUtil.prepareImagePath(product.getImagePath1(), request);
+//			this.image_path1 = CommonUtil.prepareImagePath(product.getImagePath1(), request);
+			this.images.add(CommonUtil.prepareImagePath(product.getImagePath1(), request));
 		}
 
 		if (!CommonUtil.isEmpty(product.getImagePath2())) {
-			this.image_path2 = CommonUtil.prepareImagePath(product.getImagePath2(), request);
+//			this.image_path2 = CommonUtil.prepareImagePath(product.getImagePath2(), request);
+			this.images.add(CommonUtil.prepareImagePath(product.getImagePath2(), request));
 		}
 
 		if (!CommonUtil.isEmpty(product.getImagePath3())) {
-			this.image_path3 = CommonUtil.prepareImagePath(product.getImagePath3(), request);
+//			this.image_path3 = CommonUtil.prepareImagePath(product.getImagePath3(), request);
+			this.images.add(CommonUtil.prepareImagePath(product.getImagePath3(), request));
 		}
 
 		if (!CommonUtil.isEmpty(product.getImagePath4())) {
-			this.image_path4 = CommonUtil.prepareImagePath(product.getImagePath4(), request);
+//			this.image_path4 = CommonUtil.prepareImagePath(product.getImagePath4(), request);
+			this.images.add(CommonUtil.prepareImagePath(product.getImagePath4(), request));
 		}
 
 		this.price_text = CommonUtil.formatBigDecimalAsCurrency(product.getPrice(), CommonConstant.CURRENCY_CODE_KS);
@@ -222,6 +228,14 @@ public class ProductDetailResponse implements Serializable {
 
 	public void setCode_number(String code_number) {
 		this.code_number = code_number;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 
 }

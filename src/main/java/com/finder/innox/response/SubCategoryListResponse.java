@@ -10,7 +10,7 @@ public class SubCategoryListResponse implements Serializable {
 
 	private long category_id;
 
-	private List<SubCategoryResponse> sub_categroy_list = new ArrayList<SubCategoryResponse>();
+	private List<SubCategoryResponse> sub_categorys = new ArrayList<SubCategoryResponse>();
 
 	public long getCategory_id() {
 		return category_id;
@@ -20,12 +20,12 @@ public class SubCategoryListResponse implements Serializable {
 		this.category_id = category_id;
 	}
 
-	public List<SubCategoryResponse> getSub_categroy_list() {
-		return sub_categroy_list;
+	public List<SubCategoryResponse> getSub_categroys() {
+		return sub_categorys;
 	}
 
-	public void setSub_categroy_list(List<SubCategoryResponse> sub_categroy_list) {
-		this.sub_categroy_list = sub_categroy_list;
+	public void setSub_categroys(List<SubCategoryResponse> sub_categroys) {
+		this.sub_categorys = sub_categroys;
 	}
 
 }

@@ -70,5 +70,13 @@
 	<definition name="custom_product_search" extends="mainLayout">
 		<put-attribute name="body" value="/WEB-INF/views/custom_product_search.jsp" />
 	</definition>
+	
+	<definition name="color_setup" extends="mainLayout">
+		<put-attribute name="body" value="/WEB-INF/views/color_setup.jsp" />
+	</definition>
+	
+	<definition name="size_setup" extends="mainLayout">
+		<put-attribute name="body" value="/WEB-INF/views/size_setup.jsp" />
+	</definition>
 
 </tiles-definitions>

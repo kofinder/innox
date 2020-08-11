@@ -3,6 +3,7 @@ package com.finder.innox.core.dto;
 import java.io.Serializable;
 
 import com.finder.innox.core.domain.Color;
+import com.finder.innox.utils.CommonStatus;
 
 public class ColorDTO implements Serializable {
 
@@ -14,6 +15,10 @@ public class ColorDTO implements Serializable {
 
 	private String colorName;
 
+	private int status;
+
+	private String statusDesc;
+
 	public ColorDTO() {
 		super();
 	}
@@ -23,6 +28,8 @@ public class ColorDTO implements Serializable {
 			this.seq = color.getSeq();
 			this.colorCode = color.getColorCode();
 			this.colorName = color.getColorName();
+			this.status = color.getStatus() == null ? CommonStatus.ACTIVE.getCode() : color.getStatus();
+			this.statusDesc = CommonStatus.getDescByCode(this.status);
 		}
 	}
 
@@ -48,6 +55,22 @@ public class ColorDTO implements Serializable {
 
 	public void setColorName(String colorName) {
 		this.colorName = colorName;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 
 }

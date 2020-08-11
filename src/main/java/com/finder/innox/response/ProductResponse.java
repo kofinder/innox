@@ -1,6 +1,8 @@
 package com.finder.innox.response;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +17,8 @@ public class ProductResponse implements Serializable {
 	private long prodcut_id;
 
 	private String product_name;
+
+	private List<String> images = new ArrayList<String>();
 
 	private String image_path1;
 
@@ -39,19 +43,23 @@ public class ProductResponse implements Serializable {
 		this.product_name = dto.getName();
 
 		if (!CommonUtil.isEmpty(dto.getImagePath1())) {
-			this.image_path1 = CommonUtil.prepareImagePath(dto.getImagePath1(), request);
+//			this.image_path1 = CommonUtil.prepareImagePath(dto.getImagePath1(), request);
+			this.images.add(CommonUtil.prepareImagePath(dto.getImagePath1(), request));
 		}
 
 		if (!CommonUtil.isEmpty(dto.getImagePath2())) {
-			this.image_path2 = CommonUtil.prepareImagePath(dto.getImagePath2(), request);
+//			this.image_path2 = CommonUtil.prepareImagePath(dto.getImagePath2(), request);
+			this.images.add(CommonUtil.prepareImagePath(dto.getImagePath2(), request));
 		}
 
 		if (!CommonUtil.isEmpty(dto.getImagePath3())) {
-			this.image_path3 = CommonUtil.prepareImagePath(dto.getImagePath3(), request);
+//			this.image_path3 = CommonUtil.prepareImagePath(dto.getImagePath3(), request);
+			this.images.add(CommonUtil.prepareImagePath(dto.getImagePath3(), request));
 		}
 
 		if (!CommonUtil.isEmpty(dto.getImagePath4())) {
-			this.image_path4 = CommonUtil.prepareImagePath(dto.getImagePath4(), request);
+//			this.image_path4 = CommonUtil.prepareImagePath(dto.getImagePath4(), request);
+			this.images.add(CommonUtil.prepareImagePath(dto.getImagePath4(), request));
 		}
 
 		this.price_text = CommonUtil.formatBigDecimalAsCurrency(dto.getPrice(), CommonConstant.CURRENCY_CODE_KS);
@@ -134,6 +142,14 @@ public class ProductResponse implements Serializable {
 
 	public void setDiscount_percentage_text(String discount_percentage_text) {
 		this.discount_percentage_text = discount_percentage_text;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 
 }

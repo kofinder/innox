@@ -38,7 +38,7 @@
 
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Banner</h1>
+					<h1 class="m-0 text-dark">Size</h1>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -59,7 +59,7 @@
 		<div class="container-fluid">
 
 
-			<div class="row">
+			<%-- <div class="row">
 				<div class="col-12">
 					<!-- banner setup -->
 					<div class="card card-default">
@@ -190,7 +190,7 @@
 
 
 				</div>
-			</div>
+			</div> --%>
 
 			<!-- /.container-fluid -->
 		</div>

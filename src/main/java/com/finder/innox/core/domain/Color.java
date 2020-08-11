@@ -21,6 +21,9 @@ public class Color extends CommonEntity implements Serializable {
 	@Column(name = "created_by_id")
 	private User createdBy;
 
+	@Column(name = "Status")
+	private Integer status;
+
 	public String getColorCode() {
 		return colorCode;
 	}
@@ -43,6 +46,14 @@ public class Color extends CommonEntity implements Serializable {
 
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }

@@ -51,7 +51,7 @@ public class CategoryApiController {
 		CategoryListResponse resposne = new CategoryListResponse();
 		categoryList.forEach(cat -> {
 			CategoryResponse categoryResponse = new CategoryResponse(cat, request);
-			resposne.getCategory_list().add(categoryResponse);
+			resposne.getCategorys().add(categoryResponse);
 		});
 
 		apiResponse.setData(resposne);
@@ -86,7 +86,7 @@ public class CategoryApiController {
 
 				subCategoryDtoList.forEach(sub -> {
 					SubCategoryResponse subCategoryResponse = new SubCategoryResponse(sub, request);
-					response.getSub_categroy_list().add(subCategoryResponse);
+					response.getSub_categroys().add(subCategoryResponse);
 				});
 
 				apiResponse.setData(response);

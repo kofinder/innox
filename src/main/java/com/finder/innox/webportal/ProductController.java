@@ -126,7 +126,7 @@ public class ProductController {
 		model.addAttribute("categroyList", categoryService.getAllCategoryList());
 		model.addAttribute("brandList", brandService.getAllBrandList());
 		model.addAttribute("statusList", CommonStatus.values());
-		model.addAttribute("colorList", colorService.getAllColorList());
+		model.addAttribute("colorList", colorService.getAllColorList(CommonStatus.ACTIVE.getCode()));
 		model.addAttribute("sizeList", sizeService.getAllSize());
 	}
 }

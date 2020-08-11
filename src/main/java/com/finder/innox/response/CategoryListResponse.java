@@ -8,14 +8,14 @@ public class CategoryListResponse implements Serializable {
 
 	private static final long serialVersionUID = 7968829112061951799L;
 
-	private List<CategoryResponse> category_list = new ArrayList<CategoryResponse>();
+	private List<CategoryResponse> categorys = new ArrayList<CategoryResponse>();
 
-	public List<CategoryResponse> getCategory_list() {
-		return category_list;
+	public List<CategoryResponse> getCategorys() {
+		return categorys;
 	}
 
-	public void setCategory_list(List<CategoryResponse> category_list) {
-		this.category_list = category_list;
+	public void setCategorys(List<CategoryResponse> categorys) {
+		this.categorys = categorys;
 	}
 
 }

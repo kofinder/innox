@@ -53,7 +53,7 @@ public class CustomProductController {
 
 	@Autowired
 	private ColorService colorService;
-	
+
 	@Autowired
 	private SizeService sizeService;
 
@@ -231,7 +231,7 @@ public class CustomProductController {
 		model.addAttribute("pageTitle", PageTitleConstant.CUSTOM_PRODUCT);
 		model.addAttribute("categroyList", categoryService.getAllCategoryList());
 		model.addAttribute("statusList", CommonStatus.values());
-		model.addAttribute("colorList", colorService.getAllColorList());
+		model.addAttribute("colorList", colorService.getAllColorList(CommonStatus.ACTIVE.getCode()));
 		model.addAttribute("sizeCategoryList", ItemSizeCategoryEnum.values());
 		model.addAttribute("itemSizeList", sizeService.getAllSize());
 	}

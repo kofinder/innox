@@ -103,7 +103,7 @@
 								<p>Product Search</p>
 						</a></li>
 					</ul></li>
-					
+
 				<li class="nav-item has-treeview"><a href="#" class="nav-link">
 						<i class="nav-icon fas fa-hammer"></i>
 						<p>
@@ -119,6 +119,24 @@
 						<li class="nav-item"><a href="custom_product_search.html"
 							class="nav-link"> <i class="far fa-circle nav-icon"></i>
 								<p>Custom Product Search</p>
+						</a></li>
+					</ul></li>
+
+				<li class="nav-item has-treeview"><a href="#" class="nav-link">
+						<i class="nav-icon fas fa-cogs"></i>
+						<p>
+							Master Setup <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item"><a href="color_setup.html"
+							class="nav-link"> <i class="far fa-circle nav-icon"></i>
+								<p>Color Setup</p>
+						</a></li>
+
+						<li class="nav-item"><a href="size_setup.html"
+							class="nav-link"> <i class="far fa-circle nav-icon"></i>
+								<p>Size Search</p>
 						</a></li>
 					</ul></li>
 

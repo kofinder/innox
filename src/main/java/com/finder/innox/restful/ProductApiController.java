@@ -51,7 +51,7 @@ public class ProductApiController {
 				List<ProductDTO> productDtoList = productService.getProductListByPageNo(pageNo);
 				productDtoList.forEach(prodcut -> {
 					ProductResponse productResponse = new ProductResponse(prodcut, request);
-					response.getProduct_list().add(productResponse);
+					response.getProducts().add(productResponse);
 				});
 			} else {
 				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
@@ -91,7 +91,7 @@ public class ProductApiController {
 
 				productDtoList.forEach(prodcut -> {
 					ProductResponse productResponse = new ProductResponse(prodcut, request);
-					response.getProduct_list().add(productResponse);
+					response.getProducts().add(productResponse);
 				});
 			} else {
 				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
@@ -129,7 +129,7 @@ public class ProductApiController {
 
 			dtoList.forEach(dto -> {
 				ProductResponse productResponse = new ProductResponse(dto, request);
-				response.getProduct_list().add(productResponse);
+				response.getProducts().add(productResponse);
 			});
 
 			apiReeponse.setData(response);
