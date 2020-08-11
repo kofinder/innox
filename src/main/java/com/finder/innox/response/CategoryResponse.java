@@ -1,6 +1,8 @@
 package com.finder.innox.response;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +20,8 @@ public class CategoryResponse implements Serializable {
 	private String image_path;
 
 	private int sequence_no;
+
+	private List<SubCategoryResponse> sub_categorys = new ArrayList<SubCategoryResponse>();
 
 	public CategoryResponse() {
 		super();
@@ -60,6 +64,14 @@ public class CategoryResponse implements Serializable {
 
 	public void setSequence_no(int sequence_no) {
 		this.sequence_no = sequence_no;
+	}
+
+	public List<SubCategoryResponse> getSub_categorys() {
+		return sub_categorys;
+	}
+
+	public void setSub_categorys(List<SubCategoryResponse> sub_categorys) {
+		this.sub_categorys = sub_categorys;
 	}
 
 }

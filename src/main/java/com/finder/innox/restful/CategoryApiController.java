@@ -49,9 +49,17 @@ public class CategoryApiController {
 		List<CategoryDTO> categoryList = categoryService.getAllCategoryList();
 
 		CategoryListResponse resposne = new CategoryListResponse();
+		
 		categoryList.forEach(cat -> {
 			CategoryResponse categoryResponse = new CategoryResponse(cat, request);
 			resposne.getCategorys().add(categoryResponse);
+
+			List<SubCategoryDTO> subCategoryDtoList = subCategoryService.getAllSubCategoryListByCatId(cat.getSeq(),
+					CommonStatus.ACTIVE.getCode());
+			subCategoryDtoList.forEach(sub -> {
+				SubCategoryResponse subCategoryResponse = new SubCategoryResponse(sub, request);
+				categoryResponse.getSub_categorys().add(subCategoryResponse);
+			});
 		});
 
 		apiResponse.setData(resposne);
@@ -80,6 +88,7 @@ public class CategoryApiController {
 			List<SubCategoryDTO> subCategoryDtoList = subCategoryService.getAllSubCategoryListByCatId(category_id,
 					CommonStatus.ACTIVE.getCode());
 			SubCategoryListResponse response = new SubCategoryListResponse();
+
 			if (subCategoryDtoList != null && !subCategoryDtoList.isEmpty()) {
 
 				response.setCategory_id(category_id);
