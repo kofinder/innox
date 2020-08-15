@@ -6,6 +6,6 @@ import com.finder.innox.core.domain.Size;
 
 public interface SizeDao extends GenericDao<Size, Long>{
 	
-	List<Size> getAllSize();
+	List<Size> getAllSize(int sttus);
 
 }

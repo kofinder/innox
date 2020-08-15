@@ -24,6 +24,12 @@ public class Size extends CommonEntity implements Serializable {
 	@JoinColumn(name = "created_by_id")
 	private User createdBy;
 
+	@Column(name = "Status")
+	private Integer status;
+
+	@Column(name = "size_category")
+	private Integer sizeCategory;
+
 	public String getSizeCode() {
 		return sizeCode;
 	}
@@ -46,6 +52,22 @@ public class Size extends CommonEntity implements Serializable {
 
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Integer getSizeCategory() {
+		return sizeCategory;
+	}
+
+	public void setSizeCategory(Integer sizeCategory) {
+		this.sizeCategory = sizeCategory;
 	}
 
 }

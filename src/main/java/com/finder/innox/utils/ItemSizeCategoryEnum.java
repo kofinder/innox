@@ -21,4 +21,14 @@ public enum ItemSizeCategoryEnum {
 		return desc;
 	}
 
+	public static String getDescByCode(int code) {
+		for (ItemSizeCategoryEnum cat : values()) {
+			if (cat.getCode() == code) {
+				return cat.getDesc();
+			}
+		}
+
+		return "";
+	}
+
 }

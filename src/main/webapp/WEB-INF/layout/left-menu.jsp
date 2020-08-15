@@ -136,7 +136,7 @@
 
 						<li class="nav-item"><a href="size_setup.html"
 							class="nav-link"> <i class="far fa-circle nav-icon"></i>
-								<p>Size Search</p>
+								<p>Size Setup</p>
 						</a></li>
 					</ul></li>
 

@@ -59,12 +59,12 @@
 		<div class="container-fluid">
 
 
-			<%-- <div class="row">
+			<div class="row">
 				<div class="col-12">
 					<!-- banner setup -->
 					<div class="card card-default">
 						<div class="card-header">
-							<h3 class="card-title">Banner Setup</h3>
+							<h3 class="card-title">Size Setup</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -77,57 +77,47 @@
 
 						<div class="card-body">
 
-							<form:form role="form" id="banner_setup_form"
-								modelAttribute="bannerDTO" action="banner_setup.html"
-								method="POST" enctype="multipart/form-data">
+							<form:form role="form" id="size_setup_form"
+								modelAttribute="sizeDTO" action="size_setup.html" method="POST"
+								enctype="multipart/form-data">
 								<form:hidden path="seq" />
 
 								<div class="form-row">
 									<div class="col-sm-6">
-										<div class="form-group" id="banner_name_data">
-											<label for="bnnerName">Banner Name</label>
-											<form:input path="name" id="banner_name"
-												placeholder="Banner Name" class="form-control" />
+										<div class="form-group" id="size_name_data">
+											<label for="sizeName">Size Name</label>
+											<form:input path="sizeName" id="size_name"
+												placeholder="Size Name" class="form-control" />
 										</div>
-										<div class="form-group" id="sequence_data">
-											<label for="sequence_id">Sequence</label>
-											<form:input path="sequenceNo" class="form-control"
-												id="sequence_id" placeholder="Banner Name" />
+										<div class="form-group">
+											<label for="status">Category</label>
+											<form:select class="form-control" path="sizeCategory"
+												id="size_category">
+												<form:options items="${itemSizeCategoryList}"
+													itemValue="code" itemLabel="desc" />
+											</form:select>
 										</div>
 									</div>
 
 									<div class="col-sm-6">
-										<div class="form-group" id="description-data">
-											<label for="bannerDescription">Description</label>
-											<form:input path="description" class="form-control"
-												id="description_id" placeholder="Description" />
+										<div class="form-group" id="size_code_data">
+											<label for="sizeCode">Size Code</label>
+											<form:input path="sizeCode" class="form-control"
+												id="size_code" placeholder="Szie Code" />
 										</div>
-										<div class="form-group">
-											<label for=exampleInputFile>File input</label>
-											<div class="input-group">
-												<div class="custom-file">
-													<form:input path="imageFile" type="file"
-														accept="image/x-png, image/jpeg" class="custom-file-input"
-														id="exampleInputFile" />
-													<label class="custom-file-label" for="exampleInputFile">Choose
-														file</label>
-												</div>
-												<div class="input-group-append">
-													<span class="input-group-text" id="">Upload</span>
-												</div>
+										<c:if test="${sizeDTO.seq > 0}">
+											<div class="form-group">
+												<label for="status">Status</label>
+												<form:select class="form-control" path="status"
+													id="status_id">
+													<form:options items="${statusList}" itemValue="code"
+														itemLabel="desc" />
+												</form:select>
 											</div>
-											<div class="image show" style="margin-top: 20px;">
-												<c:if test="${not empty bannerDTO.imagePath}">
-													<img src="${bannerDTO.imagePath}" width="100px;"
-														height="100px;" class="img-circle elevation-2"
-														alt="Banner Image">
-												</c:if>
-											</div>
-										</div>
+										</c:if>
 
 										<div class="form-group" style="text-align: right;">
-											<button type="submit" class="btn btn-primary"
-												onclick="checkBannerSetup()">Save</button>
+											<button type="submit" class="btn btn-primary">Save</button>
 										</div>
 									</div>
 								</div>
@@ -141,7 +131,7 @@
 					<div class="card card-default">
 
 						<div class="card-header">
-							<h3 class="card-title">Banner List</h3>
+							<h3 class="card-title">Size List</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -163,22 +153,22 @@
 											<td width="5%">Edit</td>
 											<td>No</td>
 											<td>Name</td>
-											<td>Description</td>
-											<td>Sequence</td>
+											<td>Code</td>
+											<td>Category</td>
 											<td>Status</td>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${bannerList}" var="b" varStatus="status">
+										<c:forEach items="${sizeList}" var="size" varStatus="status">
 											<tr>
-												<td><a href="banner_setup.html?bannerId=${b.seq}">
-														<i class="fas fa-edit"></i>
+												<td><a href="size_setup.html?sizeId=${size.seq}"> <i
+														class="fas fa-edit"></i>
 												</a></td>
 												<td>${status.count}</td>
-												<td>${b.name}</td>
-												<td>${b.description}</td>
-												<td>${b.sequenceNo}</td>
-												<td>${b.status}</td>
+												<td>${size.sizeName}</td>
+												<td>${size.sizeCode}</td>
+												<td>${size.sizeCategoryDesc}</td>
+												<td>${size.statusDesc}</td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -190,7 +180,7 @@
 
 
 				</div>
-			</div> --%>
+			</div>
 
 			<!-- /.container-fluid -->
 		</div>

@@ -233,7 +233,7 @@ public class CustomProductController {
 		model.addAttribute("statusList", CommonStatus.values());
 		model.addAttribute("colorList", colorService.getAllColorList(CommonStatus.ACTIVE.getCode()));
 		model.addAttribute("sizeCategoryList", ItemSizeCategoryEnum.values());
-		model.addAttribute("itemSizeList", sizeService.getAllSize());
+		model.addAttribute("itemSizeList", sizeService.getAllSize(CommonStatus.ACTIVE.getCode()));
 	}
 
 }
