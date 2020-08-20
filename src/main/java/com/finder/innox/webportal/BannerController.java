@@ -1,5 +1,7 @@
 package com.finder.innox.webportal;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finder.innox.core.dto.BannerDTO;
+import com.finder.innox.core.dto.UserDTO;
 import com.finder.innox.core.services.BannerService;
+import com.finder.innox.core.services.UserService;
 import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.PageTitleConstant;
@@ -27,20 +31,24 @@ public class BannerController {
 	@Autowired
 	private BannerService bannerService;
 
+	@Autowired
+	private UserService userService;
+
 	@GetMapping("/banner_setup.html")
-	public String bannerSetupGet(@RequestParam(name = "bannerId", required = false) Long bannerId, Model model, HttpServletRequest request) {
+	public String bannerSetupGet(@RequestParam(name = "bannerId", required = false) Long bannerId, Model model,
+			HttpServletRequest request) {
 		logger.info("bannerSetupGet() >> Start");
 		commonModel(model);
-		if(bannerId != null && bannerId > 0) {
-			BannerDTO bannerDTO  =  bannerService.getBannerById(bannerId);
-			if(!CommonUtil.isEmpty(bannerDTO.getImagePath())) {
+		if (bannerId != null && bannerId > 0) {
+			BannerDTO bannerDTO = bannerService.getBannerById(bannerId);
+			if (!CommonUtil.isEmpty(bannerDTO.getImagePath())) {
 				bannerDTO.setImagePath(CommonConstant.IMAGE_PATH + bannerDTO.getImagePath());
 			}
 			model.addAttribute("bannerDTO", bannerDTO);
-		}else {
+		} else {
 			model.addAttribute("bannerDTO", new BannerDTO());
 		}
-		
+
 		model.addAttribute("bannerList", bannerService.getAllBannerList());
 		logger.info("bannerSetupGet() >> End");
 		return "banner_setup";
@@ -52,6 +60,11 @@ public class BannerController {
 		logger.info("bannerSetupPost() >> Start");
 
 		try {
+			Principal principal = request.getUserPrincipal();
+			if (principal != null) {
+				UserDTO usetDto = userService.findByName(principal.getName());
+				bannerDTO.setUserDTO(usetDto);
+			}
 			BannerDTO bannerDto = bannerService.saveBanner(bannerDTO);
 			if (bannerDto != null) {
 				attributes.addFlashAttribute("message", "Banner Saved Successfully!");
@@ -67,7 +80,7 @@ public class BannerController {
 		logger.info("bannerSetupPost() >> End");
 		return "redirect:banner_setup.html";
 	}
-	
+
 	private void commonModel(Model model) {
 		model.addAttribute("pageTitle", PageTitleConstant.BANNER_TITLE);
 	}

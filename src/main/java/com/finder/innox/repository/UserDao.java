@@ -12,5 +12,7 @@ public interface UserDao extends GenericDao<User, Integer>{
 	User findByUserName(String userName);
 	
 	User findByEmail(String email);
+	
+	List<User> getDesignerList();
 
 }

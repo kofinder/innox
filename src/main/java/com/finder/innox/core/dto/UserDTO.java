@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.finder.innox.core.domain.User;
 import com.finder.innox.utils.CommonStatus;
+import com.finder.innox.utils.UserRoleEnum;
 
 public class UserDTO {
 
@@ -35,6 +36,8 @@ public class UserDTO {
 
 	private boolean recordDelFlag;
 
+	private int userRoleLevel;
+
 	public UserDTO() {
 		super();
 	}
@@ -47,11 +50,13 @@ public class UserDTO {
 			this.email = user.getEmail();
 			this.status = user.getStatus() == null ? CommonStatus.ACTIVE.getCode() : user.getStatus();
 			this.avatar = user.getAvatar();
-			this.draftFlag = user.getDraftFlag();
-			this.recordRegSeq = user.getRecordRegSeq();
-			this.recordUpdateSeq = user.getRecordUpdateSeq();
-			this.recordTmpFlag = user.getRecordTmpFlag();
-			this.recordDelFlag = user.getRecordDelFlag();
+			this.draftFlag = user.getDraftFlag() == null ? false : user.getDraftFlag();
+			this.recordRegSeq = user.getRecordRegSeq() == null ? 1 : user.getRecordRegSeq();
+			this.recordUpdateSeq = user.getRecordUpdateSeq() == null ? 1 : user.getRecordUpdateSeq();
+			this.recordTmpFlag = user.getRecordTmpFlag() == null ? false : user.getRecordTmpFlag();
+			this.recordDelFlag = user.getRecordDelFlag() == null ? false : user.getRecordDelFlag();
+			this.userRoleLevel = user.getUserRoleLevel() == null ? UserRoleEnum.ROLE_USER.getCode()
+					: user.getUserRoleLevel();
 		}
 	}
 
@@ -165,6 +170,14 @@ public class UserDTO {
 
 	public void setRecordDelFlag(boolean recordDelFlag) {
 		this.recordDelFlag = recordDelFlag;
+	}
+
+	public int getUserRoleLevel() {
+		return userRoleLevel;
+	}
+
+	public void setUserRoleLevel(int userRoleLevel) {
+		this.userRoleLevel = userRoleLevel;
 	}
 
 }

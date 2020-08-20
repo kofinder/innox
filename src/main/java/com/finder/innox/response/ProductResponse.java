@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.finder.innox.core.dto.CustomProductDTO;
 import com.finder.innox.core.dto.ProductDTO;
 import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonUtil;
@@ -70,6 +71,18 @@ public class ProductResponse implements Serializable {
 			this.discount_percentage_text = CommonUtil.formatDiscountPercentage(dto.getDiscountPercent(),
 					CommonConstant.PERCENTAGE_CODE);
 		}
+	}
+
+	public ProductResponse(CustomProductDTO dto, HttpServletRequest request) {
+		this.prodcut_id = dto.getSeq();
+		this.product_name = dto.getProductName();
+
+		if (!CommonUtil.isEmpty(dto.getImagePath())) {
+//			this.image_path4 = CommonUtil.prepareImagePath(dto.getImagePath4(), request);
+			this.images.add(CommonUtil.prepareImagePath(dto.getImagePath(), request));
+		}
+
+		this.price_text = CommonUtil.formatBigDecimalAsCurrency(dto.getInitialPrice(), CommonConstant.CURRENCY_CODE_KS);
 	}
 
 	public long getProdcut_id() {

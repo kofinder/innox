@@ -29,7 +29,7 @@ public class User implements Serializable {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer userSeq;
+	private Long userSeq;
 
 	@Column(name = "user_name", unique = true)
 	private String userName;
@@ -71,11 +71,14 @@ public class User implements Serializable {
 	@Column(name = "record_del_flag")
 	private Boolean recordDelFlag;
 
-	public Integer getUserSeq() {
+	@Column(name = "user_role_level")
+	private Integer userRoleLevel;
+
+	public Long getUserSeq() {
 		return userSeq;
 	}
 
-	public void setUserSeq(Integer userSeq) {
+	public void setUserSeq(Long userSeq) {
 		this.userSeq = userSeq;
 	}
 
@@ -181,6 +184,14 @@ public class User implements Serializable {
 
 	public void setRecordDelFlag(Boolean recordDelFlag) {
 		this.recordDelFlag = recordDelFlag;
+	}
+
+	public Integer getUserRoleLevel() {
+		return userRoleLevel;
+	}
+
+	public void setUserRoleLevel(Integer userRoleLevel) {
+		this.userRoleLevel = userRoleLevel;
 	}
 
 }

@@ -10,25 +10,25 @@ import org.springframework.stereotype.Repository;
 
 import com.finder.innox.core.domain.User;
 import com.finder.innox.repository.UserDao;
+import com.finder.innox.utils.UserRoleEnum;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({ "deprecation", "unchecked" })
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements UserDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAllUser() {
-		Criteria c  = this.getCurrentSession().createCriteria(User.class);
+		Criteria c = this.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.ne("userSeq", 0));
 		return c.list();
 	}
 
 	@Override
 	public User findByUserName(String userName) {
-		Criteria c  = this.sessionFactory.getCurrentSession().createCriteria(User.class);
+		Criteria c = this.sessionFactory.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.eq("userName", userName));
 		c.setMaxResults(1);
 
@@ -38,9 +38,16 @@ public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements UserDa
 
 	@Override
 	public User findByEmail(String email) {
-		Criteria c  = this.sessionFactory.getCurrentSession().createCriteria(User.class);
+		Criteria c = this.sessionFactory.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.ne("email", email));
 		return (User) c.uniqueResult();
+	}
+
+	@Override
+	public List<User> getDesignerList() {
+		Criteria c = this.getCurrentSession().createCriteria(User.class);
+		c.add(Restrictions.eq("userRoleLevel", UserRoleEnum.ROLE_DESIGNER.getCode()));
+		return c.list();
 	}
 
 }

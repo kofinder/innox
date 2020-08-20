@@ -41,4 +41,12 @@ public class CustomProductDaoImpl extends GenericDaoImpl<CustomProduct, Long> im
 		return c.list();
 	}
 
+	@Override
+	public List<CustomProduct> getCustomProductListBySubCat(long subCategoryId) {
+		Criteria c = this.getCurrentSession().createCriteria(CustomProduct.class);
+		c.add(Restrictions.eq("subCategory.seq", subCategoryId));
+		c.addOrder(Order.asc("prodcutName"));
+		return c.list();
+	}
+
 }

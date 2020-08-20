@@ -123,4 +123,21 @@ public class CustomProductServiceImpl implements CustomProductService {
 		return dtoList;
 	}
 
+	@Override
+	public List<CustomProductDTO> getCustomProductListBySubCat(long subCategoryId) {
+		logger.info("getCustomProductListBySubCat() >> Start >> Sub Category Id : " + subCategoryId);
+		List<CustomProduct> entityList = customProductDao.getCustomProductListBySubCat(subCategoryId);
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<CustomProductDTO>();
+		}
+
+		List<CustomProductDTO> dtoList = new ArrayList<CustomProductDTO>();
+		entityList.forEach(entity -> {
+			CustomProductDTO dto = new CustomProductDTO(entity);
+			dtoList.add(dto);
+		});
+		logger.info("getCustomProductListBySubCat() >> End");
+		return dtoList;
+	}
+
 }

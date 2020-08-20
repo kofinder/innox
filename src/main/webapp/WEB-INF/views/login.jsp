@@ -45,7 +45,7 @@
 		<div class="global-container">
 			<div class="card login-form">
 				<div class="card-body">
-					<h3 class="card-title text-center">SecurityDemo</h3>
+					<h3 class="card-title text-center">INNOX</h3>
 					<div class="card-text">
 						<form name='f' action="j_spring_security_check" method='POST' accept-charset="UTF-8">
 							<div class="form-group">

@@ -1,0 +1,18 @@
+insert  into `size`(`id`,`size_category`,`size_code`,`size_name`,`status`,`created_by_id`,`created_time`,`updated_time`) values 
+(1,1,'0001','Small',1,NULL,NULL,'2020-08-12 23:15:44'),
+(2,1,'0002','M',1,NULL,NULL,NULL),
+(3,1,'0003','L',1,NULL,NULL,NULL),
+(4,1,'0004','XL',1,NULL,NULL,NULL),
+(5,1,'0005','XXL',1,NULL,NULL,NULL),
+(6,1,'0006','XXXL',1,NULL,NULL,NULL),
+(7,2,'001','35',1,NULL,NULL,NULL),
+(8,2,'002','36',1,NULL,NULL,NULL),
+(9,2,'003','37',1,NULL,NULL,NULL),
+(10,2,'004','38',1,NULL,NULL,NULL),
+(11,2,'005','39',1,NULL,NULL,NULL),
+(12,2,'006','40',1,NULL,NULL,NULL),
+(13,2,'007','41',1,NULL,NULL,NULL),
+(15,2,'008','42',1,NULL,NULL,NULL),
+(16,2,'009','43',1,NULL,NULL,NULL),
+(17,2,'010','44',1,NULL,NULL,NULL),
+(18,2,'011','44',1,NULL,NULL,NULL);

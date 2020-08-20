@@ -1,5 +1,6 @@
 package com.finder.innox.core.services.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.finder.innox.core.services.UserService;
 import com.finder.innox.repository.UserDao;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -58,7 +60,7 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(dto.getEmail());
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
-		user.setRoles(Arrays.asList(new Role("ROLE_USER"), new Role("ROLE_ADMIN")));
+		user.setRoles(Arrays.asList(new Role("ROLE_ADMIN")));
 
 		userDao.save(user);
 
@@ -66,6 +68,30 @@ public class UserServiceImpl implements UserService {
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<UserDTO> getDesignerList() {
+		List<User> entityList = userDao.getDesignerList();
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<UserDTO>();
+		}
+
+		List<UserDTO> dtoList = new ArrayList<UserDTO>();
+		entityList.forEach(user -> {
+			UserDTO userDto = new UserDTO(user);
+			dtoList.add(userDto);
+		});
+		return dtoList;
+	}
+
+	@Override
+	public UserDTO findByName(String userName) {
+		User user = userDao.findByUserName(userName);
+		if (user == null) {
+			throw new UsernameNotFoundException(userName);
+		}
+		return new UserDTO(user);
 	}
 
 }

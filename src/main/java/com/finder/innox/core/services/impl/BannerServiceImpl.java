@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.finder.innox.core.domain.Banner;
+import com.finder.innox.core.domain.User;
 import com.finder.innox.core.dto.BannerDTO;
 import com.finder.innox.core.services.BannerService;
 import com.finder.innox.repository.BannerDao;
@@ -46,27 +47,32 @@ public class BannerServiceImpl implements BannerService {
 
 	@Override
 	public BannerDTO saveBanner(BannerDTO bannerDTO) throws Exception {
-		
+
 		Banner banner = null;
-		if(bannerDTO.getSeq() > 0) {
+		if (bannerDTO.getSeq() > 0) {
 			banner = bannerDao.get(bannerDTO.getSeq());
 			banner.setName(bannerDTO.getName());
 			banner.setDescription(bannerDTO.getDescription());
 			banner.setSequenceNo(bannerDTO.getSequenceNo());
 			banner.setStatus(bannerDTO.getStatus());
 			banner.setUpdatedTime(new Date());
-			
-			bannerDao.update(banner);
-		}else {
+		} else {
 			banner = new Banner();
 			banner.setName(bannerDTO.getName());
 			banner.setDescription(bannerDTO.getDescription());
 			banner.setSequenceNo(bannerDTO.getSequenceNo());
 			banner.setStatus(CommonStatus.ACTIVE.getCode());
 			banner.setCreatedTime(new Date());
-			
-			bannerDao.save(banner);
 		}
+
+		// login user
+		if (bannerDTO.getUserDTO() != null && bannerDTO.getUserDTO().getSeq() > 0) {
+			User user = new User();
+			user.setUserSeq(bannerDTO.getUserDTO().getSeq());
+			banner.setCreatedBy(user);
+		}
+
+		bannerDao.saveOrUpdate(banner);
 
 		if (!CommonUtil.isEmpty(bannerDTO.getImageFile().getOriginalFilename())) {
 			try {
@@ -79,7 +85,7 @@ public class BannerServiceImpl implements BannerService {
 			}
 			bannerDao.merge(banner);
 		}
-		
+
 		logger.info("saveBanner() >> End >> Banner id : " + banner.getSeq());
 		return new BannerDTO(bannerDao.get(banner.getSeq()));
 	}

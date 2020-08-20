@@ -1,7 +1,7 @@
 package com.finder.innox.utils;
 
 public class CommonConstant {
-	
+
 	public static final String STD_DATE_TIME_FORMAT = "dd/MM/yyyy hh:mm a";
 	public static final String STD_DATE_FORMAT = "dd/MM/yyyy";
 	public static final String STD_DATE_FORMAT_MM_dd_yyyy = "MM/dd/yyyy";
@@ -40,8 +40,8 @@ public class CommonConstant {
 	public static final String STD_DATE_FORMAT_EEEE_dd_MMMM_yyyy = "EEEE, dd MMMM yyyy";
 	public static final String STD_DATE_FORMAT_dd_MMM_yyyy = "dd MMM yyyy";
 	public static final String STD_TIME_FORMAT_HH_MM_SS = "HH:mm:ss";
-	
-	public static final String ROOT_DIRECTORY = "E:\\usr/innox/images/"; 
+
+	public static final String ROOT_DIRECTORY = "E:\\usr/innox/images/";
 	public static final String IMAGE_PATH = "/images/";
 	public static final String BASE_PATH = "innox";
 	public static final String IMAGE_SUFFIX = ".png";
@@ -53,51 +53,53 @@ public class CommonConstant {
 	public static final String USER_DIRECTORY = "user/";
 	public static final String IMAGE_RESOURCES_PATH = "resources/img";
 	public static final String DEFAULT_LOGO = "innox_logo.jpg";
-	
-	
+
 	public static final String BANNER_DIRECTORY = "banner/";
 	public static final String BANNER_IMAGE_DIRECTORY = "banner_image/";
 	public static final String BANNER_IMAGE_PERFIX = "banner_image";
-	
+
 	public static final String BRAND_DIRECTORY = "brand/";
 	public static final String BRAND_IMAGE_DIRECTORY = "brand_image/";
 	public static final String BRAND_IMAGE_PERFIX = "brand_image";
-	
+
 	public static final String CATEGORY_DIRECTORY = "category/";
 	public static final String CATEGORY_IMAGE_DIRECTORY = "category_image/";
 	public static final String CATEGORY_IMAGE_PERFIX = "category_image";
-	
+
 	public static final String SUB_CATEGORY_DIRECTORY = "sub_category/";
 	public static final String SUB_CATEGORY_IMAGE_DIRECTORY = "sub_category_image/";
 	public static final String SUB_CATEGORY_IMAGE_PERFIX = "sub_category_image";
-	
+
 	public static final String PRODUCT_DIRECTORY = "product/";
 	public static final String PRODUCT_IMAGE_DIRECTORY = "product_image/";
 	public static final String PRODUCT_IMAGE_PERFIX = "product_image";
-	
+
 	public static final String CUSTOM_PRODUCT_DIRECTORY = "custom_product/";
 	public static final String CUSTOM_PRODUCT_IMAGE_DIRECTORY = "custom_product_image/";
 	public static final String CUSTOM_PRODUCT_IMAGE_PERFIX = "custom_product_image";
-	
+
 	public static final String CUSTOM_LAYOUT_DIRECTORY = "custom_layout/";
 	public static final String CUSTOM_LAYOUT_IMAGE_DIRECTORY = "custom_layout_image/";
 	public static final String CUSTOM_LAYOUT_IMAGE_PERFIX = "custom_layout_image";
-	
+
+	public static final String ARTWORK_DIRECTORY = "artwork/";
+	public static final String ARTWORK_IMAGE_DIRECTORY = "artwork_image/";
+	public static final String ARTWORK_IMAGE_PERFIX = "artwork_image";
+
 	public static final int RECORD_LIMIT_PROMO_ITEM = 6;
 	public static final int RECORD_LIMIT_POPULAR = 6;
 	public static final int RECORD_LIMIT_NEW_ARRIVAL_ITEM = 6;
 	public static final String CURRENCY_CODE_KS = "Ks";
 	public static final String PERCENTAGE_CODE = "%";
-	
+
 	// should be only 5 or 10
 	public static final int SHOW_PAGINATION_COUNT = 5;
 
 	public static final int SHOW_COMMENT_COUNT = 5;
-	
+
 	public static final int ROW_PER_PAGE = 12;
-	
+
 	public static final String UI_MESSGAE = "message";
 	public static final String UI_ERROR_MESSGAE = "errorMsg";
-
 
 }

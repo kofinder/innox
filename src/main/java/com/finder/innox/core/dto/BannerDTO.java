@@ -26,6 +26,8 @@ public class BannerDTO implements Serializable {
 
 	private String createdTime;
 
+	private UserDTO userDTO;
+
 	public BannerDTO() {
 		super();
 	}
@@ -38,6 +40,7 @@ public class BannerDTO implements Serializable {
 			this.imagePath = banner.getImagePath();
 			this.sequenceNo = banner.getSequenceNo();
 			this.status = banner.getStatus() == null ? 0 : banner.getStatus();
+			this.userDTO = new UserDTO(banner.getCreatedBy());
 		}
 	}
 
@@ -103,6 +106,14 @@ public class BannerDTO implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 
 }
