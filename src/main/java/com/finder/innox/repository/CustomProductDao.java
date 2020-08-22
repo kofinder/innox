@@ -10,5 +10,7 @@ public interface CustomProductDao extends GenericDao<CustomProduct, Long> {
 	List<CustomProduct> searchCustomProduct(CustomProductDTO searchCusPrdDTO);
 
 	List<CustomProduct> getCustomProductListBySubCat(long subCategoryId);
+	
+	CustomProduct getCustomProductById(long customProductId, int status);
 
 }

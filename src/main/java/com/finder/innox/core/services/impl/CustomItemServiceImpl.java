@@ -34,8 +34,8 @@ public class CustomItemServiceImpl implements CustomItemService {
 	private CustomItemSizeDao customItemSizeDao;
 
 	@Override
-	public List<CustomItemDTO> getCustomItemListByCustomProductId(long id) {
-		List<CustomItem> entityList = customItemDao.getCustomItemListByCustomProductId(id);
+	public List<CustomItemDTO> getCustomItemListByCustomProductId(long id, int status) {
+		List<CustomItem> entityList = customItemDao.getCustomItemListByCustomProductId(id, status);
 		if (entityList == null || entityList.isEmpty()) {
 			return new ArrayList<CustomItemDTO>();
 		}

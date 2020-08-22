@@ -12,6 +12,7 @@ public interface InnoxApiConstant {
 	public static String API_CATEGORY_LIST = "/categorys";
 	public static String API_SUB_CATEGORY_LIST = "/sub_categorys/list_by_category";
 	public static String API_CUSTOM_PRODUCT_LIST = "/custom_products/list_by_sub_category";
+	public static String API_CUSTOM_PRODUCT_DETAIl = "/custom_products/detail";
 	public static String API_ARTWORK_UPLOAD = "/artwork/upload";
 	public static String API_ARTWORK_CATEGORY = "/artwork/categorys";
 	public static String API_DESIGNER = "/designers";

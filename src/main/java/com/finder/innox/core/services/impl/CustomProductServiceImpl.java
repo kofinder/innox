@@ -99,8 +99,8 @@ public class CustomProductServiceImpl implements CustomProductService {
 	}
 
 	@Override
-	public CustomProductDTO getCustomProductById(long id) {
-		CustomProduct entity = customProductDao.get(id);
+	public CustomProductDTO getCustomProductById(long id, int status) {
+		CustomProduct entity = customProductDao.getCustomProductById(id, status);
 		if (entity == null) {
 			logger.info("getCustomProductById() >> NULL");
 			return null;

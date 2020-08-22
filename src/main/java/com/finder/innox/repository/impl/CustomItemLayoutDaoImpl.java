@@ -3,6 +3,7 @@ package com.finder.innox.repository.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -15,9 +16,14 @@ public class CustomItemLayoutDaoImpl extends GenericDaoImpl<CustomItemLayout, Lo
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CustomItemLayout> getCustomItemLayoutListByItemId(long customItemId) {
+	public List<CustomItemLayout> getCustomItemLayoutListByItemId(long customItemId, int status) {
 		Criteria c = this.getCurrentSession().createCriteria(CustomItemLayout.class);
 		c.add(Restrictions.eq("customItem.seq", customItemId));
+		if (status > 0) {
+			c.add(Restrictions.eq("statue", status));
+		}
+
+		c.addOrder(Order.asc("sequenceNo"));
 		return c.list();
 	}
 
@@ -26,7 +32,7 @@ public class CustomItemLayoutDaoImpl extends GenericDaoImpl<CustomItemLayout, Lo
 		Criteria c = this.getCurrentSession().createCriteria(CustomItemLayout.class);
 		c.add(Restrictions.eq("customItem.id", customItemId));
 		c.add(Restrictions.eq("layoutName", layoutName));
-		if(seq > 0) {
+		if (seq > 0) {
 			c.add(Restrictions.ne("id", seq));
 		}
 		return c.uniqueResult() == null ? 1 : 0;

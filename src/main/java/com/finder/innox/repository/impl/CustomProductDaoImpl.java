@@ -49,4 +49,16 @@ public class CustomProductDaoImpl extends GenericDaoImpl<CustomProduct, Long> im
 		return c.list();
 	}
 
+	@Override
+	public CustomProduct getCustomProductById(long customProductId, int status) {
+		Criteria c = this.getCurrentSession().createCriteria(CustomProduct.class);
+		c.add(Restrictions.eq("seq", customProductId));
+
+		if (status > 0) {
+			c.add(Restrictions.eq("status", status));
+		}
+
+		return (CustomProduct) c.uniqueResult();
+	}
+
 }

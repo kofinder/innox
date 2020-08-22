@@ -8,7 +8,7 @@ public interface CustomProductService {
 
 	CustomProductDTO manageCustomProduct(CustomProductDTO customProductDTO, String loginUserName);
 
-	CustomProductDTO getCustomProductById(long id);
+	CustomProductDTO getCustomProductById(long id, int status);
 
 	List<CustomProductDTO> searchCustomProduct(CustomProductDTO searchCusPrdDTO);
 

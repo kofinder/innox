@@ -6,7 +6,7 @@ import com.finder.innox.core.dto.CustomItemDTO;
 
 public interface CustomItemService {
 
-	List<CustomItemDTO> getCustomItemListByCustomProductId(long id);
+	List<CustomItemDTO> getCustomItemListByCustomProductId(long id, int status);
 
 	CustomItemDTO customItemManage(CustomItemDTO customItemDTO) throws Exception;
 

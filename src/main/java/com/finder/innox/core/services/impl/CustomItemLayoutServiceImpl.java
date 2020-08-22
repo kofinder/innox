@@ -31,9 +31,9 @@ public class CustomItemLayoutServiceImpl implements CustomItemLayoutService {
 	private CustomerItemLayoutDao customLayoutDao;
 
 	@Override
-	public List<CustomItemLayoutDTO> getCustomItemLayoutListByItemId(long customItemId) {
+	public List<CustomItemLayoutDTO> getCustomItemLayoutListByItemId(long customItemId, int status) {
 		logger.info("getCustomItemLayoutListByItemId() >> Custom Item Id : " + customItemId);
-		List<CustomItemLayout> entityList = customLayoutDao.getCustomItemLayoutListByItemId(customItemId);
+		List<CustomItemLayout> entityList = customLayoutDao.getCustomItemLayoutListByItemId(customItemId, 0);
 		if (entityList == null || entityList.isEmpty()) {
 			return new ArrayList<CustomItemLayoutDTO>();
 		}

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.finder.innox.core.domain.CustomItem;
+import com.finder.innox.core.domain.CustomItemSize;
 
 public class CustomItemDTO implements Serializable {
 
@@ -29,6 +30,8 @@ public class CustomItemDTO implements Serializable {
 
 	private List<Long> cusItemSizeList = new ArrayList<Long>();
 
+	private List<CustomItemSizeDTO> customItemSizeList = new ArrayList<CustomItemSizeDTO>();
+
 	private int sizeCategoryId;
 
 	public CustomItemDTO() {
@@ -45,12 +48,16 @@ public class CustomItemDTO implements Serializable {
 			this.itemPrice = customItem.getItemPrice() == null ? BigDecimal.ZERO : customItem.getItemPrice();
 			this.sequenceNo = customItem.getSequenceNo() == null ? 0 : customItem.getSequenceNo();
 
-			customItem.getCustomItemSizeList().forEach(size -> {
+			for (CustomItemSize size : customItem.getCustomItemSizeList()) {
 				if (size != null && size.getSeq() != null && size.getSize() != null
 						&& size.getSize().getSeq() != null) {
 					this.cusItemSizeList.add(size.getSize().getSeq());
+					CustomItemSizeDTO customItemSizeDTO = new CustomItemSizeDTO();
+					customItemSizeDTO.setSizeDTO(new SizeDTO(size.getSize()));
+					this.customItemSizeList.add(customItemSizeDTO);
+					;
 				}
-			});
+			}
 		}
 	}
 
@@ -132,6 +139,14 @@ public class CustomItemDTO implements Serializable {
 
 	public void setSizeCategoryId(int sizeCategoryId) {
 		this.sizeCategoryId = sizeCategoryId;
+	}
+
+	public List<CustomItemSizeDTO> getCustomItemSizeList() {
+		return customItemSizeList;
+	}
+
+	public void setCustomItemSizeList(List<CustomItemSizeDTO> customItemSizeList) {
+		this.customItemSizeList = customItemSizeList;
 	}
 
 }

@@ -6,6 +6,6 @@ import com.finder.innox.core.domain.CustomItem;
 
 public interface CustomItemDao extends GenericDao<CustomItem, Long> {
 
-	List<CustomItem> getCustomItemListByCustomProductId(long id);
+	List<CustomItem> getCustomItemListByCustomProductId(long id, int stauts);
 
 }

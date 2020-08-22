@@ -23,7 +23,9 @@ public class CustomItemSizeDTO implements Serializable {
 	public CustomItemSizeDTO(CustomItemSize customSize) {
 		if (customSize != null) {
 			this.seq = customSize.getSeq();
-			this.customItemDTO = new CustomItemDTO(customSize.getCustomItem());
+			if(customSize.getCustomItem() != null) {
+				this.customItemDTO = new CustomItemDTO(customSize.getCustomItem());
+			}
 			this.sizeDTO = new SizeDTO(customSize.getSize());
 		}
 	}

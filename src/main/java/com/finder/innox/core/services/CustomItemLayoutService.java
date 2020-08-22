@@ -6,7 +6,7 @@ import com.finder.innox.core.dto.CustomItemLayoutDTO;
 
 public interface CustomItemLayoutService {
 
-	List<CustomItemLayoutDTO> getCustomItemLayoutListByItemId(long customItemId);
+	List<CustomItemLayoutDTO> getCustomItemLayoutListByItemId(long customItemId, int status);
 	
 	CustomItemLayoutDTO manageCustomItemLayout(CustomItemLayoutDTO customItemLayoutDTO)throws Exception;
 	

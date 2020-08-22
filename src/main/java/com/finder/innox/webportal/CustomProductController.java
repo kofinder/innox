@@ -71,7 +71,7 @@ public class CustomProductController {
 
 		// custom product
 		if (customPrdId != null && customPrdId.compareTo(0L) > 0) {
-			model.addAttribute("customProductDTO", customProductService.getCustomProductById(customPrdId));
+			model.addAttribute("customProductDTO", customProductService.getCustomProductById(customPrdId, 0));
 			model.addAttribute("subCategroyList", subCategoryService.getAllActiveSubCategoryList());
 
 			// custom item
@@ -92,13 +92,13 @@ public class CustomProductController {
 				}
 
 				model.addAttribute("customItemLayoutList",
-						customLayoutService.getCustomItemLayoutListByItemId(customItemId));
+						customLayoutService.getCustomItemLayoutListByItemId(customItemId, 0));
 			} else {
 				model.addAttribute("customItemDTO", new CustomItemDTO());
 				model.addAttribute("customItemLayoutDTO", new CustomItemLayoutDTO());
 			}
 
-			model.addAttribute("customItemList", customItemService.getCustomItemListByCustomProductId(customPrdId));
+			model.addAttribute("customItemList", customItemService.getCustomItemListByCustomProductId(customPrdId, 0));
 		} else {
 			model.addAttribute("customProductDTO", new CustomProductDTO());
 			model.addAttribute("customItemDTO", new CustomItemDTO());
