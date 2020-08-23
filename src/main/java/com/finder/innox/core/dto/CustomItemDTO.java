@@ -48,14 +48,16 @@ public class CustomItemDTO implements Serializable {
 			this.itemPrice = customItem.getItemPrice() == null ? BigDecimal.ZERO : customItem.getItemPrice();
 			this.sequenceNo = customItem.getSequenceNo() == null ? 0 : customItem.getSequenceNo();
 
-			for (CustomItemSize size : customItem.getCustomItemSizeList()) {
-				if (size != null && size.getSeq() != null && size.getSize() != null
-						&& size.getSize().getSeq() != null) {
-					this.cusItemSizeList.add(size.getSize().getSeq());
-					CustomItemSizeDTO customItemSizeDTO = new CustomItemSizeDTO();
-					customItemSizeDTO.setSizeDTO(new SizeDTO(size.getSize()));
-					this.customItemSizeList.add(customItemSizeDTO);
-					;
+			if (customItem.getCustomItemSizeList() != null && !customItem.getCustomItemSizeList().isEmpty()) {
+				for (CustomItemSize size : customItem.getCustomItemSizeList()) {
+					if (size != null && size.getSeq() != null && size.getSize() != null
+							&& size.getSize().getSeq() != null) {
+						this.cusItemSizeList.add(size.getSize().getSeq());
+						CustomItemSizeDTO customItemSizeDTO = new CustomItemSizeDTO();
+						customItemSizeDTO.setSizeDTO(new SizeDTO(size.getSize()));
+						this.customItemSizeList.add(customItemSizeDTO);
+						;
+					}
 				}
 			}
 		}

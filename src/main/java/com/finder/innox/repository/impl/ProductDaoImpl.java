@@ -60,10 +60,18 @@ public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements Pro
 	}
 
 	@Override
-	public List<Product> getProductListBySubCatgory(long subCategoryId) {
+	public List<Product> getProductListBySubCatgory(long subCategoryId, int pageNo) {
 		Criteria c = this.getCurrentSession().createCriteria(Product.class);
 		if (subCategoryId > 0) {
 			c.add(Restrictions.eq("subCategory.seq", subCategoryId));
+		}
+		
+		if (pageNo > 0) {
+			int startIndex = (pageNo - 1) * CommonConstant.ROW_PER_PAGE;
+			if (startIndex > -1) {
+				c.setFirstResult(startIndex);
+				c.setMaxResults(CommonConstant.ROW_PER_PAGE);
+			}
 		}
 		c.add(Restrictions.eq("status", CommonStatus.ACTIVE.getCode()));
 		c.addOrder(Order.asc("createdTime"));

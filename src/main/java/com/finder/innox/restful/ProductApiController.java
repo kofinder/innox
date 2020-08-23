@@ -21,6 +21,7 @@ import com.finder.innox.response.ProductDetailResponse;
 import com.finder.innox.response.ProductListResponse;
 import com.finder.innox.response.ProductResponse;
 import com.finder.innox.response.Response;
+import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.FieldError;
 import com.finder.innox.utils.FieldError.ErrorMessage;
 import com.finder.innox.utils.FieldError.FieldCode;
@@ -73,7 +74,7 @@ public class ProductApiController {
 
 	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST_BY_SUB_CATEGORY)
 	public String getProductListBySubCategory(@RequestParam(name = "sub_category_id") Long sub_category_id,
-			HttpServletRequest request) {
+			@RequestParam(name = "page_no", required = false) Integer page_no, HttpServletRequest request) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -87,12 +88,24 @@ public class ProductApiController {
 			}
 
 			if (errorList.size() == 0) {
-				List<ProductDTO> productDtoList = productService.getProductListBySubCatgory(sub_category_id);
+				List<ProductDTO> productDtoList = productService.getProductListBySubCatgory(sub_category_id, page_no);
 
 				productDtoList.forEach(prodcut -> {
 					ProductResponse productResponse = new ProductResponse(prodcut, request);
 					response.getProducts().add(productResponse);
 				});
+
+				if (page_no > 0) {
+					// get product list count
+					List<ProductDTO> prdDtoList = productService.getProductListByPageNo(0);
+					int listCount = prdDtoList.size();
+					int currentCount = page_no * CommonConstant.ROW_PER_PAGE;
+					response.setTotal_count(listCount);
+
+					if (currentCount < listCount) {
+						response.setHas_more_list(true);
+					}
+				}
 			} else {
 				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
 				pe.setFieldErrorList(errorList);

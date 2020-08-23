@@ -96,7 +96,7 @@ public class CustomItemServiceImpl implements CustomItemService {
 			customItemSizeDao.save(cusItemSize);
 		}
 		logger.info("customItemManage() >> End >> Custom Item Size Save Success");
-		return new CustomItemDTO(customItem);
+		return new CustomItemDTO(customItemDao.get(customItem.getSeq()));
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public interface ProductDao extends GenericDao<Product, Long> {
 
 	List<Product> getPromotionProductList();
 
-	List<Product> getProductListBySubCatgory(long subCategoryId);
+	List<Product> getProductListBySubCatgory(long subCategoryId, int pageNo);
 
 	List<Product> searchProductList(String keyword, BigDecimal startPrice, BigDecimal endPrice, Long category,
 			Long subCategory);

@@ -19,7 +19,7 @@ public interface ProductService {
 
 	List<ProductDTO> getPromotionProductList();
 
-	List<ProductDTO> getProductListBySubCatgory(long subCategoryId);
+	List<ProductDTO> getProductListBySubCatgory(long subCategoryId, int pageNo);
 
 	List<ProductDTO> searchProductList(String keyword, BigDecimal startPrice, BigDecimal endPrice, Long category,
 			Long subCategory);

@@ -37,7 +37,7 @@ public class CustomProductServiceImpl implements CustomProductService {
 	private CustomProductDao customProductDao;
 
 	@Override
-	public CustomProductDTO manageCustomProduct(CustomProductDTO customProductDTO, String loginUserName) {
+	public CustomProductDTO manageCustomProduct(CustomProductDTO customProductDTO, String loginUserName) throws Exception {
 		// get login user info
 		User createdBy = userDao.findByUserName(loginUserName);
 

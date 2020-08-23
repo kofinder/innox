@@ -281,8 +281,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDTO> getProductListBySubCatgory(long subCategoryId) {
-		List<Product> entityList = productDao.getProductListBySubCatgory(subCategoryId);
+	public List<ProductDTO> getProductListBySubCatgory(long subCategoryId, int pageNo) {
+		List<Product> entityList = productDao.getProductListBySubCatgory(subCategoryId, pageNo);
 		if (entityList == null || entityList.isEmpty()) {
 			return new ArrayList<ProductDTO>();
 		}

@@ -6,7 +6,7 @@ import com.finder.innox.core.dto.CustomProductDTO;
 
 public interface CustomProductService {
 
-	CustomProductDTO manageCustomProduct(CustomProductDTO customProductDTO, String loginUserName);
+	CustomProductDTO manageCustomProduct(CustomProductDTO customProductDTO, String loginUserName) throws Exception;
 
 	CustomProductDTO getCustomProductById(long id, int status);
 

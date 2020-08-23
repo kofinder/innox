@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 	<!-- Left navbar links -->
@@ -28,7 +29,7 @@
 	<ul class="navbar-nav ml-auto">
 
 		<li class="nav-item dropdown"><a class="nav-link"
-			data-toggle="dropdown" href="#"> Sign Out </a></li>
+			href="<c:url value="/logout" />">Logout</a> <!-- <a class="nav-link" href="logout.html"> Sign Out </a> --></li>
 		<!-- Messages Dropdown Menu -->
 		<!-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
