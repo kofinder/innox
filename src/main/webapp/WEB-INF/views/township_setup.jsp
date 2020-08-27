@@ -40,7 +40,7 @@
 
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Color</h1>
+					<h1 class="m-0 text-dark">Township</h1>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -63,7 +63,7 @@
 			<!-- banner setup -->
 			<div class="card card-default">
 				<div class="card-header">
-					<h3 class="card-title">Color Setup</h3>
+					<h3 class="card-title">Township Setup</h3>
 
 					<div class="card-tools">
 						<button type="button" class="btn btn-tool"
@@ -75,40 +75,47 @@
 
 				<div class="card-body">
 
-					<form:form role="form" id="color_setup_form"
-						modelAttribute="colorDTO" action="color_setup.html" method="POST"
-						enctype="multipart/form-data">
+					<form:form role="form" id="township_setup_form"
+						modelAttribute="townshipDTO" action="township_setup.html"
+						method="POST" enctype="multipart/form-data">
 						<form:hidden path="seq" />
 
 						<div class="row">
 							<div class="col-md-6">
-								<div class="form-group" id="color_name_data">
-									<label for="colorName">Color Name</label>
-									<form:input path="colorName" id="color_name"
-										placeholder="Color Name" class="form-control" />
+								<div class="form-group" id="state_data">
+									<label for="status">State</label>
+									<form:select class="form-control" path="stateDTO.seq"
+										id="state_id">
+										<form:options items="${stateList}" itemValue="seq"
+											itemLabel="name" />
+									</form:select>
 								</div>
-
-								<c:if test="${colorDTO.seq > 0}">
-									<div class="form-group">
-										<label for="status">Status</label>
-										<form:select class="form-control" path="status" id="status_id">
-											<form:options items="${statusList}" itemValue="code"
-												itemLabel="desc" />
-										</form:select>
-									</div>
-								</c:if>
+								<div class="form-group" id="township_name_data">
+									<label for="townshipName">Name</label>
+									<form:input path="townshipName" id="township_name"
+										placeholder="Township Name" class="form-control" />
+								</div>
 							</div>
 
 							<div class="col-md-6">
-								<div class="form-group" id="color_code_data">
-									<label for="colorCode">Color Code</label>
-									<form:input path="colorCode" id="color_code"
-										placeholder="Color Code" class="form-control" />
+								<div class="form-group" id="zone_data">
+									<label for="status">Zone</label>
+									<form:select class="form-control" path="zoneDTO.seq"
+										id="zone_id">
+										<form:options items="${zoneList}" itemValue="seq"
+											itemLabel="zoneName" />
+									</form:select>
+								</div>
+
+								<div class="form-group" id="nrc_name_data">
+									<label for="nrcName">NRC Name</label>
+									<form:input path="nrcName" id="nrc_name" placeholder="NRC Name"
+										class="form-control" />
 								</div>
 
 								<div class="form-group" style="text-align: right;">
 									<button type="submit" class="btn btn-primary"
-										onclick="checkColorSetup()">Save</button>
+										onclick="checkTownshipeSetup()">Save</button>
 								</div>
 							</div>
 						</div>
@@ -117,14 +124,14 @@
 				</div>
 				<!-- /.card-body -->
 
-				<!-- banner setup -->
+				<!-- state setup -->
 			</div>
 
 
-			<!-- brand list -->
+			<!-- state list -->
 			<div class="card card-default">
 				<div class="card-header">
-					<h3 class="card-title">Color List</h3>
+					<h3 class="card-title">Zone List</h3>
 
 					<div class="card-tools">
 						<button type="button" class="btn btn-tool"
@@ -144,22 +151,24 @@
 								<tr role="row">
 									<td width="5%">Edit</td>
 									<td>No</td>
-									<td>Color Name</td>
-									<td>Color Code</td>
-									<td>Status</td>
+									<td>Name</td>
+									<td>NRC</td>
+									<td>State</td>
+									<td>Zone</td>
+									<td>Delivery Fee</td>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${colorList}" var="color" varStatus="status">
-									<tr>
-										<td><a href="color_setup.html?colorId=${color.seq}">
-												<i class="fas fa-edit"></i>
-										</a></td>
-										<td>${status.count}</td>
-										<td>${color.colorName}</td>
-										<td>${color.colorCode}</td>
-										<td>${color.statusDesc}</td>
-									</tr>
+								<c:forEach items="${townshipList}" var="t" varStatus="count">
+									<td><a href="township_setup.html?townshipId=${t.seq}">
+											<i class="fas fa-edit"></i>
+									</a></td>
+									<td>${count.count}</td>
+									<td>${t.townshipName}</td>
+									<td>${t.nrcName}</td>
+									<td>${t.stateDTO.name}</td>
+									<td>${t.zoneDTO.zoneName}</td>
+									<td>${t.zoneDTO.deliveryFee}</td>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -210,8 +219,8 @@
 	});
 </script>
 <script>
-	function checkColorSetup() {
-		checkValidColorSetup();
+	function checkTownshipeSetup() {
+		checkValidTownshipSetup();
 		if (errors == 0) {
 			return true;
 		}
@@ -219,28 +228,29 @@
 		event.preventDefault();
 	}
 
-	function checkValidColorSetup() {
+	function checkValidTownshipSetup() {
 		errors = 0;
 
-		var nameErr = checkField("Name", $("#color_name").val(), true, null,
+		var nameErr = checkField("Name", $("#township_name").val(), true, null,
 				null, null);
 
-		var colorCodeErr = checkField("Color Code", $("#color_code").val(),
-				true, null, null, null);
+		var nrcNameErr = checkField("NRC Name", $("#nrc_name").val(), true,
+				null, null, null);
 
 		if (nameErr) {
-			showError("color_name_data", "color_name", nameErr);
+			showError("township_name_data", "township_name", nameErr);
 			errors = 1;
 		} else {
-			removeErrorMsg("color_name_data", "color_name");
+			removeErrorMsg("township_name_data", "township_name");
 		}
 
-		if (colorCodeErr) {
-			showError("color_code_data", "color_code", colorCodeErr);
+		if (nrcNameErr) {
+			showError("nrc_name_data", "nrc_name", nrcNameErr);
 			errors = 1;
 		} else {
-			removeErrorMsg("color_code_data", "color_code");
+			removeErrorMsg("nrc_name_data", "nrc_name");
 		}
+
 	}
 </script>
 <!-- Control Sidebar -->

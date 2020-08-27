@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +34,7 @@ import com.finder.innox.utils.PageTitleConstant;
 @Controller
 public class CustomProductController {
 
-	private final Logger logger = LogManager.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private CustomProductService customProductService;
@@ -228,7 +228,7 @@ public class CustomProductController {
 
 	// TODO To implement custom product search
 	private void commomModelSetup(Model model) {
-		model.addAttribute("pageTitle", PageTitleConstant.CUSTOM_PRODUCT);
+		model.addAttribute("pageTitle", PageTitleConstant.CUSTOM_PRODUCT_TITLE);
 		model.addAttribute("categroyList", categoryService.getAllCategoryList());
 		model.addAttribute("statusList", CommonStatus.values());
 		model.addAttribute("colorList", colorService.getAllColorList(CommonStatus.ACTIVE.getCode()));

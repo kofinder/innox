@@ -97,7 +97,7 @@
 									</div>
 
 									<div class="col-sm-6">
-										<div class="form-group" id="description-data">
+										<div class="form-group" id="description_data">
 											<label for="bannerDescription">Description</label>
 											<form:input path="description" class="form-control"
 												id="description_id" placeholder="Description" />
@@ -258,10 +258,10 @@
 		}
 
 		if (descErr) {
-			showError("description-data", "description_id", descErr);
+			showError("description_data", "description_id", descErr);
 			errors = 1;
 		} else {
-			removeErrorMsg("description-data", "description_id")
+			removeErrorMsg("description_data", "description_id")
 		}
 
 		if (sequenceErr) {

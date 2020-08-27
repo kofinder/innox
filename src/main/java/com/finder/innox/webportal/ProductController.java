@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +37,7 @@ import com.finder.innox.utils.PageTitleConstant;
 @Controller
 public class ProductController {
 
-	private final Logger logger = LogManager.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private ProductService productService;
@@ -105,7 +105,7 @@ public class ProductController {
 	public String productSearchGet(Model model, HttpServletRequest request) {
 
 		model.addAttribute("productList", productService.productSearch(null));
-		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT_SEARCH);
+		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT_SEARCH_TITLE);
 		return "product_search";
 	}
 
@@ -122,7 +122,7 @@ public class ProductController {
 	}
 
 	private void CommonModelSetUp(Model model) {
-		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT);
+		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT_TITLE);
 		model.addAttribute("categroyList", categoryService.getAllCategoryList());
 		model.addAttribute("brandList", brandService.getAllBrandList());
 		model.addAttribute("statusList", CommonStatus.values());

@@ -6,8 +6,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ import com.finder.innox.repository.CustomItemSizeDao;
 @Transactional
 public class CustomItemServiceImpl implements CustomItemService {
 
-	private final Logger logger = LogManager.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private CustomItemDao customItemDao;

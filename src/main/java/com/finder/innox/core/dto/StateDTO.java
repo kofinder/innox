@@ -24,7 +24,7 @@ public class StateDTO implements Serializable {
 		if (state != null) {
 			this.seq = state.getSeq();
 			this.name = state.getName();
-			this.stateNo = state.getStateNo();
+			this.stateNo = state.getStateNo() == null ? 0 : state.getStateNo();
 			this.userDTO = new UserDTO(state.getUser());
 		}
 	}

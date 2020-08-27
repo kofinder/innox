@@ -27,7 +27,7 @@
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
 		</Root>
-		<Logger name="com.finder.ecoshop" level="trace"></Logger>
+		<Logger name="com.finder.innox" level="trace"></Logger>
 	</Loggers>
 
 </Configuration>

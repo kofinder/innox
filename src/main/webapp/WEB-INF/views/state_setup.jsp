@@ -40,7 +40,7 @@
 
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Color</h1>
+					<h1 class="m-0 text-dark">State</h1>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -63,7 +63,7 @@
 			<!-- banner setup -->
 			<div class="card card-default">
 				<div class="card-header">
-					<h3 class="card-title">Color Setup</h3>
+					<h3 class="card-title">State Setup</h3>
 
 					<div class="card-tools">
 						<button type="button" class="btn btn-tool"
@@ -75,40 +75,29 @@
 
 				<div class="card-body">
 
-					<form:form role="form" id="color_setup_form"
-						modelAttribute="colorDTO" action="color_setup.html" method="POST"
+					<form:form role="form" id="state_setup_form"
+						modelAttribute="stateDTO" action="state_setup.html" method="POST"
 						enctype="multipart/form-data">
 						<form:hidden path="seq" />
 
 						<div class="row">
 							<div class="col-md-6">
-								<div class="form-group" id="color_name_data">
-									<label for="colorName">Color Name</label>
-									<form:input path="colorName" id="color_name"
-										placeholder="Color Name" class="form-control" />
+								<div class="form-group" id="state_name_data">
+									<label for="stateName">State Name</label>
+									<form:input path="name" id="state_name"
+										placeholder="State Name" class="form-control" />
 								</div>
-
-								<c:if test="${colorDTO.seq > 0}">
-									<div class="form-group">
-										<label for="status">Status</label>
-										<form:select class="form-control" path="status" id="status_id">
-											<form:options items="${statusList}" itemValue="code"
-												itemLabel="desc" />
-										</form:select>
-									</div>
-								</c:if>
 							</div>
 
 							<div class="col-md-6">
-								<div class="form-group" id="color_code_data">
-									<label for="colorCode">Color Code</label>
-									<form:input path="colorCode" id="color_code"
-										placeholder="Color Code" class="form-control" />
+								<div class="form-group" id="state_no_data">
+									<label for="stateNo">State No</label>
+									<form:input path="stateNo" id="state_no" placeholder="State No"
+										class="form-control" />
 								</div>
 
 								<div class="form-group" style="text-align: right;">
-									<button type="submit" class="btn btn-primary"
-										onclick="checkColorSetup()">Save</button>
+									<button type="submit" class="btn btn-primary" onclick="checkStateSetup()">Save</button>
 								</div>
 							</div>
 						</div>
@@ -117,14 +106,14 @@
 				</div>
 				<!-- /.card-body -->
 
-				<!-- banner setup -->
+				<!-- state setup -->
 			</div>
 
 
-			<!-- brand list -->
+			<!-- state list -->
 			<div class="card card-default">
 				<div class="card-header">
-					<h3 class="card-title">Color List</h3>
+					<h3 class="card-title">State List</h3>
 
 					<div class="card-tools">
 						<button type="button" class="btn btn-tool"
@@ -144,22 +133,18 @@
 								<tr role="row">
 									<td width="5%">Edit</td>
 									<td>No</td>
-									<td>Color Name</td>
-									<td>Color Code</td>
-									<td>Status</td>
+									<td>Name</td>
+									<td>State No</td>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${colorList}" var="color" varStatus="status">
-									<tr>
-										<td><a href="color_setup.html?colorId=${color.seq}">
-												<i class="fas fa-edit"></i>
-										</a></td>
-										<td>${status.count}</td>
-										<td>${color.colorName}</td>
-										<td>${color.colorCode}</td>
-										<td>${color.statusDesc}</td>
-									</tr>
+								<c:forEach items="${stateList}" var="s" varStatus="count">
+									<td><a href="state_setup.html?stateId=${s.seq}"> <i
+											class="fas fa-edit"></i>
+									</a></td>
+									<td>${count.count}</td>
+									<td>${s.name}</td>
+									<td>${s.stateNo}</td>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -210,38 +195,38 @@
 	});
 </script>
 <script>
-	function checkColorSetup() {
-		checkValidColorSetup();
-		if (errors == 0) {
-			return true;
+		function checkStateSetup(){
+			checkValidStateSetup();
+			if(errors == 0){
+				return true;
+			}
+			
+			event.preventDefault();
 		}
-
-		event.preventDefault();
-	}
-
-	function checkValidColorSetup() {
-		errors = 0;
-
-		var nameErr = checkField("Name", $("#color_name").val(), true, null,
-				null, null);
-
-		var colorCodeErr = checkField("Color Code", $("#color_code").val(),
-				true, null, null, null);
-
-		if (nameErr) {
-			showError("color_name_data", "color_name", nameErr);
-			errors = 1;
-		} else {
-			removeErrorMsg("color_name_data", "color_name");
+		
+		function checkValidStateSetup(){
+			errors = 0;
+			
+			var nameErr = checkField("Name", $("#state_name").val(), true, null,
+					null, null);
+			
+			var stateNoErr = checkField("State No", $("#state_no").val(), true,
+					null, null, "n");
+			
+			if (nameErr) {
+				showError("state_name_data", "state_name", nameErr);
+				errors = 1;
+			}  else {
+				removeErrorMsg("state_name_data", "state_name");
+			}
+			
+			if(stateNoErr){
+				showError("state_no_data", "state_no", stateNoErr);
+				errors = 1;
+			}else{
+				removeErrorMsg("state_no_data", "state_no");
+			}
 		}
-
-		if (colorCodeErr) {
-			showError("color_code_data", "color_code", colorCodeErr);
-			errors = 1;
-		} else {
-			removeErrorMsg("color_code_data", "color_code");
-		}
-	}
 </script>
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">

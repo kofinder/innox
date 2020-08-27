@@ -2,8 +2,8 @@ package com.finder.innox.webportal;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +24,7 @@ import com.finder.innox.utils.PageTitleConstant;
 @Controller
 public class SizeController {
 
-	private Logger logger = LogManager.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private SizeService sizeService;
@@ -70,7 +70,7 @@ public class SizeController {
 	}
 
 	private void commonModelSetup(Model model) {
-		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT_SIZE);
+		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT_SIZE_TITLE);
 		model.addAttribute("statusList", CommonStatus.values());
 		model.addAttribute("sizeList", sizeService.getAllSize(0));
 		model.addAttribute("itemSizeCategoryList", ItemSizeCategoryEnum.values());

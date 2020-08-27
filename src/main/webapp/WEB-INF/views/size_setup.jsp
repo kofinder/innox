@@ -103,7 +103,7 @@
 										<div class="form-group" id="size_code_data">
 											<label for="sizeCode">Size Code</label>
 											<form:input path="sizeCode" class="form-control"
-												id="size_code" placeholder="Szie Code" />
+												id="size_code" placeholder="Size Code" />
 										</div>
 										<c:if test="${sizeDTO.seq > 0}">
 											<div class="form-group">
@@ -117,7 +117,8 @@
 										</c:if>
 
 										<div class="form-group" style="text-align: right;">
-											<button type="submit" class="btn btn-primary">Save</button>
+											<button type="submit" class="btn btn-primary"
+												onclick="checkSizeSetup()">Save</button>
 										</div>
 									</div>
 								</div>
@@ -221,44 +222,34 @@
 </script>
 
 <script>
-	function checkBannerSetup() {
-		checkBannerSetupValid();
+	function checkSizeSetup() {
+		checkSizeSetupValid();
 		if (errors == 0) {
 			return true;
 		}
 		event.preventDefault();
 	}
 
-	function checkBannerSetupValid() {
+	function checkSizeSetupValid() {
 		errors = 0;
-		var nameErr = checkField("Name", $("#banner_name").val(), true, null,
+		var nameErr = checkField("Name", $("#size_name").val(), true, null,
 				null, null);
 
-		var descErr = checkField("Description", $("#description_id").val(),
-				true, null, null, null);
-
-		var sequenceErr = checkField("Sequence", $("#sequence_id").val(), true,
+		var sizeCodeErr = checkField("Size Code", $("#size_code").val(), true,
 				null, null, null);
 
 		if (nameErr) {
-			showError("banner_name_data", "banner_name", nameErr);
+			showError("size_name_data", "size_name", nameErr);
 			errors = 1;
 		} else {
-			removeErrorMsg("banner_name_data", "banner_name")
+			removeErrorMsg("size_name_data", "size_name")
 		}
 
-		if (descErr) {
-			showError("description-data", "description_id", descErr);
+		if (sizeCodeErr) {
+			showError("size_code_data", "size_code", sizeCodeErr);
 			errors = 1;
 		} else {
-			removeErrorMsg("description-data", "description_id")
-		}
-
-		if (sequenceErr) {
-			showError("sequence_data", "sequence_id", sequenceErr);
-			errors = 1;
-		} else {
-			removeErrorMsg("sequence_data", "sequence_id")
+			removeErrorMsg("size_code_data", "size_code")
 		}
 	}
 </script>

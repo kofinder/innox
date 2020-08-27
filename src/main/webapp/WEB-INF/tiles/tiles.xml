@@ -1,82 +1,120 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
-       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd"> 
-   
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
 <tiles-definitions>
-	<definition name="mainLayout" template="/WEB-INF/layout/main.jsp">
-		<put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
-		<put-attribute name="left-menu" value="/WEB-INF/layout/left-menu.jsp" />	
+	<definition name="mainLayout"
+		template="/WEB-INF/layout/main.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/layout/header.jsp" />
+		<put-attribute name="left-menu"
+			value="/WEB-INF/layout/left-menu.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/layout/footer.jsp" />
 	</definition>
-	
+
 	<definition name="login" template="/WEB-INF/views/login.jsp">
 		<put-list-attribute name="stylesheets">
-	        <add-attribute value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-	    </put-list-attribute>
+			<add-attribute
+				value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+		</put-list-attribute>
 	</definition>
-	
-	<definition name="register" template="/WEB-INF/views/register.jsp">
+
+	<definition name="register"
+		template="/WEB-INF/views/register.jsp">
 		<put-list-attribute name="stylesheets">
-	        <add-attribute value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-	    </put-list-attribute>
+			<add-attribute
+				value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+		</put-list-attribute>
 	</definition>
 
 	<definition name="admin" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/dashboard.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/dashboard.jsp" />
 	</definition>
-	
+
 	<definition name="dashboard" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/dashboard.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/dashboard.jsp" />
 	</definition>
-	
+
 	<definition name="banner_setup" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/banner_setup.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/banner_setup.jsp" />
 	</definition>
-	
+
 	<definition name="brand_setup" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/brand_setup.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/brand_setup.jsp" />
 	</definition>
-	
+
 	<definition name="category_setup" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/category_setup.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/category_setup.jsp" />
 	</definition>
-	
+
 	<definition name="category_search" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/category_search.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/category_search.jsp" />
 	</definition>
-	
+
 	<definition name="sub_category_setup" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/sub_category_setup.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/sub_category_setup.jsp" />
 	</definition>
-	
+
 	<definition name="error" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/error.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/error.jsp" />
 	</definition>
-	
+
 	<definition name="product_setup" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/product_setup.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/product_setup.jsp" />
 	</definition>
-	
+
 	<definition name="product_search" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/product_search.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/product_search.jsp" />
 	</definition>
-	
+
 	<definition name="custom_product_setup" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/custom_product_setup.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/custom_product_setup.jsp" />
 	</definition>
-	
-	<definition name="custom_product_search" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/custom_product_search.jsp" />
+
+	<definition name="custom_product_search"
+		extends="mainLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/custom_product_search.jsp" />
 	</definition>
-	
+
 	<definition name="color_setup" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/color_setup.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/color_setup.jsp" />
 	</definition>
-	
+
 	<definition name="size_setup" extends="mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/size_setup.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/size_setup.jsp" />
 	</definition>
+
+	<definition name="state_setup" extends="mainLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/state_setup.jsp" />
+	</definition>
+
+	<definition name="zone_setup" extends="mainLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/zone_setup.jsp" />
+	</definition>
+
+	<definition name="township_setup" extends="mainLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/township_setup.jsp" />
+	</definition>
+
 
 </tiles-definitions>

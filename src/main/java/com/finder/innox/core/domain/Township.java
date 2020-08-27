@@ -3,9 +3,13 @@ package com.finder.innox.core.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "township")
 public class Township extends CommonEntity implements Serializable {
 
 	private static final long serialVersionUID = 3862232551402479393L;
@@ -21,7 +25,7 @@ public class Township extends CommonEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "zone_id")
 	private Zone zone;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "created_by_id")
 	private User user;
@@ -31,7 +35,7 @@ public class Township extends CommonEntity implements Serializable {
 
 	@Column(name = "nrc_name")
 	private String nrcName;
-	
+
 	public State getState() {
 		return state;
 	}
@@ -70,6 +74,14 @@ public class Township extends CommonEntity implements Serializable {
 
 	public void setNrcName(String nrcName) {
 		this.nrcName = nrcName;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

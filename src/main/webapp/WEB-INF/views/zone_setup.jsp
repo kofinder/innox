@@ -40,7 +40,7 @@
 
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Color</h1>
+					<h1 class="m-0 text-dark">Zone</h1>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -63,7 +63,7 @@
 			<!-- banner setup -->
 			<div class="card card-default">
 				<div class="card-header">
-					<h3 class="card-title">Color Setup</h3>
+					<h3 class="card-title">Zone Setup</h3>
 
 					<div class="card-tools">
 						<button type="button" class="btn btn-tool"
@@ -75,40 +75,40 @@
 
 				<div class="card-body">
 
-					<form:form role="form" id="color_setup_form"
-						modelAttribute="colorDTO" action="color_setup.html" method="POST"
+					<form:form role="form" id="zone_setup_form"
+						modelAttribute="zoneDTO" action="zone_setup.html" method="POST"
 						enctype="multipart/form-data">
 						<form:hidden path="seq" />
 
 						<div class="row">
 							<div class="col-md-6">
-								<div class="form-group" id="color_name_data">
-									<label for="colorName">Color Name</label>
-									<form:input path="colorName" id="color_name"
-										placeholder="Color Name" class="form-control" />
+								<div class="form-group" id="zone_name_data">
+									<label for="zoneName">Zone Name</label>
+									<form:input path="zoneName" id="zone_name"
+										placeholder="Zone Name" class="form-control" />
 								</div>
-
-								<c:if test="${colorDTO.seq > 0}">
-									<div class="form-group">
-										<label for="status">Status</label>
-										<form:select class="form-control" path="status" id="status_id">
-											<form:options items="${statusList}" itemValue="code"
-												itemLabel="desc" />
-										</form:select>
-									</div>
-								</c:if>
+								<div class="form-group" id="delivery_fee_data">
+									<label for="deliveryFee">Delivery Fee</label>
+									<form:input path="deliveryFee" id="delivery_fee"
+										placeholder="Delivery Fee" class="form-control" />
+								</div>
 							</div>
 
 							<div class="col-md-6">
-								<div class="form-group" id="color_code_data">
-									<label for="colorCode">Color Code</label>
-									<form:input path="colorCode" id="color_code"
-										placeholder="Color Code" class="form-control" />
+								<div class="form-group" id="zone_code_data">
+									<label for="zoneCode">Zone Code</label>
+									<form:input path="zoneCode" id="zone_code"
+										placeholder="Zone Code" class="form-control" />
+								</div>
+
+								<div class="form-group" id="description">
+									<label for="zoneCode">Description</label>
+									<form:textarea path="description" rows="3"
+										cssClass="form-control" />
 								</div>
 
 								<div class="form-group" style="text-align: right;">
-									<button type="submit" class="btn btn-primary"
-										onclick="checkColorSetup()">Save</button>
+									<button type="submit" class="btn btn-primary" onclick="checkZoneSetup()">Save</button>
 								</div>
 							</div>
 						</div>
@@ -117,14 +117,14 @@
 				</div>
 				<!-- /.card-body -->
 
-				<!-- banner setup -->
+				<!-- state setup -->
 			</div>
 
 
-			<!-- brand list -->
+			<!-- state list -->
 			<div class="card card-default">
 				<div class="card-header">
-					<h3 class="card-title">Color List</h3>
+					<h3 class="card-title">Zone List</h3>
 
 					<div class="card-tools">
 						<button type="button" class="btn btn-tool"
@@ -144,22 +144,22 @@
 								<tr role="row">
 									<td width="5%">Edit</td>
 									<td>No</td>
-									<td>Color Name</td>
-									<td>Color Code</td>
-									<td>Status</td>
+									<td>Name</td>
+									<td>Zone Code</td>
+									<td>Delivery Fee</td>
+									<td>Description</td>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${colorList}" var="color" varStatus="status">
-									<tr>
-										<td><a href="color_setup.html?colorId=${color.seq}">
-												<i class="fas fa-edit"></i>
-										</a></td>
-										<td>${status.count}</td>
-										<td>${color.colorName}</td>
-										<td>${color.colorCode}</td>
-										<td>${color.statusDesc}</td>
-									</tr>
+								<c:forEach items="${zoneList}" var="z" varStatus="count">
+									<td><a href="zone_setup.html?zoneId=${z.seq}"> <i
+											class="fas fa-edit"></i>
+									</a></td>
+									<td>${count.count}</td>
+									<td>${z.zoneName}</td>
+									<td>${z.zoneCode}</td>
+									<td>${z.deliveryFee}</td>
+									<td>${z.description}</td>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -210,8 +210,8 @@
 	});
 </script>
 <script>
-	function checkColorSetup() {
-		checkValidColorSetup();
+	function checkZoneSetup() {
+		checkValidZoneSetup();
 		if (errors == 0) {
 			return true;
 		}
@@ -219,27 +219,27 @@
 		event.preventDefault();
 	}
 
-	function checkValidColorSetup() {
+	function checkValidZoneSetup() {
 		errors = 0;
 
-		var nameErr = checkField("Name", $("#color_name").val(), true, null,
+		var nameErr = checkField("Name", $("#zone_name").val(), true, null,
 				null, null);
 
-		var colorCodeErr = checkField("Color Code", $("#color_code").val(),
-				true, null, null, null);
+		var zoneCodeErr = checkField("Zone Code", $("#zone_code").val(), true,
+				null, null, null);
 
 		if (nameErr) {
-			showError("color_name_data", "color_name", nameErr);
+			showError("zone_name_data", "zone_name", nameErr);
 			errors = 1;
 		} else {
-			removeErrorMsg("color_name_data", "color_name");
+			removeErrorMsg("zone_name_data", "zone_name");
 		}
 
-		if (colorCodeErr) {
-			showError("color_code_data", "color_code", colorCodeErr);
+		if (zoneCodeErr) {
+			showError("zone_code_data", "zone_code", zoneCodeErr);
 			errors = 1;
 		} else {
-			removeErrorMsg("color_code_data", "color_code");
+			removeErrorMsg("zone_code_data", "zone_code");
 		}
 	}
 </script>
