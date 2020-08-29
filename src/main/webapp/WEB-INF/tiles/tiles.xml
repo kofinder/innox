@@ -116,5 +116,11 @@
 			value="/WEB-INF/views/township_setup.jsp" />
 	</definition>
 
+	<definition name="font_setup" extends="mainLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/font_setup.jsp" />
+	</definition>
+
+
 
 </tiles-definitions>

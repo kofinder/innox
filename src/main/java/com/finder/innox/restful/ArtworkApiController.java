@@ -19,7 +19,6 @@ import com.finder.innox.core.dto.ArtworkCategoryDTO;
 import com.finder.innox.core.dto.ArtworkDTO;
 import com.finder.innox.core.services.ArtworkCategoryService;
 import com.finder.innox.core.services.ArtworkService;
-import com.finder.innox.core.services.ArtworkTagService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
 import com.finder.innox.request.ArtworkUploadRequest;
@@ -44,9 +43,6 @@ public class ArtworkApiController {
 
 	@Autowired
 	private ArtworkCategoryService artworkCategroyService;
-
-	@Autowired
-	private ArtworkTagService artworkTagService;
 
 	@PostMapping(path = InnoxApiConstant.API_ARTWORK_UPLOAD)
 	public String uploadArtwork(@RequestBody ArtworkUploadRequest artworkUplaod, HttpServletRequest request) {

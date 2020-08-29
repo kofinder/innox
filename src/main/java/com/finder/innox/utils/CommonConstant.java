@@ -86,6 +86,10 @@ public class CommonConstant {
 	public static final String ARTWORK_IMAGE_DIRECTORY = "artwork_image/";
 	public static final String ARTWORK_IMAGE_PERFIX = "artwork_image";
 
+	public static final String FONTS_DIRECTORY = "fonts/";
+	public static final String FONTS_IMAGE_DIRECTORY = "fonts_image/";
+	public static final String FONTS_IMAGE_PERFIX = "fonts_image";
+
 	public static final int RECORD_LIMIT_PROMO_ITEM = 6;
 	public static final int RECORD_LIMIT_POPULAR = 6;
 	public static final int RECORD_LIMIT_NEW_ARRIVAL_ITEM = 6;

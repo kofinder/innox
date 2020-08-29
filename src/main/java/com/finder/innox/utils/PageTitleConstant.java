@@ -13,4 +13,5 @@ public class PageTitleConstant {
 	public static final String STATE_TITLE = "State";
 	public static final String ZONE_TITLE = "Zone";
 	public static final String TOWNSHIP_TITLE = "Township";
+	public static final String FONTS_TITLE = "Fonts";
 }
