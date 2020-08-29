@@ -8,8 +8,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<link rel="stylesheet" href="resources/plugins/toastr/toastr.min.css">
-
 <!-- DataTables -->
 <link rel="stylesheet"
 	href="resources/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -60,118 +58,124 @@
 	<div class="content">
 		<div class="container-fluid">
 
-			<!-- banner setup -->
-			<div class="card card-default">
-				<div class="card-header">
-					<h3 class="card-title">Zone Setup</h3>
 
-					<div class="card-tools">
-						<button type="button" class="btn btn-tool"
-							data-card-widget="collapse">
-							<i class="fas fa-minus"></i>
-						</button>
-					</div>
-				</div>
+			<div class="row">
+				<div class="col-12">
+					<!-- font setup -->
+					<div class="card card-default">
+						<div class="card-header">
+							<h3 class="card-title">State Setup</h3>
 
-				<div class="card-body">
-
-					<form:form role="form" id="zone_setup_form"
-						modelAttribute="zoneDTO" action="zone_setup.html" method="POST"
-						enctype="multipart/form-data">
-						<form:hidden path="seq" />
-
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group" id="zone_name_data">
-									<label for="zoneName">Zone Name</label>
-									<form:input path="zoneName" id="zone_name"
-										placeholder="Zone Name" class="form-control" />
-								</div>
-								<div class="form-group" id="delivery_fee_data">
-									<label for="deliveryFee">Delivery Fee</label>
-									<form:input path="deliveryFee" id="delivery_fee"
-										placeholder="Delivery Fee" class="form-control" />
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="form-group" id="zone_code_data">
-									<label for="zoneCode">Zone Code</label>
-									<form:input path="zoneCode" id="zone_code"
-										placeholder="Zone Code" class="form-control" />
-								</div>
-
-								<div class="form-group" id="description">
-									<label for="zoneCode">Description</label>
-									<form:textarea path="description" rows="3"
-										cssClass="form-control" />
-								</div>
-
-								<div class="form-group" style="text-align: right;">
-									<button type="submit" class="btn btn-primary" onclick="checkZoneSetup()">Save</button>
-								</div>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse">
+									<i class="fas fa-minus"></i>
+								</button>
 							</div>
 						</div>
-					</form:form>
 
-				</div>
-				<!-- /.card-body -->
+						<div class="card-body">
 
-				<!-- state setup -->
-			</div>
+							<form:form role="form" id="zone_setup_form"
+								modelAttribute="zoneDTO" action="zone_setup.html" method="POST"
+								enctype="multipart/form-data">
+								<form:hidden path="seq" />
 
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group" id="zone_name_data">
+											<label for="zoneName">Zone Name</label>
+											<form:input path="zoneName" id="zone_name"
+												placeholder="Zone Name" class="form-control" />
+										</div>
+										<div class="form-group" id="delivery_fee_data">
+											<label for="deliveryFee">Delivery Fee</label>
+											<form:input path="deliveryFee" id="delivery_fee"
+												placeholder="Delivery Fee" class="form-control" />
+										</div>
+									</div>
 
-			<!-- state list -->
-			<div class="card card-default">
-				<div class="card-header">
-					<h3 class="card-title">Zone List</h3>
+									<div class="col-md-6">
+										<div class="form-group" id="zone_code_data">
+											<label for="zoneCode">Zone Code</label>
+											<form:input path="zoneCode" id="zone_code"
+												placeholder="Zone Code" class="form-control" />
+										</div>
 
-					<div class="card-tools">
-						<button type="button" class="btn btn-tool"
-							data-card-widget="collapse">
-							<i class="fas fa-minus"></i>
-						</button>
+										<div class="form-group" id="description">
+											<label for="zoneCode">Description</label>
+											<form:textarea path="description" rows="3"
+												cssClass="form-control" />
+										</div>
+
+										<div class="form-group" style="text-align: right;">
+											<button type="submit" class="btn btn-primary"
+												onclick="checkZoneSetup()">Save</button>
+										</div>
+									</div>
+								</div>
+							</form:form>
+
+						</div>
+						<!-- end zone setup -->
+
+						<!-- zone list -->
+						<div class="card card-default">
+
+							<div class="card-header">
+								<h3 class="card-title">Size List</h3>
+
+								<div class="card-tools">
+									<button type="button" class="btn btn-tool"
+										data-card-widget="collapse">
+										<i class="fas fa-minus"></i>
+									</button>
+								</div>
+							</div>
+
+							<div class="card-body">
+								<div id="example1_wrapper"
+									class="dataTables_wrapper dt-bootstrap4">
+									<table id="example1"
+										class="table table-bordered table-striped dataTable dtr-inline"
+										role="grid" aria-describedby="example1_info">
+
+										<thead>
+											<tr role="row">
+												<td width="5%">Edit</td>
+												<td>No</td>
+												<td>Name</td>
+												<td>Zone Code</td>
+												<td>Delivery Fee</td>
+												<td>Description</td>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${zoneList}" var="zone" varStatus="status">
+												<tr>
+													<td><a href="zone_setup.html?zoneId=${zone.seq}"> <i
+															class="fas fa-edit"></i>
+													</a></td>
+													<td>${status.count}</td>
+													<td>${zone.zoneName}</td>
+													<td>${zone.zoneCode}</td>
+													<td>${zone.deliveryFee}</td>
+													<td>${zone.description}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- end zone list -->
+						</div>
 					</div>
 				</div>
 
-				<div class="card-body">
-					<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-						<table id="example1"
-							class="table table-bordered table-striped dataTable dtr-inline"
-							role="grid" aria-describedby="example1_info">
-
-							<thead>
-								<tr role="row">
-									<td width="5%">Edit</td>
-									<td>No</td>
-									<td>Name</td>
-									<td>Zone Code</td>
-									<td>Delivery Fee</td>
-									<td>Description</td>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${zoneList}" var="z" varStatus="count">
-									<td><a href="zone_setup.html?zoneId=${z.seq}"> <i
-											class="fas fa-edit"></i>
-									</a></td>
-									<td>${count.count}</td>
-									<td>${z.zoneName}</td>
-									<td>${z.zoneCode}</td>
-									<td>${z.deliveryFee}</td>
-									<td>${z.description}</td>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<!-- banner list -->
+				<!-- /.container-fluid -->
 			</div>
-
-
-			<!-- /.container-fluid -->
+			<!-- /.content -->
 		</div>
-		<!-- /.content -->
 	</div>
 </div>
 
@@ -179,9 +183,6 @@
 <script src="resources/plugins/jquery/jquery.min.js"></script>
 <script src="resources/js/validation.js"></script>
 <script src="resources/js/script.js"></script>
-
-<!-- Bootstrap 4 -->
-<script src="resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- DataTables -->
 <script src="resources/plugins/datatables/jquery.dataTables.min.js"></script>

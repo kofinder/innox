@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finder.innox.core.domain.State;
-import com.finder.innox.core.domain.User;
 import com.finder.innox.core.dto.StateDTO;
 import com.finder.innox.core.services.StateService;
-import com.finder.innox.core.services.UserService;
 import com.finder.innox.repository.StateDao;
 import com.finder.innox.repository.UserDao;
 import com.finder.innox.utils.CommonUtil;
@@ -35,7 +33,7 @@ public class StateServiceImpl implements StateService {
 	@Override
 	public StateDTO getStateDataById(long stateId) {
 		logger.info("getStateDataById() >> Start >> State Id : " + stateId);
-		State entity = stateDao.getStateDataById(stateId);
+		State entity = stateDao.get(stateId);
 		if (entity != null) {
 			return new StateDTO(entity);
 		}
@@ -46,7 +44,7 @@ public class StateServiceImpl implements StateService {
 	public List<StateDTO> getStateDataList() {
 		logger.debug("getStateDataList() >> Start");
 		List<State> entityList = stateDao.getStateDataList();
-		if (entityList == null && entityList.isEmpty()) {
+		if (entityList == null || entityList.isEmpty()) {
 			return new ArrayList<StateDTO>();
 		}
 

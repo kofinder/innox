@@ -126,9 +126,9 @@
 						</div>
 						<!-- /.card-body -->
 					</div>
-					<!-- banner setup -->
+					<!-- size setup -->
 
-					<!-- banner list -->
+					<!-- size list -->
 					<div class="card card-default">
 
 						<div class="card-header">
@@ -176,7 +176,7 @@
 								</table>
 							</div>
 						</div>
-						<!-- banner list -->
+						<!-- size list -->
 					</div>
 
 

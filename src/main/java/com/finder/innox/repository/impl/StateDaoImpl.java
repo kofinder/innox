@@ -3,6 +3,7 @@ package com.finder.innox.repository.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.finder.innox.core.domain.State;
@@ -15,6 +16,7 @@ public class StateDaoImpl extends GenericDaoImpl<State, Long> implements StateDa
 	@Override
 	public State getStateDataById(long stateId) {
 		Criteria c = this.getCurrentSession().createCriteria(State.class);
+		c.add(Restrictions.eq("seq", stateId));
 		return (State) c.uniqueResult();
 	}
 
