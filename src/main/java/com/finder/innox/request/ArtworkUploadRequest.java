@@ -30,6 +30,7 @@ public class ArtworkUploadRequest implements Serializable {
 
 			dto.setArtworkName(request.getArtwork_name());
 			dto.setOriginalPrice(request.getOriginal_price());
+			dto.setSellPrice(request.getOriginal_price());
 			dto.setArtworkImage(request.getArtwork_image());
 
 			dto.getArtworkTemplateIdList().addAll(request.getArtwork_templates());

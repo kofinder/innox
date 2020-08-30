@@ -116,12 +116,15 @@ public class CustomProductController {
 		logger.info("CustomProductController :: customProductManage() >> Start");
 		try {
 			// TODO user information from spring security
-
 			CustomProductDTO customProductDto = customProductService.manageCustomProduct(customProductDTO, "");
 			if (customProductDto != null) {
 				attributes.addFlashAttribute(CommonConstant.UI_MESSGAE, MessageEnum.SAVE_SUCCESS.getDesc());
 			} else {
 				attributes.addFlashAttribute(CommonConstant.UI_MESSGAE, MessageEnum.SAVE_FAILED.getDesc());
+			}
+
+			if (customProductDTO.getSeq() > 0) {
+				attributes.addAttribute("customPrdId", customProductDTO.getSeq());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
