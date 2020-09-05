@@ -3,27 +3,41 @@ package com.finder.innox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.finder.innox.core.services.UserService;
+import com.finder.innox.filters.JwtSecurityFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private JwtSecurityFilter jwtRequestFilter;
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		return bCryptPasswordEncoder;
+	}
+
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
 	}
 
 	@Bean
@@ -74,6 +88,23 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.passwordParameter("password")
 				// Config for Logout Page
 				.and().logout().invalidateHttpSession(true).deleteCookies("JSESSIONID").logoutSuccessUrl("/login");
+
+		// Add a filter to validate the tokens with every request
+		http.addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
+//		http
+//        .csrf().disable()
+//        .antMatcher("/**").authorizeRequests()
+//        .antMatchers("/resources/**").permitAll()
+//        .antMatchers("/api/authenticate").permitAll()
+//        .antMatchers("/api/**").hasAnyRole("APIUSER","ADMIN")
+//        .antMatchers("/**").hasRole("ADMIN")
+//    .and()
+//        .formLogin()
+//    .and()
+//        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//    http.sessionManagement().maximumSessions(1).expiredUrl("/login?expired=true");
 	}
 
 	@Override
