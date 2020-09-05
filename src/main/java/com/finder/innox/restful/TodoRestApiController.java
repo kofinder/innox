@@ -1,42 +1,23 @@
 package com.finder.innox.restful;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.finder.innox.annotation.InnoxShopApi;
-import com.finder.innox.exception.ProcessException;
-import com.finder.innox.response.Response;
-import com.finder.innox.utils.JsonUtil;
 
 
-@InnoxShopApi(apiPath = InnoxApiConstant.API_RESOURCES_NAME)
+@InnoxShopApi(apiPath = InnoxApiConstant.API_AUTH_RESOURCES_NAME)
 public class TodoRestApiController {
 
-	private final ApplicationContext ctx;
-
-	@Autowired
-	public TodoRestApiController(final ApplicationContext ctx) {
-		this.ctx = ctx;
-	}
-
-	@CrossOrigin("*")
-	@GetMapping(path = InnoxApiConstant.API_EXECUTE_ENDPOINT)
-	public String execute() {
-		return "hello world";
-	}
-	
-	@GetMapping(path = InnoxApiConstant.API_WELCOME)
-	public String welcomeApi() {
-		String result = "";
-		Response<Object> apiResponse = new Response<>();
-		ProcessException pe = null;
-		
-		apiResponse.setData("Hello World");
-		apiResponse.setResponseMessage("Data retrieval is successful");
-		
-		result = JsonUtil.formatJsonResponse(apiResponse, pe);
-		return result;
+	@RequestMapping(value = "/just", method = RequestMethod.GET)
+	public ResponseEntity<?> justTest() throws Exception {
+		SecurityContext context = SecurityContextHolder.getContext();
+		Authentication a = context.getAuthentication();
+		System.out.println(a.getName());
+		return ResponseEntity.ok("hello world");
 	}
 }

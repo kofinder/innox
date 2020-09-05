@@ -15,11 +15,10 @@ import com.finder.innox.filters.JwtSecurityFilter;
 public class EcoshopApplication extends SpringBootServletInitializer {
 	
 	@Bean
-    public FilterRegistrationBean jwtFilter() {
-        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+    public FilterRegistrationBean<JwtSecurityFilter> jwtFilter() {
+        final FilterRegistrationBean<JwtSecurityFilter> registrationBean = new FilterRegistrationBean<JwtSecurityFilter>();
         registrationBean.setFilter(new JwtSecurityFilter());
-        //registrationBean.setInitParameters(Collections.singletonMap("services.auth", authService));
-        registrationBean.addUrlPatterns("/api/**", "/logout");
+        registrationBean.addUrlPatterns("/api/auth/**", "/logout");
 
         return registrationBean;
     }

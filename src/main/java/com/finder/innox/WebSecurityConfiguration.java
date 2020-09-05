@@ -63,7 +63,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 
 		// The pages does not require login
-		http.authorizeRequests().antMatchers("/register", "/login", "/logout").permitAll();
+		http.authorizeRequests().antMatchers("/register", "/api/v1.0/authenticate", "/login", "/logout").permitAll();
 
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
@@ -91,20 +91,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		// Add a filter to validate the tokens with every request
 		http.addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
-//		http
-//        .csrf().disable()
-//        .antMatcher("/**").authorizeRequests()
-//        .antMatchers("/resources/**").permitAll()
-//        .antMatchers("/api/authenticate").permitAll()
-//        .antMatchers("/api/**").hasAnyRole("APIUSER","ADMIN")
-//        .antMatchers("/**").hasRole("ADMIN")
-//    .and()
-//        .formLogin()
-//    .and()
-//        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//    http.sessionManagement().maximumSessions(1).expiredUrl("/login?expired=true");
+		http.sessionManagement().maximumSessions(1).expiredUrl("/login?expired=true");
 	}
 
 	@Override

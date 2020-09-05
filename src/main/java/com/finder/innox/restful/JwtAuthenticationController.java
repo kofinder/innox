@@ -18,6 +18,7 @@ import com.finder.innox.annotation.InnoxShopApi;
 import com.finder.innox.core.services.UserService;
 import com.finder.innox.restful.model.JwtRequest;
 import com.finder.innox.restful.model.JwtResponse;
+import com.finder.innox.utils.JsonUtil;
 
 @InnoxShopApi(apiPath = InnoxApiConstant.API_RESOURCES_NAME)
 public class JwtAuthenticationController {
@@ -30,9 +31,11 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private UserService userService;
+	
+	
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+	public String createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
@@ -40,7 +43,7 @@ public class JwtAuthenticationController {
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		return JsonUtil.prettyJSON(new JwtResponse(token));
 	}
 
 	private void authenticate(String username, String password) throws Exception {
