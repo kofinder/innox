@@ -8,7 +8,7 @@ public interface StateService {
 	
 	StateDTO getStateDataById(long stateId);
 	
-	List<StateDTO> getStateDataList();
+	List<StateDTO> getStateDataList(int status);
 	
 	StateDTO stateManage(StateDTO stateDTO, String authUserName) throws Exception;
 

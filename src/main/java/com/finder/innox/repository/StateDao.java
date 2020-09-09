@@ -8,6 +8,6 @@ public interface StateDao extends GenericDao<State, Long>{
 	
 	State getStateDataById(long stateId);
 	
-	List<State> getStateDataList();
+	List<State> getStateDataList(int status);
 
 }

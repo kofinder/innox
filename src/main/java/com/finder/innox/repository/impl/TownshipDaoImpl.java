@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.finder.innox.core.domain.Township;
@@ -17,6 +18,15 @@ public class TownshipDaoImpl extends GenericDaoImpl<Township, Long> implements T
 	public List<Township> searchTownshipList() {
 		Criteria c = this.getCurrentSession().createCriteria(Township.class);
 		c.addOrder(Order.asc("townshipName"));
+		return c.list();
+	}
+
+	@Override
+	public List<Township> getTownshipListByState(Long stateId) {
+		Criteria c = this.getCurrentSession().createCriteria(Township.class);
+		if (stateId != null && stateId > 0) {
+			c.add(Restrictions.eq("state.seq", stateId));
+		}
 		return c.list();
 	}
 }

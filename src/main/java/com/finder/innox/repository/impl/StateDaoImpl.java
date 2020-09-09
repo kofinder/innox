@@ -21,8 +21,11 @@ public class StateDaoImpl extends GenericDaoImpl<State, Long> implements StateDa
 	}
 
 	@Override
-	public List<State> getStateDataList() {
+	public List<State> getStateDataList(int status) {
 		Criteria c = this.getCurrentSession().createCriteria(State.class);
+		if (status > 0) {
+			c.add(Restrictions.eq("status", status));
+		}
 		return c.list();
 	}
 

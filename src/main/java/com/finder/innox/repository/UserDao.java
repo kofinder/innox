@@ -4,15 +4,16 @@ import java.util.List;
 
 import com.finder.innox.core.domain.User;
 
+public interface UserDao extends GenericDao<User, Long> {
 
-public interface UserDao extends GenericDao<User, Integer>{
-	
 	List<User> getAllUser();
-	
-	User findByUserName(String userName);
-	
+
+	User findByUserName(String userName, int userRole);
+
 	User findByEmail(String email);
-	
+
 	List<User> getDesignerList();
+
+	User findByPhoneNo(String phoneNo);
 
 }

@@ -15,6 +15,8 @@ public class UserDTO {
 	private String password;
 
 	private String email;
+	
+	private String phoneNo;
 
 	private int status;
 
@@ -48,6 +50,7 @@ public class UserDTO {
 			this.userName = user.getUserName();
 			this.password = user.getPassword();
 			this.email = user.getEmail();
+			this.phoneNo = user.getPhoneNo();
 			this.status = user.getStatus() == null ? CommonStatus.ACTIVE.getCode() : user.getStatus();
 			this.avatar = user.getAvatar();
 			this.draftFlag = user.getDraftFlag() == null ? false : user.getDraftFlag();
@@ -179,5 +182,15 @@ public class UserDTO {
 	public void setUserRoleLevel(int userRoleLevel) {
 		this.userRoleLevel = userRoleLevel;
 	}
+
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+	
+	
 
 }

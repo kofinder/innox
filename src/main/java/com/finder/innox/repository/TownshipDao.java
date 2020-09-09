@@ -7,5 +7,7 @@ import com.finder.innox.core.domain.Township;
 public interface TownshipDao extends GenericDao<Township, Long> {
 
 	List<Township> searchTownshipList();
+	
+	List<Township> getTownshipListByState(Long stateId);
 
 }

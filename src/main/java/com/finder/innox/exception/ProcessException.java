@@ -11,13 +11,16 @@ public class ProcessException extends Exception {
 	private ErrorType errorType;
 
 	private List<FieldError> fieldErrorList;
-	
+
 	public ProcessException(ErrorType errorType) {
 		super(errorType.getDescription());
 		this.setErrorType(errorType);
 	}
 
 	public enum ErrorType {
+		UNAUTHORIZED("401", "UnAuthorized Request"),
+		INVALID_CREDENTIALS("400", "Invalid Credentials"),
+		USER_DISABLED("4001", "User account disabled"),
 		GENERAL("-1", "General application exception occurred while processing client request."),
 		LOGIN_FAIL("-1", "Username or Password is incorrect."), INVALID_DATA("-1", "Invalid Data"),
 		MULTIPLE_ERROR("1000", ""), INVALID_SESSION("1001", "Invalid Session!"),

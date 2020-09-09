@@ -63,7 +63,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 
 		// The pages does not require login
-		http.authorizeRequests().antMatchers("/register", "/api/v1.0/authenticate", "/login", "/logout").permitAll();
+		http.authorizeRequests().antMatchers("/register", "/login", "/logout").permitAll();
 
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
@@ -98,6 +98,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/*.css");
 		web.ignoring().antMatchers("/*.js");
+		web.ignoring().antMatchers("/resources/img/**");
+		web.ignoring().antMatchers("/api/v1.0/**");
 	}
 
 }

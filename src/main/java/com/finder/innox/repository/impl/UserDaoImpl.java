@@ -14,7 +14,7 @@ import com.finder.innox.utils.UserRoleEnum;
 
 @SuppressWarnings({ "deprecation", "unchecked" })
 @Repository
-public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements UserDao {
+public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -27,9 +27,14 @@ public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements UserDa
 	}
 
 	@Override
-	public User findByUserName(String userName) {
+	public User findByUserName(String userName, int userRole) {
 		Criteria c = this.sessionFactory.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.eq("userName", userName));
+
+		if (userRole > 0) {
+			c.add(Restrictions.eq("userRoleLevel", userRole));
+		}
+
 		c.setMaxResults(1);
 
 		Object usr = c.uniqueResult();
@@ -48,6 +53,13 @@ public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements UserDa
 		Criteria c = this.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.eq("userRoleLevel", UserRoleEnum.ROLE_DESIGNER.getCode()));
 		return c.list();
+	}
+
+	@Override
+	public User findByPhoneNo(String phoneNo) {
+		Criteria c = this.getCurrentSession().createCriteria(User.class);
+		c.add(Restrictions.eq("phoneNo", phoneNo));
+		return (User) c.uniqueResult();
 	}
 
 }

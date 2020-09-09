@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.finder.innox.core.domain.User;
 import com.finder.innox.core.dto.UserDTO;
+import com.finder.innox.request.UserRegisterRequest;
 
 public interface UserService extends UserDetailsService {
 
@@ -17,6 +18,12 @@ public interface UserService extends UserDetailsService {
 
 	List<UserDTO> getDesignerList();
 
-	UserDTO findByName(String userName);
+	UserDTO findByName(String userName, int userRole);
 
+	boolean isUserNameAlreadExist(String userName, int userRole);
+
+	UserDTO findByPhoneNo(String phoneNo);
+
+	UserDTO userRegister(UserRegisterRequest registerRequest) throws Exception;
+	
 }

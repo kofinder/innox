@@ -19,6 +19,7 @@ import com.finder.innox.core.dto.TownshipDTO;
 import com.finder.innox.core.services.TownshipService;
 import com.finder.innox.repository.TownshipDao;
 import com.finder.innox.repository.UserDao;
+import com.finder.innox.utils.UserRoleEnum;
 
 @Service
 @Transactional
@@ -68,7 +69,7 @@ public class TownshipServiceImpl implements TownshipService {
 			township.setCreatedTime(new Date());
 		}
 
-		User user = userDao.findByUserName(authUserName);
+		User user = userDao.findByUserName(authUserName, UserRoleEnum.ROLE_ADMIN.getCode());
 		if (user != null) {
 			township.setUser(user);
 		}
@@ -87,5 +88,21 @@ public class TownshipServiceImpl implements TownshipService {
 		townshipDao.saveOrUpdate(township);
 		logger.info("townshipManage() >> End");
 		return new TownshipDTO(townshipDao.get(township.getSeq()));
+	}
+
+	@Override
+	public List<TownshipDTO> getTownshipListByState(Long stateId) {
+		logger.info("getTownshipListByState() >> State Id : " + stateId);
+		List<Township> entityList = townshipDao.getTownshipListByState(stateId);
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<TownshipDTO>();
+		}
+
+		List<TownshipDTO> dtoList = new ArrayList<TownshipDTO>();
+		entityList.forEach(township -> {
+			dtoList.add(new TownshipDTO(township));
+		});
+		logger.info("getTownshipListByState() >> State List : " + dtoList.size());
+		return dtoList;
 	}
 }

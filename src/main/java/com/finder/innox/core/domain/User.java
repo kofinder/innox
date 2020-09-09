@@ -40,6 +40,9 @@ public class User implements Serializable {
 	@Column(name = "email")
 	private String email;
 
+	@Column(name = "phone_no")
+	private String phoneNo;
+
 	@Column(name = "status")
 	private Integer status;
 
@@ -192,6 +195,14 @@ public class User implements Serializable {
 
 	public void setUserRoleLevel(Integer userRoleLevel) {
 		this.userRoleLevel = userRoleLevel;
+	}
+
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
 	}
 
 }

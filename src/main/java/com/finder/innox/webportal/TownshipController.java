@@ -73,7 +73,7 @@ public class TownshipController {
 
 	private void commonModelSetup(Model model) {
 		model.addAttribute("pageTitle", PageTitleConstant.TOWNSHIP_TITLE);
-		model.addAttribute("stateList", stateService.getStateDataList());
+		model.addAttribute("stateList", stateService.getStateDataList(0));
 		model.addAttribute("zoneList", zoneService.getAllZoneList());
 		model.addAttribute("townshipList", townshipService.searchTownshipList());
 	}

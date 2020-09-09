@@ -20,5 +20,10 @@ public interface InnoxApiConstant {
 	public static String API_ARTWORK_LIST_BY_CATEGORY = "/artworks_by_category";
 	public static String API_ARTWORK_LIST_BY_DESIGNER = "/artworks_by_designer";
 	public static String API_FONT_LIST = "/fonts";
+	
+	public static String API_STATE_LIST = "/states";
+	public static String API_TOWNSHIP_LIST = "/townships";
+	
+	public static String API_USER_REGISTER = "/user/register";
 
 }

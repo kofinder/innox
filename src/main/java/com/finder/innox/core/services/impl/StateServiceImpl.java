@@ -17,6 +17,7 @@ import com.finder.innox.core.services.StateService;
 import com.finder.innox.repository.StateDao;
 import com.finder.innox.repository.UserDao;
 import com.finder.innox.utils.CommonUtil;
+import com.finder.innox.utils.UserRoleEnum;
 
 @Service
 @Transactional
@@ -41,9 +42,9 @@ public class StateServiceImpl implements StateService {
 	}
 
 	@Override
-	public List<StateDTO> getStateDataList() {
+	public List<StateDTO> getStateDataList(int status) {
 		logger.debug("getStateDataList() >> Start");
-		List<State> entityList = stateDao.getStateDataList();
+		List<State> entityList = stateDao.getStateDataList(status);
 		if (entityList == null || entityList.isEmpty()) {
 			return new ArrayList<StateDTO>();
 		}
@@ -73,7 +74,7 @@ public class StateServiceImpl implements StateService {
 		state.setStateNo(stateDTO.getStateNo());
 
 		if (!CommonUtil.isEmpty(authUserName)) {
-			state.setUser(userDao.findByUserName(authUserName));
+			state.setUser(userDao.findByUserName(authUserName, UserRoleEnum.ROLE_ADMIN.getCode()));
 		}
 
 		stateDao.saveOrUpdate(state);

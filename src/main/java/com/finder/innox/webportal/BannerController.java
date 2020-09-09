@@ -22,6 +22,7 @@ import com.finder.innox.core.services.UserService;
 import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.PageTitleConstant;
+import com.finder.innox.utils.UserRoleEnum;
 
 @Controller
 public class BannerController {
@@ -62,7 +63,7 @@ public class BannerController {
 		try {
 			Principal principal = request.getUserPrincipal();
 			if (principal != null) {
-				UserDTO usetDto = userService.findByName(principal.getName());
+				UserDTO usetDto = userService.findByName(principal.getName(), UserRoleEnum.ROLE_ADMIN.getCode());
 				bannerDTO.setUserDTO(usetDto);
 			}
 			BannerDTO bannerDto = bannerService.saveBanner(bannerDTO);

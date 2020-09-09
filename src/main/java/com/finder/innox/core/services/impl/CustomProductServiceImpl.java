@@ -23,6 +23,7 @@ import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.ImagesUtil;
+import com.finder.innox.utils.UserRoleEnum;
 
 @Service
 @Transactional
@@ -39,7 +40,7 @@ public class CustomProductServiceImpl implements CustomProductService {
 	@Override
 	public CustomProductDTO manageCustomProduct(CustomProductDTO customProductDTO, String loginUserName) throws Exception {
 		// get login user info
-		User createdBy = userDao.findByUserName(loginUserName);
+		User createdBy = userDao.findByUserName(loginUserName, UserRoleEnum.ROLE_ADMIN.getCode());
 
 		// manage custom product
 		CustomProduct customProduct = null;

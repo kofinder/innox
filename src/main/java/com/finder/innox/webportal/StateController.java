@@ -65,7 +65,7 @@ public class StateController {
 
 	private void commonModelSetup(Model model) {
 		model.addAttribute("pageTitle", PageTitleConstant.STATE_TITLE);
-		model.addAttribute("stateList", stateService.getStateDataList());
+		model.addAttribute("stateList", stateService.getStateDataList(0));
 	}
 
 }

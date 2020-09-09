@@ -12,4 +12,6 @@ public interface TownshipService {
 
 	TownshipDTO townshipManage(TownshipDTO townshipDTO, String authUserName) throws Exception;
 
+	List<TownshipDTO> getTownshipListByState(Long stateId);
+
 }
