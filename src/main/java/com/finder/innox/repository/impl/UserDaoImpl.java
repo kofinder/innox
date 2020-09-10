@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.finder.innox.core.domain.User;
 import com.finder.innox.repository.UserDao;
+import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.UserRoleEnum;
 
 @SuppressWarnings({ "deprecation", "unchecked" })
@@ -52,6 +53,7 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 	public List<User> getDesignerList() {
 		Criteria c = this.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.eq("userRoleLevel", UserRoleEnum.ROLE_DESIGNER.getCode()));
+		c.add(Restrictions.eq("status", CommonStatus.ACTIVE.getCode()));
 		return c.list();
 	}
 
