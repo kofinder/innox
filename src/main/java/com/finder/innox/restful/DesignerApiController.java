@@ -42,7 +42,7 @@ public class DesignerApiController {
 			designerResponse.setDesigner_name(designer.getUserName());
 			designerResponse.setDesigner_avatar(CommonUtil.prepareImagePath(designer.getAvatar(), request));
 
-			designerListResponse.getDesigners().add(designerResponse);
+			designerListResponse.getArtwork_designers().add(designerResponse);
 		});
 
 		apiResponse.setData(designerListResponse);

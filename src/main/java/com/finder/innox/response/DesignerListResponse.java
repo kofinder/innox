@@ -8,14 +8,14 @@ public class DesignerListResponse implements Serializable {
 
 	private static final long serialVersionUID = -5307486619558107296L;
 
-	private List<DesignerResponse> designers = new ArrayList<DesignerResponse>();
+	private List<DesignerResponse> artwork_designers = new ArrayList<DesignerResponse>();
 
-	public List<DesignerResponse> getDesigners() {
-		return designers;
+	public List<DesignerResponse> getArtwork_designers() {
+		return artwork_designers;
 	}
 
-	public void setDesigners(List<DesignerResponse> designers) {
-		this.designers = designers;
+	public void setArtwork_designers(List<DesignerResponse> artwork_designers) {
+		this.artwork_designers = artwork_designers;
 	}
 
 }
