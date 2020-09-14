@@ -30,6 +30,7 @@ public interface InnoxApiConstant {
 	public static String API_TOWNSHIP_LIST = "/townships";
 
 	public static String API_USER_REGISTER = "/user/register";
+	public static String API_UPDATE_ADD_TO_CARD = "/shopping/update_add_to_cart";
 	public static String API_INSTOCK_ADD_TO_CARD = "/shopping/instock_add_to_cart";
 	public static String API_CUSTOM_ADD_TO_CARD = "/shopping/custom_add_to_cart";
 

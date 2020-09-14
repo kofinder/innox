@@ -107,7 +107,7 @@ public class ArtworkApiController {
 		List<ArtworkCategoryDTO> categoryDtoList = artworkCategroyService.getArtworkCategoryList();
 		categoryDtoList.forEach(dto -> {
 			ArtworkCategoryResponse artworkCategory = new ArtworkCategoryResponse();
-			artworkCategory.setCategroy_id(dto.getSeq());
+			artworkCategory.setCategory_id(dto.getSeq());
 			artworkCategory.setCategory_name(dto.getCategoryName());
 			artworkCategory.setCategory_code(dto.getCateogryCode());
 

@@ -92,7 +92,7 @@ public class ProductDTO implements Serializable {
 			this.subCategoryDTO = new SubCategoryDTO(product.getSubCategory());
 			this.name = product.getName();
 			this.codeNumber = product.getCodeNumber();
-			this.price = product.getPrice();
+			this.price = product.getPrice() == null ? BigDecimal.ZERO : product.getPrice();
 			this.originalPrice = product.getOriginalPrice() == null ? BigDecimal.ZERO : product.getOriginalPrice();
 			this.discountPercent = product.getDiscountPercent() == null ? 0.00 : product.getDiscountPercent();
 			this.quantity = product.getQuantity() == null ? 0 : product.getQuantity();
@@ -102,7 +102,7 @@ public class ProductDTO implements Serializable {
 			this.status = product.getStatus() == null ? CommonStatus.INACTIVE.getCode() : product.getStatus();
 			this.overview = product.getOverview();
 			this.detail = product.getDetail();
-			this.priceDesc = CommonUtil.formatBigDecimalAsCurrency(product.getPrice(), CommonConstant.CURRENCY_CODE_KS);
+			this.priceDesc = CommonUtil.formatBigDecimalAsCurrency(this.price, CommonConstant.CURRENCY_CODE_KS);
 			this.imagePath1 = product.getImagePath1();
 			this.imagePath2 = product.getImagePath2();
 			this.imagePath3 = product.getImagePath3();
@@ -110,15 +110,19 @@ public class ProductDTO implements Serializable {
 			this.size = product.getSize();
 			this.color = product.getColor();
 
-			product.getProductColorList().forEach(color -> {
-				prdColorList.add(color.getColor().getSeq());
-				productColorList.add(new ColorDTO(color.getColor()));
-			});
+			if (product.getProductColorList() != null) {
+				product.getProductColorList().forEach(color -> {
+					prdColorList.add(color.getColor().getSeq());
+					productColorList.add(new ColorDTO(color.getColor()));
+				});
+			}
 
-			product.getProductSizeList().forEach(size -> {
-				prdSizeList.add(size.getSize().getSeq());
-				productSizeList.add(new SizeDTO(size.getSize()));
-			});
+			if (product.getProductSizeList() != null) {
+				product.getProductSizeList().forEach(size -> {
+					prdSizeList.add(size.getSize().getSeq());
+					productSizeList.add(new SizeDTO(size.getSize()));
+				});
+			}
 
 		}
 	}

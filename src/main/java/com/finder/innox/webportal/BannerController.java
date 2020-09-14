@@ -63,8 +63,8 @@ public class BannerController {
 		try {
 			Principal principal = request.getUserPrincipal();
 			if (principal != null) {
-				UserDTO usetDto = userService.findByName(principal.getName(), UserRoleEnum.ROLE_ADMIN.getCode());
-				bannerDTO.setUserDTO(usetDto);
+				UserDTO userDto = userService.findByName(principal.getName(), UserRoleEnum.ROLE_ADMIN.getCode());
+				bannerDTO.setUserDTO(userDto);
 			}
 			BannerDTO bannerDto = bannerService.saveBanner(bannerDTO);
 			if (bannerDto != null) {

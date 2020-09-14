@@ -15,7 +15,8 @@ public class FieldError {
 	public enum FieldCode {
 		CUSTOMER_ID("2000"), PAGE_NO("2001"), CATEGORY_ID("2002"), SUB_CATEGORY_ID("2003"), PRODUCT_ID("2004"),
 		ARTWORK("2005"), DESIGNER("2006"), ARTWORK_CATEGORY("2007"), CUSTOM_PRODUCT_ID("2008"), USER_NAME("2009"),
-		PHONE_NO("2010"), PASSWORD("2011");
+		PHONE_NO("2010"), PASSWORD("2011"), COLOR_ID("2012"), SIZE_ID("2013"), QUANTITY_REQUIRED("2014"),
+		SHOPPING_CART_ID("2015");
 
 		private String code;
 
@@ -37,7 +38,9 @@ public class FieldError {
 		ARTWORK_IMAGE_REQUIRED("Artwork image is required"), ARTWORK_CATEGORY_REQUIRED("Artwork category is required"),
 		CUSTOM_PRODUCT_ID_REQUIRED("Custom product is is required"), USER_NAME_REQUIRED("User name is required"),
 		PHONE_NO_REQUIRED("Phone no is required"), PASSWORD_REQUIRED("Password is required"),
-		PASSWORD_NOT_MATCH("Password does not match");
+		PASSWORD_NOT_MATCH("Password does not match"), COLOR_ID_REQUIRED("Color is is required"),
+		SIZE_ID_REQUIRED("Size id is required"), QUANTITY_REQUIRED("Quantity is required"),
+		SHOPPING_CART_ID_REQUIRED("Shopping cart id is required");
 
 		private String message;
 

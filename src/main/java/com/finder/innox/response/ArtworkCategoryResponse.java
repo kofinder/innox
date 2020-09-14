@@ -6,18 +6,21 @@ public class ArtworkCategoryResponse implements Serializable {
 
 	private static final long serialVersionUID = -3695447382925647554L;
 
-	private long categroy_id;
+	private long category_id;
 
 	private String category_name;
 
 	private String category_code;
+	
+	
 
-	public long getCategroy_id() {
-		return categroy_id;
+
+	public long getCategory_id() {
+		return category_id;
 	}
 
-	public void setCategroy_id(long categroy_id) {
-		this.categroy_id = categroy_id;
+	public void setCategory_id(long category_id) {
+		this.category_id = category_id;
 	}
 
 	public String getCategory_name() {

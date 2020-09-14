@@ -27,6 +27,7 @@ import com.finder.innox.core.services.UserService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
 import com.finder.innox.response.Response;
+import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.JsonUtil;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -81,15 +82,20 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 
 			} catch (IllegalArgumentException e) {
 				System.out.println("Unable to get JWT Token");
+				createResposenData(response, HttpStatus.UNAUTHORIZED, "Unable to get JWT Token!",
+						ErrorType.UNAUTHORIZED);
 			} catch (ExpiredJwtException e) {
 				System.out.println("JWT Token has expired");
+				createResposenData(response, HttpStatus.UNAUTHORIZED, "JWT Token has been expired!",
+						ErrorType.UNAUTHORIZED);
 			}
 		} else {
 			createResposenData(response, HttpStatus.UNAUTHORIZED, "Bearer token is required!", ErrorType.UNAUTHORIZED);
 		}
 
 		// Once we get the token validate it.
-		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+		System.out.println(">>> SecurityContextHolder >> " + SecurityContextHolder.getContext().getAuthentication());
+		if (!CommonUtil.isEmpty(username)) {
 
 			UserDetails userDetails = this.userService.loadUserByUsername(username);
 
@@ -148,7 +154,10 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
+		response.setStatus(responseStatus.value());
 		out.print(result);
 		out.flush();
+		out.close();
+		response.sendError(responseStatus.value(), errorMsg);
 	}
 }
