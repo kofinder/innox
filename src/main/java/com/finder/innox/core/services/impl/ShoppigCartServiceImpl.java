@@ -1,6 +1,7 @@
 package com.finder.innox.core.services.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -102,6 +103,26 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 				CommonUtil.formatBigDecimalAsCurrency(totalAmount, CommonConstant.CURRENCY_CODE_KS));
 
 		return shoppingCartDTO;
+	}
+
+	@Override
+	public List<ShoppingCartDTO> getShoppingCartListByCusId(long customerId) {
+		logger.info("getShoppingCartListByCusId() >> Start >> Customer Id : " + customerId);
+		List<ShoppingCart> entityList = cartDao.getShoppingCartDataByIds(customerId, 0, 0);
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<ShoppingCartDTO>();
+		}
+
+		List<ShoppingCartDTO> dtoList = new ArrayList<ShoppingCartDTO>();
+		entityList.forEach(cart -> {
+			ShoppingCartDTO dto = new ShoppingCartDTO(cart);
+			if (dto.getProductDTO() != null) {
+				dto.setProductSubTotal(dto.getProductDTO().getPrice().multiply(new BigDecimal(dto.getQuantity())));
+				dtoList.add(dto);
+			}
+		});
+
+		return dtoList;
 	}
 
 }

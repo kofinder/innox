@@ -27,6 +27,8 @@ public class ShoppingCartDTO implements Serializable {
 
 	private String totalAmountText;
 
+	private BigDecimal productSubTotal;
+
 	public ShoppingCartDTO() {
 		super();
 	}
@@ -112,6 +114,14 @@ public class ShoppingCartDTO implements Serializable {
 
 	public void setTotalAmountText(String totalAmountText) {
 		this.totalAmountText = totalAmountText;
+	}
+
+	public BigDecimal getProductSubTotal() {
+		return productSubTotal;
+	}
+
+	public void setProductSubTotal(BigDecimal productSubTotal) {
+		this.productSubTotal = productSubTotal;
 	}
 
 }

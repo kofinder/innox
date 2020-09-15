@@ -1,5 +1,6 @@
 package com.finder.innox.restful;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -22,6 +24,10 @@ import com.finder.innox.exception.ProcessException.ErrorType;
 import com.finder.innox.request.InstockShoppingCartRequest;
 import com.finder.innox.response.AddToCartResponse;
 import com.finder.innox.response.Response;
+import com.finder.innox.response.ShoppingCartListResponse;
+import com.finder.innox.response.ShoppingCartResponse;
+import com.finder.innox.utils.CommonConstant;
+import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.FieldError;
 import com.finder.innox.utils.FieldError.ErrorMessage;
 import com.finder.innox.utils.FieldError.FieldCode;
@@ -116,6 +122,39 @@ public class ShoppingCartApiController {
 			logger.error("updateAddToCart() >> " + e.getMessage(), e);
 			pe = new ProcessException(ErrorType.GENERAL);
 		}
+
+		result = JsonUtil.formatJsonResponse(apiResponse, pe);
+		return result;
+	}
+
+	@GetMapping(path = InnoxApiConstant.API_SHOPPING_CART_LIST)
+	public String getShoppingCartList(HttpServletRequest request) {
+		String result = "";
+		ProcessException pe = null;
+		Response<ShoppingCartListResponse> apiResponse = new Response<ShoppingCartListResponse>();
+		Principal principal = request.getUserPrincipal();
+		long customerId = 0;
+		if (principal != null) {
+			UserDTO userDto = userService.findByName(principal.getName(), UserRoleEnum.ROLE_USER.getCode());
+			customerId = userDto.getSeq();
+		}
+
+		ShoppingCartListResponse response = new ShoppingCartListResponse();
+		BigDecimal totalAmount = BigDecimal.ZERO;
+		List<ShoppingCartDTO> cartDtos = shoppingCartService.getShoppingCartListByCusId(customerId);
+		for (ShoppingCartDTO cart : cartDtos) {
+			ShoppingCartResponse cartResponse = ShoppingCartResponse.transferDtoToResponseData(cart, request);
+			response.getShopping_carts().add(cartResponse);
+
+			totalAmount = totalAmount.add(cart.getProductSubTotal());
+		}
+
+		response.setTotal_amount(totalAmount);
+		response.setTotal_amount_text(
+				CommonUtil.formatBigDecimalAsCurrency(response.getTotal_amount(), CommonConstant.CURRENCY_CODE_KS));
+
+		apiResponse.setData(response);
+		apiResponse.setResponseMessage("Data retrieval is success!");
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
 		return result;
