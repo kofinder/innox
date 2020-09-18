@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,7 +46,7 @@ public class ShoppingCartApiController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CARD)
+	@PostMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
 	public String instockProductAddToCart(@RequestBody InstockShoppingCartRequest requestData,
 			HttpServletRequest httpRequest) {
 		String result = "";
@@ -86,7 +87,7 @@ public class ShoppingCartApiController {
 		return result;
 	}
 
-	@PostMapping(path = InnoxApiConstant.API_UPDATE_ADD_TO_CARD)
+	@PostMapping(path = InnoxApiConstant.API_UPDATE_ADD_TO_CART)
 	public String updateAddToCart(@RequestBody InstockShoppingCartRequest updateCartRequest,
 			HttpServletRequest request) {
 		String result = "";
@@ -155,6 +156,47 @@ public class ShoppingCartApiController {
 
 		apiResponse.setData(response);
 		apiResponse.setResponseMessage("Data retrieval is success!");
+
+		result = JsonUtil.formatJsonResponse(apiResponse, pe);
+		return result;
+	}
+
+	@PostMapping(path = InnoxApiConstant.API_DELETE_CART)
+	public String deleteShoppingCarts(@RequestBody Map<String, List<Long>> cart_ids, HttpServletRequest request) {
+		String result = "";
+		ProcessException pe = null;
+		Response<ShoppingCartListResponse> apiResponse = new Response<ShoppingCartListResponse>();
+
+		try {
+			Principal principal = request.getUserPrincipal();
+			long customerId = 0;
+			if (principal != null) {
+				UserDTO userDto = userService.findByName(principal.getName(), UserRoleEnum.ROLE_USER.getCode());
+				customerId = userDto.getSeq();
+			}
+
+			ShoppingCartListResponse response = new ShoppingCartListResponse();
+			BigDecimal totalAmount = BigDecimal.ZERO;
+			List<ShoppingCartDTO> cartDtos = shoppingCartService.deleteShoppingCarts(cart_ids.get("cart_ids"),
+					customerId);
+			for (ShoppingCartDTO cart : cartDtos) {
+				ShoppingCartResponse cartResponse = ShoppingCartResponse.transferDtoToResponseData(cart, request);
+				response.getShopping_carts().add(cartResponse);
+
+				totalAmount = totalAmount.add(cart.getProductSubTotal());
+			}
+
+			response.setTotal_amount(totalAmount);
+			response.setTotal_amount_text(
+					CommonUtil.formatBigDecimalAsCurrency(response.getTotal_amount(), CommonConstant.CURRENCY_CODE_KS));
+
+			apiResponse.setData(response);
+			apiResponse.setResponseMessage("Shopping cart delete is success!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("deleteShoppingCarts() >> " + e.getMessage(), e);
+			pe = new ProcessException(ErrorType.GENERAL);
+		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
 		return result;

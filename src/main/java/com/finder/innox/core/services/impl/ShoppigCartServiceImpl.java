@@ -125,4 +125,13 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 		return dtoList;
 	}
 
+	@Override
+	public List<ShoppingCartDTO> deleteShoppingCarts(List<Long> cartIds, long customerId) throws Exception {
+		logger.info("deleteShoppingCarts() Start >> Cart Id List >> " + cartIds.size());
+		cartIds.forEach(id -> {
+			cartDao.deleteShoppingCard(id);
+		});
+		return this.getShoppingCartListByCusId(customerId);
+	}
+
 }

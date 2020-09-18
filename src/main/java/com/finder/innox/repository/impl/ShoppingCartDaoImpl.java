@@ -65,4 +65,11 @@ public class ShoppingCartDaoImpl extends GenericDaoImpl<ShoppingCart, Long> impl
 		return c.list();
 	}
 
+	@Override
+	public void deleteShoppingCard(long cartId) {
+		String sqlStr = "DELETE FROM `shopping_cart` WHERE id = " + cartId;
+		Query query = this.getCurrentSession().createSQLQuery(sqlStr);
+		query.executeUpdate();
+	}
+
 }
