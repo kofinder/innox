@@ -4,4 +4,6 @@ import com.finder.innox.core.domain.UserAddress;
 
 public interface UserAddressDao extends GenericDao<UserAddress, Long> {
 
+	UserAddress getUserAddressByUserId(long userId);
+
 }

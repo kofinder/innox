@@ -18,6 +18,8 @@ public class UserAddressDTO implements Serializable {
 
 	private boolean isPrimaryAddress;
 
+	private UserDTO userDTO;
+
 	public UserAddressDTO() {
 		super();
 	}
@@ -28,7 +30,8 @@ public class UserAddressDTO implements Serializable {
 			this.stateDTO = new StateDTO(address.getState());
 			this.townshipDTO = new TownshipDTO(address.getTownship());
 			this.detailAddress = address.getDetailAddress();
-			this.isPrimaryAddress = address.getIsPrimaryAddress();
+			this.isPrimaryAddress = address.getIsPrimaryAddress() == null ? true : address.getIsPrimaryAddress();
+			this.userDTO = new UserDTO(address.getUser());
 		}
 	}
 
@@ -70,6 +73,14 @@ public class UserAddressDTO implements Serializable {
 
 	public void setPrimaryAddress(boolean isPrimaryAddress) {
 		this.isPrimaryAddress = isPrimaryAddress;
+	}
+
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 
 }

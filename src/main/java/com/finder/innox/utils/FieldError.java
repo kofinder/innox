@@ -16,7 +16,8 @@ public class FieldError {
 		CUSTOMER_ID("2000"), PAGE_NO("2001"), CATEGORY_ID("2002"), SUB_CATEGORY_ID("2003"), PRODUCT_ID("2004"),
 		ARTWORK("2005"), DESIGNER("2006"), ARTWORK_CATEGORY("2007"), CUSTOM_PRODUCT_ID("2008"), USER_NAME("2009"),
 		PHONE_NO("2010"), PASSWORD("2011"), COLOR_ID("2012"), SIZE_ID("2013"), QUANTITY_REQUIRED("2014"),
-		SHOPPING_CART_ID("2015");
+		SHOPPING_CART_ID("2015"), USER_ROLE("2016"), STATE_ID("2017"), TOWNSHIP("2018"), ADDRESS("2019"),
+		DUPLICATE_NAME("2020");
 
 		private String code;
 
@@ -40,7 +41,9 @@ public class FieldError {
 		PHONE_NO_REQUIRED("Phone no is required"), PASSWORD_REQUIRED("Password is required"),
 		PASSWORD_NOT_MATCH("Password does not match"), COLOR_ID_REQUIRED("Color is is required"),
 		SIZE_ID_REQUIRED("Size id is required"), QUANTITY_REQUIRED("Quantity is required"),
-		SHOPPING_CART_ID_REQUIRED("Shopping cart id is required");
+		SHOPPING_CART_ID_REQUIRED("Shopping cart id is required"), USER_ROLE_REQUIRED("User role is required"),
+		STATE_ID_REQUIRED("State id is required"), TOWNSHIP_ID_REQUIRED("Township id is reduired"),
+		ADDRESS_REQUIRED("Detail address is required"), DUPLICATE_NAME("User name is already use by someone!");
 
 		private String message;
 

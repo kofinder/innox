@@ -38,7 +38,7 @@ public class JwtAuthenticationController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/token", method = RequestMethod.POST)
+	@RequestMapping(value = InnoxApiConstant.API_USER_LOGIN, method = RequestMethod.POST)
 	public String createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 		String result = "";
 		String token = "";

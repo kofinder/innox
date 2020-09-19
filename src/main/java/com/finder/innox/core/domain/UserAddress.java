@@ -28,6 +28,10 @@ public class UserAddress extends CommonEntity implements Serializable {
 	@Column(name = "is_primary_address")
 	private Boolean isPrimaryAddress;
 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
 	public State getState() {
 		return state;
 	}
@@ -58,6 +62,14 @@ public class UserAddress extends CommonEntity implements Serializable {
 
 	public void setIsPrimaryAddress(Boolean isPrimaryAddress) {
 		this.isPrimaryAddress = isPrimaryAddress;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

@@ -15,12 +15,10 @@ import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.FeatureEnum;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({ "deprecation", "unchecked" })
 @Repository
-public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements CategoryDao{
+public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements CategoryDao {
 
-	
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> getAllCategoryList() {
 		Criteria c = this.getCurrentSession().createCriteria(Category.class);
@@ -28,27 +26,25 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements C
 		return c.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> searchCategoryByData(CategoryDTO categoryDTO) {
 		Criteria c = this.getCurrentSession().createCriteria(Category.class);
-		
-		if(!CommonUtil.isEmpty(categoryDTO.getName())) {
+
+		if (!CommonUtil.isEmpty(categoryDTO.getName())) {
 			c.add(Restrictions.like("name", categoryDTO.getName(), MatchMode.ANYWHERE));
 		}
-		
-		if(categoryDTO.getSequenceNo() > 0) {
+
+		if (categoryDTO.getSequenceNo() > 0) {
 			c.add(Restrictions.eq("sequence", categoryDTO.getSequenceNo()));
 		}
-		
-		if(categoryDTO.getStatus() > 0) {
+
+		if (categoryDTO.getStatus() > 0) {
 			c.add(Restrictions.eq("status", categoryDTO.getStatus()));
 		}
-		
+
 		return c.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> getFeatureCategoryList() {
 		String sqlStr = "from Category where feature = " + FeatureEnum.FEATURE.getCode() + " order by sequence";

@@ -6,6 +6,8 @@ public class UserRegisterRequest implements Serializable {
 
 	private static final long serialVersionUID = 8814422415670402003L;
 
+	private long user_id;
+
 	private String name;
 
 	private String email;
@@ -21,6 +23,10 @@ public class UserRegisterRequest implements Serializable {
 	private Long township_id;
 
 	private String detail_address;
+
+	private int user_role;
+
+	private String profile_image;
 
 	public String getName() {
 		return name;
@@ -84,6 +90,30 @@ public class UserRegisterRequest implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public int getUser_role() {
+		return user_role;
+	}
+
+	public void setUser_role(int user_role) {
+		this.user_role = user_role;
+	}
+
+	public String getProfile_image() {
+		return profile_image;
+	}
+
+	public void setProfile_image(String profile_image) {
+		this.profile_image = profile_image;
+	}
+
+	public long getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(long user_id) {
+		this.user_id = user_id;
 	}
 
 }

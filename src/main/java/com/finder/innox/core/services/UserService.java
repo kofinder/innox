@@ -20,10 +20,14 @@ public interface UserService extends UserDetailsService {
 
 	UserDTO findByName(String userName, int userRole);
 
-	boolean isUserNameAlreadExist(String userName, int userRole);
+	boolean isUserNameAlreadExist(String userName, int userRole, long userId);
 
 	UserDTO findByPhoneNo(String phoneNo);
 
 	UserDTO userRegister(UserRegisterRequest registerRequest) throws Exception;
-	
+
+	UserDTO getUserById(long userId);
+
+	UserDTO userProfileUpdate(UserRegisterRequest updateRequest) throws Exception;
+
 }

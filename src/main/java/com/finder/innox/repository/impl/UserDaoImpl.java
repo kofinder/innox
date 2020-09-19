@@ -35,7 +35,6 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 		if (userRole > 0) {
 			c.add(Restrictions.eq("userRoleLevel", userRole));
 		}
-
 		c.setMaxResults(1);
 
 		Object usr = c.uniqueResult();
@@ -62,6 +61,25 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 		Criteria c = this.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.eq("phoneNo", phoneNo));
 		return (User) c.uniqueResult();
+	}
+
+	@Override
+	public User isUserNameAlreadyExist(String userName, int userRole, long userId) {
+		Criteria c = this.sessionFactory.getCurrentSession().createCriteria(User.class);
+		c.add(Restrictions.eq("userName", userName));
+
+		if (userRole > 0) {
+			c.add(Restrictions.eq("userRoleLevel", userRole));
+		}
+
+		if (userId > 0) {
+			c.add(Restrictions.ne("userSeq", userId));
+		}
+
+		c.setMaxResults(1);
+
+		Object usr = c.uniqueResult();
+		return (User) usr;
 	}
 
 }

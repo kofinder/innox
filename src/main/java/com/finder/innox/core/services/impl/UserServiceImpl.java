@@ -28,8 +28,10 @@ import com.finder.innox.core.services.UserService;
 import com.finder.innox.repository.UserAddressDao;
 import com.finder.innox.repository.UserDao;
 import com.finder.innox.request.UserRegisterRequest;
+import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.CommonUtil;
+import com.finder.innox.utils.ImagesUtil;
 import com.finder.innox.utils.UserRoleEnum;
 
 @Service
@@ -112,8 +114,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean isUserNameAlreadExist(String userName, int userRole) {
-		User user = userDao.findByUserName(userName, userRole);
+	public boolean isUserNameAlreadExist(String userName, int userRole, long userId) {
+		User user = userDao.isUserNameAlreadyExist(userName, userRole, userId);
 		if (user != null) {
 			return true;
 		}
@@ -140,16 +142,40 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(registerRequest.getEmail());
 		user.setPhoneNo(registerRequest.getPhoneNo());
 		user.setStatus(CommonStatus.ACTIVE.getCode());
-		user.setUserRoleLevel(UserRoleEnum.ROLE_USER.getCode());
 		user.setRecordRegDate(new Date());
-		
-		user.setRoles(Arrays.asList(new Role(UserRoleEnum.ROLE_USER.getDesc())));
+
+		// user role
+		if (registerRequest.getUser_role() == UserRoleEnum.ROLE_USER.getCode()) {
+			user.setUserRoleLevel(UserRoleEnum.ROLE_USER.getCode());
+			user.setRoles(Arrays.asList(new Role(UserRoleEnum.ROLE_USER.getDesc())));
+
+		} else if (registerRequest.getUser_role() == UserRoleEnum.ROLE_DESIGNER.getCode()) {
+			user.setUserRoleLevel(UserRoleEnum.ROLE_DESIGNER.getCode());
+			user.setRoles(Arrays.asList(new Role(UserRoleEnum.ROLE_DESIGNER.getDesc())));
+		}
 
 		userDao.save(user);
 
+		// user profile image
+		if (!CommonUtil.isEmpty(registerRequest.getProfile_image())) {
+			try {
+				String imageName = ImagesUtil.uploadBase64File(registerRequest.getProfile_image(),
+						CommonConstant.USER_DIRECTORY + CommonConstant.USER_IMAGE_DIRECTORY + user.getUserSeq() + "/",
+						CommonConstant.USER_IMAGE_PREFIX, user.getUserSeq());
+				user.setAvatar(imageName);
+
+				userDao.saveOrUpdate(user);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		// user address
 		if (registerRequest.getState_id() != null || registerRequest.getTownship_id() != null
 				|| !CommonUtil.isEmpty(registerRequest.getDetail_address())) {
 			UserAddress userAddress = new UserAddress();
+
+			userAddress.setUser(user);
 
 			if (registerRequest.getState_id() != null) {
 				State state = new State();
@@ -172,5 +198,93 @@ public class UserServiceImpl implements UserService {
 
 		logger.info("userRegister() >> End");
 		return new UserDTO(userDao.get(user.getUserSeq()));
+	}
+
+	@Override
+	public UserDTO getUserById(long userId) {
+		logger.info("getUserById() >> User Id : " + userId);
+		User user = userDao.get(userId);
+		if (user != null) {
+			return new UserDTO(user);
+		}
+		return null;
+	}
+
+	@Override
+	public UserDTO userProfileUpdate(UserRegisterRequest updateRequest) throws Exception {
+		logger.info("userProfileUpdate() >> Start");
+
+		User user = userDao.get(updateRequest.getUser_id());
+		if (user != null) {
+			user.setUserName(updateRequest.getName());
+//			user.setPassword(passwordEncoder.encode(registerRequest.getPassword())); 
+			user.setEmail(updateRequest.getEmail());
+			if (!CommonUtil.isEmpty(updateRequest.getPhoneNo())) {
+				user.setPhoneNo(updateRequest.getPhoneNo());
+			}
+
+//			user.setStatus(CommonStatus.ACTIVE.getCode());
+//			user.setRecordRegDate(new Date());
+			user.setRecordUpdDate(new Date());
+
+			// user profile image
+			if (!CommonUtil.isEmpty(updateRequest.getProfile_image())) {
+				try {
+					String imageName = ImagesUtil.uploadBase64File(
+							updateRequest.getProfile_image(), CommonConstant.USER_DIRECTORY
+									+ CommonConstant.USER_IMAGE_DIRECTORY + user.getUserSeq() + "/",
+							CommonConstant.USER_IMAGE_PREFIX, user.getUserSeq());
+					user.setAvatar(imageName);
+
+					userDao.saveOrUpdate(user);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			// user address
+			UserAddress userAddress = addressDao.getUserAddressByUserId(user.getUserSeq());
+			if (userAddress != null) {
+				State state = new State();
+				state.setSeq(updateRequest.getState_id());
+				userAddress.setState(state);
+
+				Township township = new Township();
+				township.setSeq(updateRequest.getTownship_id());
+				userAddress.setTownship(township);
+
+				userAddress.setDetailAddress(updateRequest.getDetail_address());
+				userAddress.setUpdatedTime(new Date());
+
+				addressDao.saveOrUpdate(userAddress);
+			} else {
+				userAddress = new UserAddress();
+
+				userAddress.setUser(user);
+
+				if (updateRequest.getState_id() != null) {
+					State state = new State();
+					state.setSeq(updateRequest.getState_id());
+					userAddress.setState(state);
+				}
+
+				if (updateRequest.getTownship_id() != null) {
+					Township township = new Township();
+					township.setSeq(updateRequest.getTownship_id());
+					userAddress.setTownship(township);
+				}
+
+				userAddress.setDetailAddress(updateRequest.getDetail_address());
+				userAddress.setCreatedTime(new Date());
+				userAddress.setUpdatedTime(new Date());
+
+				addressDao.save(userAddress);
+			}
+
+			return new UserDTO(userDao.get(user.getUserSeq()));
+		}
+
+		logger.info("userProfileUpdate() >> End");
+		return null;
 	}
 }

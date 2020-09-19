@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finder.innox.annotation.InnoxShopApi;
 import com.finder.innox.core.dto.ShoppingCartDTO;
@@ -87,9 +90,9 @@ public class ShoppingCartApiController {
 		return result;
 	}
 
-	@PostMapping(path = InnoxApiConstant.API_UPDATE_ADD_TO_CART)
-	public String updateAddToCart(@RequestBody InstockShoppingCartRequest updateCartRequest,
-			HttpServletRequest request) {
+	@PutMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
+	public String updateAddToCart(@RequestParam(name = "cart_id") long cart_id,
+			@RequestParam(name = "quantity") int quantity, HttpServletRequest request) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -97,9 +100,14 @@ public class ShoppingCartApiController {
 
 		try {
 			AddToCartResponse response = new AddToCartResponse();
-			checkValidUpdateCartData(updateCartRequest, errorList);
+			checkValidUpdateCartData(cart_id, quantity, errorList);
 
 			if (errorList.size() == 0) {
+
+				InstockShoppingCartRequest updateCartRequest = new InstockShoppingCartRequest();
+				updateCartRequest.setShopping_cart_id(cart_id);
+				updateCartRequest.setQuantity(quantity);
+
 				Principal principal = request.getUserPrincipal();
 				if (principal != null) {
 					UserDTO userDto = userService.findByName(principal.getName(), UserRoleEnum.ROLE_USER.getCode());
@@ -161,7 +169,7 @@ public class ShoppingCartApiController {
 		return result;
 	}
 
-	@PostMapping(path = InnoxApiConstant.API_DELETE_CART)
+	@DeleteMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
 	public String deleteShoppingCarts(@RequestBody Map<String, List<Long>> cart_ids, HttpServletRequest request) {
 		String result = "";
 		ProcessException pe = null;
@@ -202,14 +210,14 @@ public class ShoppingCartApiController {
 		return result;
 	}
 
-	private void checkValidUpdateCartData(InstockShoppingCartRequest requestData, List<FieldError> errorList) {
+	private void checkValidUpdateCartData(long cart_id, int quantity, List<FieldError> errorList) {
 
-		if (requestData.getShopping_cart_id() <= 0) {
+		if (cart_id <= 0) {
 			errorList.add(new FieldError(FieldCode.SHOPPING_CART_ID.getCode(),
 					ErrorMessage.SHOPPING_CART_ID_REQUIRED.getMessage()));
 		}
 
-		if (requestData.getQuantity() <= 0) {
+		if (quantity <= 0) {
 			errorList.add(
 					new FieldError(FieldCode.QUANTITY_REQUIRED.getCode(), ErrorMessage.QUANTITY_REQUIRED.getMessage()));
 		}

@@ -6,7 +6,7 @@ public class InstockShoppingCartRequest implements Serializable {
 
 	private static final long serialVersionUID = -5487228368998741552L;
 
-	private long shopping_cart_id;
+	private long cart_id;
 
 	private long customer_id;
 
@@ -19,11 +19,11 @@ public class InstockShoppingCartRequest implements Serializable {
 	private int quantity;
 
 	public long getShopping_cart_id() {
-		return shopping_cart_id;
+		return cart_id;
 	}
 
 	public void setShopping_cart_id(long shopping_cart_id) {
-		this.shopping_cart_id = shopping_cart_id;
+		this.cart_id = shopping_cart_id;
 	}
 
 	public long getCustomer_id() {

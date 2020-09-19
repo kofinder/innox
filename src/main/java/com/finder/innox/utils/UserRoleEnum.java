@@ -30,4 +30,13 @@ public enum UserRoleEnum {
 		return "";
 	}
 
+	public static int getCodeByCode(int code) {
+		for (UserRoleEnum role : UserRoleEnum.values()) {
+			if (code == role.getCode()) {
+				return role.getCode();
+			}
+		}
+		return 0;
+	}
+
 }
