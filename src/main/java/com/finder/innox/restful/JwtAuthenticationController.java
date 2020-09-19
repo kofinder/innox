@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.finder.innox.JwtTokenUtil;
 import com.finder.innox.annotation.InnoxShopApi;
+import com.finder.innox.core.dto.UserDTO;
 import com.finder.innox.core.services.UserService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
@@ -41,7 +42,6 @@ public class JwtAuthenticationController {
 	@RequestMapping(value = InnoxApiConstant.API_USER_LOGIN, method = RequestMethod.POST)
 	public String createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 		String result = "";
-		String token = "";
 		Response<JwtResponse> apiResponse = new Response<JwtResponse>();
 		ProcessException pe = null;
 		try {
@@ -49,13 +49,17 @@ public class JwtAuthenticationController {
 
 			final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
 
-			if (userDetails == null) {
-				return JsonUtil.prettyJSON(new JwtResponse(""));
+			if (userDetails != null) {
+
+				UserDTO userDTO = userService.findByName(userDetails.getUsername(), 0);
+				JwtResponse jwtResponse = new JwtResponse();
+				jwtResponse.setUser_id(userDTO.getSeq());
+				jwtResponse.setJwt_token(jwtTokenUtil.generateToken(userDetails));
+
+				apiResponse.setData(jwtResponse);
+			} else {
+				pe = new ProcessException(ErrorType.INVALID_DATA);
 			}
-
-			token = jwtTokenUtil.generateToken(userDetails);
-
-			apiResponse.setData(new JwtResponse(token));
 
 		} catch (Exception e) {
 			e.printStackTrace();
