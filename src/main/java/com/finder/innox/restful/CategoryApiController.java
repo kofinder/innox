@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +74,7 @@ public class CategoryApiController {
 
 	@GetMapping(path = InnoxApiConstant.API_SUB_CATEGORY_LIST)
 	public String getSubCategoryListByCategoryId(@RequestParam(name = "category_id") Long category_id,
-			HttpServletRequest request) {
+			HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		List<FieldError> errorList = new ArrayList<FieldError>();
@@ -101,11 +103,13 @@ public class CategoryApiController {
 				apiResponse.setData(response);
 				apiResponse.setResponseMessage("Data retrival is success");
 			} else {
-				pe = new ProcessException(ErrorType.INVALID_DATA);
+				httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+				pe = new ProcessException(ErrorType.INVALID_DATA, httpResponse);
 			}
 
 		} else {
-			pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+			httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+			pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 			pe.setFieldErrorList(errorList);
 		}
 

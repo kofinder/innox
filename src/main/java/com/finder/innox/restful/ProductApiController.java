@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,8 @@ public class ProductApiController {
 	private ProductService productService;
 
 	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST)
-	public String getProductList(@RequestParam(name = "pageNo") int pageNo, HttpServletRequest request) {
+	public String getProductList(@RequestParam(name = "pageNo") int pageNo, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -55,7 +58,8 @@ public class ProductApiController {
 					response.getProducts().add(productResponse);
 				});
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 
@@ -65,7 +69,8 @@ public class ProductApiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("getProductList() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
@@ -74,7 +79,8 @@ public class ProductApiController {
 
 	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST_BY_SUB_CATEGORY)
 	public String getProductListBySubCategory(@RequestParam(name = "sub_category_id") Long sub_category_id,
-			@RequestParam(name = "page_no", required = false) Integer page_no, HttpServletRequest request) {
+			@RequestParam(name = "page_no", required = false) Integer page_no, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -107,7 +113,8 @@ public class ProductApiController {
 					}
 				}
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 
@@ -117,7 +124,8 @@ public class ProductApiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("getProductList() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
@@ -129,8 +137,8 @@ public class ProductApiController {
 			@RequestParam(name = "startPrice", required = false) BigDecimal startPrice,
 			@RequestParam(name = "endPrice", required = false) BigDecimal endPrice,
 			@RequestParam(name = "category_id", required = false) Long category_id,
-			@RequestParam(name = "sub_category_id", required = false) Long sub_category_id,
-			HttpServletRequest request) {
+			@RequestParam(name = "sub_category_id", required = false) Long sub_category_id, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 
 		String result = "";
 		ProcessException pe = null;
@@ -150,7 +158,8 @@ public class ProductApiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("productListSearch() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiReeponse, pe);
@@ -158,7 +167,8 @@ public class ProductApiController {
 	}
 
 	@GetMapping(path = InnoxApiConstant.API_PRODUCT_DETAIL)
-	public String productDetail(@RequestParam(name = "product_id") Long product_id, HttpServletRequest request) {
+	public String productDetail(@RequestParam(name = "product_id") Long product_id, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		List<FieldError> errorList = new ArrayList<FieldError>();
@@ -181,17 +191,20 @@ public class ProductApiController {
 					apiResponse.setData(response);
 					apiResponse.setResponseMessage("Data retrieval is success");
 				} else {
-					pe = new ProcessException(ErrorType.INVALID_DATA);
+					httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+					pe = new ProcessException(ErrorType.INVALID_DATA, httpResponse);
 				}
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("productDetail() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);

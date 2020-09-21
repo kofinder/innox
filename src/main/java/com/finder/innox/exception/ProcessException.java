@@ -2,6 +2,10 @@ package com.finder.innox.exception;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.HttpStatus;
+
 import com.finder.innox.utils.FieldError;
 
 public class ProcessException extends Exception {
@@ -12,15 +16,21 @@ public class ProcessException extends Exception {
 
 	private List<FieldError> fieldErrorList;
 
-	public ProcessException(ErrorType errorType) {
+	public ProcessException(ErrorType errorType, HttpServletResponse httpResponse) {
 		super(errorType.getDescription());
 		this.setErrorType(errorType);
+		
+		if(errorType.getCode() == ErrorType.GENERAL.code) {
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+		}else if(errorType.getCode() == ErrorType.MULTIPLE_ERROR.code){
+			httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+		}
 	}
 
 	public enum ErrorType {
 		UNAUTHORIZED("401", "UnAuthorized Request"),
 		INVALID_CREDENTIALS("400", "Invalid Credentials"),
-		USER_DISABLED("4001", "User account disabled"),
+		USER_DISABLED("400", "User account disabled"),
 		GENERAL("-1", "General application exception occurred while processing client request."),
 		LOGIN_FAIL("-1", "Username or Password is incorrect."), INVALID_DATA("-1", "Invalid Data"),
 		MULTIPLE_ERROR("1000", ""), INVALID_SESSION("1001", "Invalid Session!"),

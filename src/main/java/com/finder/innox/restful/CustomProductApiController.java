@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class CustomProductApiController {
 
 	@GetMapping(path = InnoxApiConstant.API_CUSTOM_PRODUCT_LIST)
 	public String getCustomProductListBySubCategory(@RequestParam(name = "sub_category_id") Long sub_category_id,
-			HttpServletRequest request) {
+			HttpServletRequest request, HttpServletResponse httpResponse) {
 		logger.info("getCustomProductListBySubCategory () >> Start");
 		String result = "";
 		ProcessException pe = null;
@@ -73,7 +75,8 @@ public class CustomProductApiController {
 			apiResponse.setData(response);
 			apiResponse.setResponseMessage("Data retrieval is success");
 		} else {
-			pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+			httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+			pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 			pe.setFieldErrorList(errorList);
 		}
 
@@ -84,7 +87,7 @@ public class CustomProductApiController {
 
 	@GetMapping(path = InnoxApiConstant.API_CUSTOM_PRODUCT_DETAIl)
 	public String getCustomProductDetail(@RequestParam(name = "custom_product_id") Long custom_product_id,
-			HttpServletRequest request) {
+			HttpServletRequest request, HttpServletResponse httpResponse) {
 		logger.info("getCustomProductDetail() >> Start >> Custom Product Id : " + custom_product_id);
 		String result = "";
 		ProcessException pe = null;
@@ -134,13 +137,15 @@ public class CustomProductApiController {
 					apiResponse.setResponseMessage("Data retrieval is success");
 				}
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("getCustomProductDetail() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		logger.info("getCustomProductDetail() >> End");

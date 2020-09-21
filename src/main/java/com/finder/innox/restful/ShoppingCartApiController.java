@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,7 @@ public class ShoppingCartApiController {
 
 	@PostMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
 	public String instockProductAddToCart(@RequestBody InstockShoppingCartRequest requestData,
-			HttpServletRequest httpRequest) {
+			HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		Response<AddToCartResponse> apiResponse = new Response<AddToCartResponse>();
@@ -76,14 +78,16 @@ public class ShoppingCartApiController {
 					apiResponse.setResponseMessage("Instock add to cart is success!");
 				}
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("instockProductAddToCart() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
@@ -92,7 +96,7 @@ public class ShoppingCartApiController {
 
 	@PutMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
 	public String updateAddToCart(@RequestParam(name = "cart_id") long cart_id,
-			@RequestParam(name = "quantity") int quantity, HttpServletRequest request) {
+			@RequestParam(name = "quantity") int quantity, HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -122,14 +126,16 @@ public class ShoppingCartApiController {
 				apiResponse.setData(response);
 				apiResponse.setResponseMessage("Shopping cart update is success!");
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("updateAddToCart() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
@@ -170,7 +176,7 @@ public class ShoppingCartApiController {
 	}
 
 	@DeleteMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
-	public String deleteShoppingCarts(@RequestBody Map<String, List<Long>> cart_ids, HttpServletRequest request) {
+	public String deleteShoppingCarts(@RequestBody Map<String, List<Long>> cart_ids, HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		Response<ShoppingCartListResponse> apiResponse = new Response<ShoppingCartListResponse>();
@@ -203,7 +209,8 @@ public class ShoppingCartApiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("deleteShoppingCarts() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);

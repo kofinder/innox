@@ -1,4 +1,4 @@
-package com.finder.innox.restful.model;
+package com.finder.innox.request;
 
 import java.io.Serializable;
 

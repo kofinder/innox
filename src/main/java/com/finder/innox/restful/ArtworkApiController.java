@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,8 @@ public class ArtworkApiController {
 	private ArtworkCategoryService artworkCategroyService;
 
 	@PostMapping(path = InnoxApiConstant.API_ARTWORK_UPLOAD)
-	public String uploadArtwork(@RequestBody ArtworkUploadRequest artworkUplaod, HttpServletRequest request) {
+	public String uploadArtwork(@RequestBody ArtworkUploadRequest artworkUplaod, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -83,7 +86,8 @@ public class ArtworkApiController {
 					apiResponse.setData("Artwork upload is failed");
 				}
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 
@@ -123,7 +127,7 @@ public class ArtworkApiController {
 
 	@GetMapping(path = InnoxApiConstant.API_ARTWORK_LIST_BY_CATEGORY)
 	public String getArtworkListByCategory(@RequestParam(name = "artwork_category_id") Long artwork_category_id,
-			HttpServletRequest request) {
+			HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		List<FieldError> errorList = new ArrayList<FieldError>();
@@ -147,13 +151,15 @@ public class ArtworkApiController {
 				apiResponse.setData(artworkListResponse);
 				apiResponse.setResponseMessage("Data retrieval is success");
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("getArtworkListByCategory() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
@@ -162,7 +168,7 @@ public class ArtworkApiController {
 
 	@GetMapping(path = InnoxApiConstant.API_ARTWORK_LIST_BY_DESIGNER)
 	public String getArtworkListByDesigner(@RequestParam(name = "designer_id") Long designer_id,
-			HttpServletRequest request) {
+			HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		List<FieldError> errorList = new ArrayList<FieldError>();
@@ -184,7 +190,8 @@ public class ArtworkApiController {
 			apiResponse.setData(artworkListResponse);
 			apiResponse.setResponseMessage("Data retrieval is success");
 		} else {
-			pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+			httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+			pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 			pe.setFieldErrorList(errorList);
 		}
 

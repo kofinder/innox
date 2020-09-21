@@ -2,6 +2,9 @@ package com.finder.innox.restful;
 
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +23,9 @@ import com.finder.innox.core.dto.UserDTO;
 import com.finder.innox.core.services.UserService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
+import com.finder.innox.request.JwtRequest;
+import com.finder.innox.response.JwtResponse;
 import com.finder.innox.response.Response;
-import com.finder.innox.restful.model.JwtRequest;
-import com.finder.innox.restful.model.JwtResponse;
 import com.finder.innox.utils.JsonUtil;
 
 @InnoxShopApi(apiPath = InnoxApiConstant.API_RESOURCES_NAME)
@@ -40,7 +43,7 @@ public class JwtAuthenticationController {
 	private UserService userService;
 
 	@RequestMapping(value = InnoxApiConstant.API_USER_LOGIN, method = RequestMethod.POST)
-	public String createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+	public String createAuthenticationToken(@RequestBody JwtRequest authenticationRequest, HttpServletResponse httpResponse) throws Exception {
 		String result = "";
 		Response<JwtResponse> apiResponse = new Response<JwtResponse>();
 		ProcessException pe = null;
@@ -58,7 +61,8 @@ public class JwtAuthenticationController {
 
 				apiResponse.setData(jwtResponse);
 			} else {
-				pe = new ProcessException(ErrorType.INVALID_DATA);
+				httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+				pe = new ProcessException(ErrorType.INVALID_DATA, httpResponse);
 			}
 
 		} catch (Exception e) {
@@ -66,9 +70,11 @@ public class JwtAuthenticationController {
 			logger.error("createAuthenticationToken() >> " + e.getMessage(), e);
 
 			if (e.getMessage().equals("INVALID_CREDENTIALS")) {
-				pe = new ProcessException(ErrorType.INVALID_CREDENTIALS);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.INVALID_CREDENTIALS, httpResponse);
 			} else if (e.getMessage().equals("USER_DISABLED")) {
-				pe = new ProcessException(ErrorType.USER_DISABLED);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.USER_DISABLED, httpResponse);
 			}
 		}
 

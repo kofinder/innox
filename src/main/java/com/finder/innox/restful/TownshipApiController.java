@@ -2,6 +2,9 @@ package com.finder.innox.restful;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,8 @@ public class TownshipApiController {
 	private TownshipService townshipService;
 
 	@GetMapping(path = InnoxApiConstant.API_TOWNSHIP_LIST)
-	public String getTownshipListByState(@RequestParam(name = "state_id") Long state_id) {
+	public String getTownshipListByState(@RequestParam(name = "state_id") Long state_id,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		Response<TownshipListResponse> apiResponse = new Response<TownshipListResponse>();
@@ -46,7 +50,8 @@ public class TownshipApiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("getTownshipListByState() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);

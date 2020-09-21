@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,8 @@ public class UserApiController {
 	private UserAddressService addressService;
 
 	@PostMapping(path = InnoxApiConstant.API_RESOURCES_NAME + InnoxApiConstant.API_USER_REGISTER)
-	public String userRegister(@RequestBody UserRegisterRequest registerRequest, HttpServletRequest request) {
+	public String userRegister(@RequestBody UserRegisterRequest registerRequest, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		List<FieldError> errorList = new ArrayList<FieldError>();
@@ -84,13 +87,15 @@ public class UserApiController {
 				}
 
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("userRegister() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
@@ -98,7 +103,8 @@ public class UserApiController {
 	}
 
 	@GetMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME + InnoxApiConstant.API_USER)
-	public String getUserProfileData(@RequestParam(name = "user_id") long user_id, HttpServletRequest request) {
+	public String getUserProfileData(@RequestParam(name = "user_id") long user_id, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -143,17 +149,20 @@ public class UserApiController {
 					apiResponse.setData(response);
 					apiResponse.setResponseMessage("Data retrieval is success!");
 				} else {
-					pe = new ProcessException(ErrorType.INVALID_DATA);
+					httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+					pe = new ProcessException(ErrorType.INVALID_DATA, httpResponse);
 				}
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus((HttpStatus.SC_BAD_REQUEST));
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("getUserProfileData() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
@@ -161,7 +170,8 @@ public class UserApiController {
 	}
 
 	@PutMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME + InnoxApiConstant.API_USER)
-	public String updateUserProfile(@RequestBody UserRegisterRequest profileUpdateRequest, HttpServletRequest request) {
+	public String updateUserProfile(@RequestBody UserRegisterRequest profileUpdateRequest, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -183,17 +193,20 @@ public class UserApiController {
 				if (userDTO != null) {
 					apiResponse.setResponseMessage("User profile update is success!");
 				} else {
-					pe = new ProcessException(ErrorType.INVALID_DATA);
+					httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+					pe = new ProcessException(ErrorType.INVALID_DATA, httpResponse);
 				}
 			} else {
-				pe = new ProcessException(ErrorType.MULTIPLE_ERROR);
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 				pe.setFieldErrorList(errorList);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("updateUserProfile() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);

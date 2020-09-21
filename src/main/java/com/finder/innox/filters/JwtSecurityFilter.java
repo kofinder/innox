@@ -148,7 +148,7 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 		String result = "";
 		Response<String> apiResponse = new Response<String>();
 		apiResponse.setData(errorMsg);
-		ProcessException pe = new ProcessException(errorType);
+		ProcessException pe = new ProcessException(errorType, response);
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
 
 		PrintWriter out = response.getWriter();

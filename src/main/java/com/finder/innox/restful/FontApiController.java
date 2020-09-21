@@ -3,7 +3,9 @@ package com.finder.innox.restful;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class FontApiController {
 	private FontsService fontsService;
 
 	@GetMapping(path = InnoxApiConstant.API_FONT_LIST)
-	public String getFontList(HttpServletRequest request) {
+	public String getFontList(HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		Response<FontListResponse> apiResponse = new Response<FontListResponse>();
@@ -51,7 +53,8 @@ public class FontApiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("getFontList() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);

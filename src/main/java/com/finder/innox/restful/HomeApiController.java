@@ -3,7 +3,9 @@ package com.finder.innox.restful;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,7 @@ public class HomeApiController {
 	private CategoryService categoryService;
 
 	@GetMapping(path = InnoxApiConstant.API_HOME_PAGE_DATA)
-	public String homePageData(HttpServletRequest request) {
+	public String homePageData(HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		Response<HomePageResponse> apiResponse = new Response<HomePageResponse>();
@@ -80,7 +82,8 @@ public class HomeApiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("homePageData() >> " + e.getMessage(), e);
-			pe = new ProcessException(ErrorType.GENERAL);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
