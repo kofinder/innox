@@ -1,6 +1,7 @@
 package com.finder.innox.core.services.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -226,6 +227,32 @@ public class OrderServiceImple implements OrderService {
 		orderItemInfo.append(orderItem.getUnitPrice());
 
 		logger.info(String.format(">>> %s >>> %s", messagePrefix, orderItemInfo.toString()));
+	}
+
+	@Override
+	public List<OrderDTO> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate) {
+		logger.info("getOrderHistory() >> " + "Order Status : " + orderStatusList.toString() + " >> Start Date : "
+				+ startDate + " >> End Date : " + endDate);
+		List<Order> orderList = orderDao.getOrderHistory(orderStatusList, startDate, endDate);
+		if (orderList == null || orderList.isEmpty()) {
+			return new ArrayList<OrderDTO>();
+		}
+
+		List<OrderDTO> dtoList = new ArrayList<OrderDTO>();
+		orderList.forEach(order -> {
+			dtoList.add(new OrderDTO(order));
+		});
+		return dtoList;
+	}
+
+	@Override
+	public OrderDTO getOrderDTOById(long orderId) {
+		logger.info("getOrderDTOById() >> Order Id : " + orderId);
+		Order order = orderDao.get(orderId);
+		if (order != null) {
+			return new OrderDTO(order);
+		}
+		return null;
 	}
 
 }

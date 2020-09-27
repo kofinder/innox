@@ -39,5 +39,7 @@ public interface InnoxApiConstant {
 
 	public static String API_ORDER_PRELOAD = "/order/preload";
 	public static String API_ORDER_CONFIRM = "/order/confirm";
+	public static String API_ORDER_HISTORY = "/order/history/{order_status}";
+	public static String API_ORDER_DETAIL = "/order/{order_id}";
 
 }

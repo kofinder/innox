@@ -11,8 +11,11 @@ import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finder.innox.annotation.InnoxShopApi;
 import com.finder.innox.core.dto.OrderDTO;
@@ -32,6 +35,8 @@ import com.finder.innox.exception.ProcessException.ErrorType;
 import com.finder.innox.request.OrderConfirmRequest;
 import com.finder.innox.request.OrderPreloadRequest;
 import com.finder.innox.response.OrderConfirmResponse;
+import com.finder.innox.response.OrderHistoryListResponse;
+import com.finder.innox.response.OrderHistoryResponse;
 import com.finder.innox.response.OrderItemResponse;
 import com.finder.innox.response.OrderPreloadResponse;
 import com.finder.innox.response.PaymentTypeResponse;
@@ -281,11 +286,165 @@ public class OrderApiController {
 			} else {
 				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
 				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
+				pe.setFieldErrorList(errorList);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("orderConfirm() >> " + e.getMessage(), e);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
+		}
+
+		result = JsonUtil.formatJsonResponse(apiResponse, pe);
+		return result;
+	}
+
+	@GetMapping(path = InnoxApiConstant.API_ORDER_HISTORY)
+	public String orderHistorys(@PathVariable(name = "order_status") String orderStatus,
+			@RequestParam(name = "start_date", required = false) String startDate,
+			@RequestParam(name = "end_date", required = false) String endDate,
+			@RequestParam(name = "page_no", required = false) Integer pageNo, HttpServletRequest httpRequest,
+			HttpServletResponse httpResponse) {
+		String result = "";
+		List<FieldError> errorList = new ArrayList<FieldError>();
+		ProcessException pe = null;
+		Response<OrderHistoryListResponse> apiResponse = new Response<OrderHistoryListResponse>();
+
+		try {
+			List<Integer> orderStatusList = new ArrayList<Integer>();
+			if (CommonUtil.isEmpty(orderStatus)) {
+				errorList.add(new FieldError(FieldCode.ORDER_STATUS.getCode(),
+						ErrorMessage.ORDER_STATUS_REQUIRED.getMessage()));
+			} else {
+				String[] orderStatusArr = orderStatus.split(",");
+				for (String status : orderStatusArr) {
+					orderStatusList.add(Integer.valueOf(status));
+				}
+			}
+
+			if (errorList.size() == 0) {
+				OrderHistoryListResponse response = new OrderHistoryListResponse();
+				List<OrderDTO> orderDtos = orderService.getOrderHistory(orderStatusList, startDate, endDate);
+				orderDtos.forEach(order -> {
+					OrderHistoryResponse historyResponse = new OrderHistoryResponse(order);
+					response.getOrder_historys().add(historyResponse);
+				});
+
+				response.setTotal_order_count(orderDtos == null || orderDtos.isEmpty() ? 0 : orderDtos.size());
+				apiResponse.setData(response);
+				apiResponse.setResponseMessage("Order history retrieval is successful");
+			} else {
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
+				pe.setFieldErrorList(errorList);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("orderHistorys() >> " + e.getMessage(), e);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
+		}
+
+		result = JsonUtil.formatJsonResponse(apiResponse, pe);
+		return result;
+	}
+
+	@GetMapping(path = InnoxApiConstant.API_ORDER_DETAIL)
+	public String orderDetail(@PathVariable(name = "order_id") Long orderId, HttpServletRequest httpRequest,
+			HttpServletResponse httpResponse) {
+		String result = "";
+		List<FieldError> errorList = new ArrayList<FieldError>();
+		ProcessException pe = null;
+		Response<OrderConfirmResponse> apiResponse = new Response<OrderConfirmResponse>();
+
+		try {
+
+			if (orderId == null || orderId <= 0) {
+				errorList.add(new FieldError(FieldCode.ORDER.getCode(), ErrorMessage.ORDER_ID_REQUIRED.getMessage()));
+			}
+
+			if (errorList.size() == 0) {
+				OrderDTO orderDTO = orderService.getOrderDTOById(orderId);
+
+				if (orderDTO != null) {
+
+					OrderConfirmResponse orderConfirmResponse = new OrderConfirmResponse();
+
+					orderConfirmResponse.setOrder_id(orderDTO.getSeq());
+					orderConfirmResponse.setInvoice_number(orderDTO.getInvoiceNumber());
+					orderConfirmResponse.setOrder_status(orderDTO.getOrderStatus());
+					orderConfirmResponse.setOrder_status_text(orderDTO.getOrderStatusText());
+					orderConfirmResponse.setPayment_status(orderDTO.getPaymentStatus());
+					orderConfirmResponse.setPayment_status_text(orderDTO.getPaymentStatusText());
+					orderConfirmResponse.setDelivery_fee(orderDTO.getDeliveryFee());
+					orderConfirmResponse.setDelivery_fee_text(orderDTO.getDeliveryFeeText());
+					orderConfirmResponse.setTotal_cost(orderDTO.getTotalCost());
+					orderConfirmResponse.setTotal_cost_text(orderDTO.getTotalCostText());
+
+					List<OrderItemDTO> orderItemList = orderItemService.getOrderItemListByOrderId(orderDTO.getSeq());
+					if (orderItemList != null && !orderItemList.isEmpty()) {
+						for (OrderItemDTO dto : orderItemList) {
+							OrderItemResponse orderItemResponse = new OrderItemResponse();
+							orderItemResponse.setProduct_id(dto.getProductDTO().getSeq());
+							orderItemResponse.setProduct_name(dto.getProductDTO().getName());
+							orderItemResponse.setImage_path(
+									CommonUtil.prepareImagePath(dto.getProductDTO().getImagePath1(), httpRequest));
+							orderItemResponse.setUnit_price(dto.getProductDTO().getPrice());
+							orderItemResponse.setUnit_price_text(CommonUtil.formatBigDecimalAsCurrency(
+									dto.getProductDTO().getPrice(), CommonConstant.CURRENCY_CODE_KS));
+
+							// sub total cost
+							orderItemResponse.setQuantity(dto.getQuantity());
+							orderItemResponse.setSub_total(
+									dto.getProductDTO().getPrice().multiply(new BigDecimal(dto.getQuantity())));
+
+							orderConfirmResponse.getOrder_items().add(orderItemResponse);
+
+						}
+					}
+
+					// user info
+					UserDTO userDto = userService.getUserById(orderDTO.getCustomerDTO().getSeq());
+
+					UserResponse userResponse = new UserResponse();
+					if (userDto != null) {
+						userResponse.setUser_id(userDto.getSeq());
+						userResponse.setName(userDto.getUserName());
+						userResponse.setPhone_no(userDto.getPhoneNo());
+					}
+
+					if (orderDTO.getStateDTO() != null) {
+						userResponse.setState_id(orderDTO.getStateDTO().getSeq());
+						userResponse.setState_name(orderDTO.getStateDTO().getName());
+					}
+
+					if (orderDTO.getTownshipDTO() != null) {
+						userResponse.setTownship_id(orderDTO.getTownshipDTO().getSeq());
+						userResponse.setTownship_name(orderDTO.getTownshipDTO().getTownshipName());
+					}
+
+					userResponse.setDetail_address(orderDTO.getDeliveryAddress());
+					orderConfirmResponse.setUser_detail(userResponse);
+
+					apiResponse.setData(orderConfirmResponse);
+					apiResponse.setResponseMessage("Order detail retrieval is successful");
+
+				} else {
+					httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+					pe = new ProcessException(ErrorType.INVALID_DATA, httpResponse);
+					pe.setFieldErrorList(errorList);
+				}
+			} else {
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
+				pe.setFieldErrorList(errorList);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("orderDetail() >> " + e.getMessage(), e);
 			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
 			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}

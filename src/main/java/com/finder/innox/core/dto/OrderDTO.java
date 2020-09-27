@@ -68,8 +68,7 @@ public class OrderDTO implements Serializable {
 					: order.getPaymentStatus();
 			this.paymentStatusText = PaymentStatusEnum.getDescription(this.getPaymentStatus());
 			this.paymentTypeDTO = new PaymentTypeDTO(order.getPaymentType());
-			this.orderDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_FORMAT_MM_dd_yyyy_hh_mm_ss_a,
-					order.getOrderDate());
+			this.orderDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_FORMAT, order.getOrderDate());
 			this.stateDTO = new StateDTO(order.getState());
 			this.townshipDTO = new TownshipDTO(order.getTownship());
 			this.deliveryAddress = order.getDeliveryAddress();

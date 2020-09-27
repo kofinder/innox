@@ -18,7 +18,7 @@ public class FieldError {
 		PHONE_NO("2010"), PASSWORD("2011"), COLOR_ID("2012"), SIZE_ID("2013"), QUANTITY_REQUIRED("2014"),
 		SHOPPING_CART_ID("2015"), USER_ROLE("2016"), STATE_ID("2017"), TOWNSHIP("2018"), ADDRESS("2019"),
 		DUPLICATE_NAME("2020"), CUSTOM_ITEM_ID("2021"), CUSTOM_PRODUCT_LAYOUT("2022"), PRODUCT_FONTS_ID("2023"),
-		PRODUCT_SIZE_ID("2024"), PAYMENT_TYPE_CODE("2025");
+		PRODUCT_SIZE_ID("2024"), PAYMENT_TYPE_CODE("2025"), ORDER_STATUS("2026"), ORDER("2027");
 
 		private String code;
 
@@ -49,7 +49,8 @@ public class FieldError {
 		CUSTOM_PRODUCT_LAYOUT_REQUIRED("Custom item layout id is required!"), FONT_ID_REQUIRED("Font id is required"),
 		ARTWORK_ID_REQUIRED("Artwork id is required!"), CUSTOM_PRODUCT_LAYOUT_LIST("Custom item layout is required"),
 		CUSTOM_LAYOUT_IMAGE_REQUIRED("Custom layout image is required"),
-		PAYMENT_TYPE_CODE_REQUIRED("Payment type code is required");
+		PAYMENT_TYPE_CODE_REQUIRED("Payment type code is required"), ORDER_STATUS_REQUIRED("Order status is required"),
+		ORDER_ID_REQUIRED("Order id is is required");
 
 		private String message;
 
