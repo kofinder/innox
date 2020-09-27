@@ -19,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.finder.innox.JwtTokenUtil;
@@ -27,6 +26,7 @@ import com.finder.innox.core.services.UserService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
 import com.finder.innox.response.Response;
+import com.finder.innox.restful.InnoxApiConstant;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.JsonUtil;
 
@@ -44,13 +44,13 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 	protected Logger requestLogger;
 	protected Logger responseLogger;
 
-	private AntPathMatcher pathMatcher = new AntPathMatcher();
+//	private AntPathMatcher pathMatcher = new AntPathMatcher();
 
 	private static List<String> IGNORE_URLS = Arrays.asList("/", "/banner_setup", "/brand_setup", "/category_search",
 			"/category_setup", "/color_setup", "/custom_product_search", "/pcustom_product_setup", "/dashboard",
 			"/error", "/font_setup", "/login", "product_search", "product_setup", "/register", "/size_setup",
 			"/state_setup", "/township_setup", "/welcome", "/zone_setup", "/saveUser", "/register");
-
+	
 	public JwtSecurityFilter() {
 		this(LoggerFactory.getLogger("innox.mobile.message.tracing.sent"),
 				LoggerFactory.getLogger("innox.mobile.message.tracing.received"));
@@ -123,11 +123,12 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
+//	IGNORE_URLS.stream().anyMatch(p -> pathMatcher.match(p, request.getRequestURI()))
+//	|| request.getRequestURI().endsWith(".html") || request.getRequestURI().startsWith("/resources")
+//	|| request.getRequestURI().startsWith("/images") || request.getRequestURI().endsWith(".ico")
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-		if (IGNORE_URLS.stream().anyMatch(p -> pathMatcher.match(p, request.getRequestURI()))
-				|| request.getRequestURI().endsWith(".html") || request.getRequestURI().startsWith("/resources")
-				|| request.getRequestURI().startsWith("/images") || request.getRequestURI().endsWith(".ico")) {
+		if (!request.getRequestURI().contains(InnoxApiConstant.API_AUTH_RESOURCES_NAME)) {
 			return true;
 		}
 		return false;

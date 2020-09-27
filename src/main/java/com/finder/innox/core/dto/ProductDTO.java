@@ -11,6 +11,7 @@ import com.finder.innox.core.domain.Product;
 import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.CommonUtil;
+import com.finder.innox.utils.ProductTypeEnum;
 
 public class ProductDTO implements Serializable {
 
@@ -80,6 +81,12 @@ public class ProductDTO implements Serializable {
 
 	private List<Long> prdSizeList = new ArrayList<Long>();
 
+	private int isCustomProduct;
+
+	private CustomProductDTO customProductDTO;
+
+	private CustomItemDTO customItemDTO;
+
 	public ProductDTO() {
 		super();
 	}
@@ -107,8 +114,10 @@ public class ProductDTO implements Serializable {
 			this.imagePath2 = product.getImagePath2();
 			this.imagePath3 = product.getImagePath3();
 			this.imagePath4 = product.getImagePath4();
-			this.size = product.getSize();
-			this.color = product.getColor();
+			this.isCustomProduct = product.getIsCustomProduct() == null ? ProductTypeEnum.INSTOCK.getCode()
+					: product.getIsCustomProduct();
+			this.customProductDTO = new CustomProductDTO(product.getCustomProduct());
+			this.customItemDTO = new CustomItemDTO(product.getCustomProductItem());
 
 			if (product.getProductColorList() != null) {
 				product.getProductColorList().forEach(color -> {
@@ -381,6 +390,30 @@ public class ProductDTO implements Serializable {
 
 	public void setPrdSizeList(List<Long> prdSizeList) {
 		this.prdSizeList = prdSizeList;
+	}
+
+	public int getIsCustomProduct() {
+		return isCustomProduct;
+	}
+
+	public void setIsCustomProduct(int isCustomProduct) {
+		this.isCustomProduct = isCustomProduct;
+	}
+
+	public CustomProductDTO getCustomProductDTO() {
+		return customProductDTO;
+	}
+
+	public void setCustomProductDTO(CustomProductDTO customProductDTO) {
+		this.customProductDTO = customProductDTO;
+	}
+
+	public CustomItemDTO getCustomItemDTO() {
+		return customItemDTO;
+	}
+
+	public void setCustomItemDTO(CustomItemDTO customItemDTO) {
+		this.customItemDTO = customItemDTO;
 	}
 
 }

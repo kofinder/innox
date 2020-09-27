@@ -21,4 +21,6 @@ public interface ProductDao extends GenericDao<Product, Long> {
 	List<Product> searchProductList(String keyword, BigDecimal startPrice, BigDecimal endPrice, Long category,
 			Long subCategory);
 
+	boolean reduceItemQty(Long productId, int quantity);
+
 }

@@ -66,7 +66,8 @@ public class Product extends CommonEntity implements Serializable {
 	@Column(name = "detail")
 	private String detail;
 
-	@Column(name = "created_by_id")
+	@ManyToOne
+	@JoinColumn(name = "created_by_id")
 	private User createdBy;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
@@ -90,9 +91,16 @@ public class Product extends CommonEntity implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
 	private List<ProductSize> productSizeList;
 
-	private String size;
+	@Column(name = "is_custom_product")
+	private Integer isCustomProduct;
 
-	private String color;
+	@ManyToOne
+	@JoinColumn(name = "custom_product_id")
+	private CustomProduct customProduct;
+
+	@ManyToOne
+	@JoinColumn(name = "custom_product_item_id")
+	private CustomItem customProductItem;
 
 	public Brand getBrand() {
 		return brand;
@@ -262,20 +270,20 @@ public class Product extends CommonEntity implements Serializable {
 		this.imagePath4 = imagePath4;
 	}
 
-	public String getSize() {
-		return size;
+	public Integer getIsCustomProduct() {
+		return isCustomProduct;
 	}
 
-	public void setSize(String size) {
-		this.size = size;
+	public void setIsCustomProduct(Integer isCustomProduct) {
+		this.isCustomProduct = isCustomProduct;
 	}
 
-	public String getColor() {
-		return color;
+	public CustomProduct getCustomProduct() {
+		return customProduct;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setCustomProduct(CustomProduct customProduct) {
+		this.customProduct = customProduct;
 	}
 
 	public List<ProductColor> getProductColorList() {
@@ -292,6 +300,14 @@ public class Product extends CommonEntity implements Serializable {
 
 	public void setProductSizeList(List<ProductSize> productSizeList) {
 		this.productSizeList = productSizeList;
+	}
+
+	public CustomItem getCustomProductItem() {
+		return customProductItem;
+	}
+
+	public void setCustomProductItem(CustomItem customProductItem) {
+		this.customProductItem = customProductItem;
 	}
 
 }

@@ -107,5 +107,11 @@ public class CommonConstant {
 
 	public static final String UI_MESSGAE = "message";
 	public static final String UI_ERROR_MESSGAE = "errorMsg";
+	
+	public static final String API_REQUEST_HEADER_USER_ID = "customer_id";
+	
+	public static final String ORDER_SEQ_NO_PREFIX = "IOX";
+	public static final String ORDER_SEQ_NO_DATE_FORMAT = "yyyyMM";
+	public static final String PERCENTAGE_SIGN = "%";
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -51,7 +52,10 @@ public class ShoppingCartDaoImpl extends GenericDaoImpl<ShoppingCart, Long> impl
 	@Override
 	public List<ShoppingCart> getShoppingCartDataByIds(long customerId, long cartId, long productId) {
 		Criteria c = this.getCurrentSession().createCriteria(ShoppingCart.class);
-		c.add(Restrictions.eq("customer.userSeq", customerId));
+
+		if (customerId > 0) {
+			c.add(Restrictions.eq("customer.userSeq", customerId));
+		}
 
 		if (cartId > 0) {
 			c.add(Restrictions.eq("seq", cartId));
@@ -70,6 +74,20 @@ public class ShoppingCartDaoImpl extends GenericDaoImpl<ShoppingCart, Long> impl
 		String sqlStr = "DELETE FROM `shopping_cart` WHERE id = " + cartId;
 		Query query = this.getCurrentSession().createSQLQuery(sqlStr);
 		query.executeUpdate();
+	}
+
+	@Override
+	public List<ShoppingCart> getShoppingCartsForOrderPreload(List<Long> cartIds) {
+		Criteria c = this.getCurrentSession().createCriteria(ShoppingCart.class);
+		c.add(Restrictions.in("seq", cartIds));
+		return c.list();
+	}
+
+	@Override
+	public boolean deleteDataByIdList(List<Long> ids) {
+		SQLQuery sqlQuery = getCurrentSession().createSQLQuery("DELETE FROM shopping_cart WHERE id IN (:ids)");
+		sqlQuery.setParameterList("ids", ids);
+		return sqlQuery.executeUpdate() > 0;
 	}
 
 }

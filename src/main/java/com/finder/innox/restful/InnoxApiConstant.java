@@ -32,9 +32,12 @@ public interface InnoxApiConstant {
 	public static String API_USER = "/user";
 	public static String API_USER_REGISTER = "/register";
 	public static String API_USER_LOGIN = "/login";
-	
+
 	public static String API_SHOPPING_CART_LIST = "/shopping/carts";
 	public static String API_INSTOCK_ADD_TO_CART = "/shopping/cart";
 	public static String API_CUSTOM_ADD_TO_CART = "/shopping/custom_add_to_cart";
+
+	public static String API_ORDER_PRELOAD = "/order/preload";
+	public static String API_ORDER_CONFIRM = "/order/confirm";
 
 }

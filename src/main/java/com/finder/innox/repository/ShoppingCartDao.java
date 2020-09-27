@@ -14,4 +14,8 @@ public interface ShoppingCartDao extends GenericDao<ShoppingCart, Long> {
 
 	void deleteShoppingCard(long cartId);
 
+	List<ShoppingCart> getShoppingCartsForOrderPreload(List<Long> cartIds);
+
+	boolean deleteDataByIdList(List<Long> ids);
+
 }

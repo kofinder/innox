@@ -33,7 +33,8 @@ public class CustomItemLayout extends CommonEntity implements Serializable {
 	@Column(name = "layout_image_path")
 	private String layoutImage;
 
-	@Column(name = "created_by_id")
+	@ManyToOne
+	@JoinColumn(name = "created_by_id")
 	private User user;
 
 	@Column(name = "status")

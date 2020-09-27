@@ -2,6 +2,7 @@ package com.finder.innox.core.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +21,9 @@ public class ProductSize extends CommonEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "size_id")
 	private Size size;
+
+	@Column(name = "quantity")
+	private Integer quantity;
 
 	@ManyToOne
 	@JoinColumn(name = "created_by_id")
@@ -47,6 +51,14 @@ public class ProductSize extends CommonEntity implements Serializable {
 
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 }

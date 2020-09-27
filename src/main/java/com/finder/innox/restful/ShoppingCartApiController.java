@@ -27,6 +27,7 @@ import com.finder.innox.core.services.ShoppingCartService;
 import com.finder.innox.core.services.UserService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
+import com.finder.innox.request.CustomProductRequest;
 import com.finder.innox.request.InstockShoppingCartRequest;
 import com.finder.innox.response.AddToCartResponse;
 import com.finder.innox.response.Response;
@@ -96,7 +97,8 @@ public class ShoppingCartApiController {
 
 	@PutMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
 	public String updateAddToCart(@RequestParam(name = "cart_id") long cart_id,
-			@RequestParam(name = "quantity") int quantity, HttpServletRequest request, HttpServletResponse httpResponse) {
+			@RequestParam(name = "quantity") int quantity, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
@@ -176,7 +178,8 @@ public class ShoppingCartApiController {
 	}
 
 	@DeleteMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
-	public String deleteShoppingCarts(@RequestBody Map<String, List<Long>> cart_ids, HttpServletRequest request, HttpServletResponse httpResponse) {
+	public String deleteShoppingCarts(@RequestBody Map<String, List<Long>> cart_ids, HttpServletRequest request,
+			HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;
 		Response<ShoppingCartListResponse> apiResponse = new Response<ShoppingCartListResponse>();
@@ -215,6 +218,81 @@ public class ShoppingCartApiController {
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);
 		return result;
+	}
+
+	@PostMapping(path = InnoxApiConstant.API_CUSTOM_ADD_TO_CART)
+	public String customProductAddToCart(@RequestBody CustomProductRequest customProductRequest,
+			HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+		String result = "";
+		ProcessException pe = null;
+		List<FieldError> errorList = new ArrayList<FieldError>();
+		Response<AddToCartResponse> apiResponse = new Response<AddToCartResponse>();
+
+		try {
+			// TODO custom add to cart
+			Principal principal = httpRequest.getUserPrincipal();
+			String customerName = "";
+			if (principal != null) {
+				customerName = principal.getName();
+			}
+
+			checValidCustomAddToCart(customProductRequest, errorList);
+
+			if (errorList.size() == 0) {
+				Long productId = shoppingCartService.customAddToCart(customProductRequest, customerName);
+				if (productId != null) {
+					AddToCartResponse response = new AddToCartResponse();
+					response.setMessage("You have added to your shopping cart!");
+
+					apiResponse.setData(response);
+					apiResponse.setResponseMessage("Instock add to cart is success!");
+				}
+			} else {
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("customProductAddToCart() >> " + e.getMessage(), e);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
+		}
+
+		result = JsonUtil.formatJsonResponse(apiResponse, pe);
+		return result;
+	}
+
+	private void checValidCustomAddToCart(CustomProductRequest customProductRequest, List<FieldError> errorList) {
+		if (customProductRequest.getCustom_product_id() <= 0) {
+			errorList.add(new FieldError(FieldCode.CUSTOM_PRODUCT_ID.getCode(),
+					ErrorMessage.CUSTOM_PRODUCT_ID_REQUIRED.getMessage()));
+		}
+
+		if (customProductRequest.getCustom_item_id() <= 0) {
+			errorList.add(new FieldError(FieldCode.CUSTOM_ITEM_ID.getCode(),
+					ErrorMessage.CUSTOM__ITEM_REQUIRED.getMessage()));
+		}
+
+		if (customProductRequest.getProduct_layout() == null || customProductRequest.getProduct_layout().isEmpty()) {
+			errorList.add(new FieldError(FieldCode.CUSTOM_PRODUCT_LAYOUT.getCode(),
+					ErrorMessage.CUSTOM_PRODUCT_LAYOUT_LIST.getMessage()));
+		}
+
+		if (customProductRequest.getProduct_sizes() == null || customProductRequest.getProduct_sizes().isEmpty()) {
+			errorList.add(new FieldError(FieldCode.ARTWORK.getCode(), ErrorMessage.ARTWORK_ID_REQUIRED.getMessage()));
+		}
+
+		customProductRequest.getProduct_layout().forEach(layout -> {
+			if (layout.getProduct_layout_id() <= 0) {
+				errorList.add(new FieldError(FieldCode.CUSTOM_PRODUCT_LAYOUT.getCode(),
+						ErrorMessage.CUSTOM_PRODUCT_LAYOUT_REQUIRED.getMessage()));
+			}
+
+			if (CommonUtil.isEmpty(layout.getCreated_image())) {
+				errorList.add(new FieldError(FieldCode.CUSTOM_PRODUCT_LAYOUT.getCode(),
+						ErrorMessage.CUSTOM_LAYOUT_IMAGE_REQUIRED.getMessage()));
+			}
+		});
 	}
 
 	private void checkValidUpdateCartData(long cart_id, int quantity, List<FieldError> errorList) {

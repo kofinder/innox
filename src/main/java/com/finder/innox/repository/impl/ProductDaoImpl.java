@@ -17,9 +17,10 @@ import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.PopularEnum;
+import com.finder.innox.utils.ProductTypeEnum;
 import com.finder.innox.utils.PromotionEnum;
 
-@SuppressWarnings({ "deprecation", "unchecked" })
+@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
 @Repository
 public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements ProductDao {
 
@@ -31,7 +32,8 @@ public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements Pro
 
 	@Override
 	public List<Product> getPopularProductList() {
-		String sqlStr = "from Product where isPopular = " + PopularEnum.POPULAR.getCode();
+		String sqlStr = "from Product where isPopular = " + PopularEnum.POPULAR.getCode() + " and is_custom_product = "
+				+ ProductTypeEnum.INSTOCK.getCode();
 		Query<Product> query = this.getCurrentSession().createQuery(sqlStr);
 		return query.list();
 	}
@@ -48,6 +50,7 @@ public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements Pro
 		}
 
 		c.add(Restrictions.eq("status", CommonStatus.ACTIVE.getCode()));
+		c.add(Restrictions.eq("isCustomProduct", ProductTypeEnum.INSTOCK.getCode()));
 		c.addOrder(Order.asc("name"));
 		return c.list();
 	}
@@ -65,7 +68,7 @@ public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements Pro
 		if (subCategoryId > 0) {
 			c.add(Restrictions.eq("subCategory.seq", subCategoryId));
 		}
-		
+
 		if (pageNo > 0) {
 			int startIndex = (pageNo - 1) * CommonConstant.ROW_PER_PAGE;
 			if (startIndex > -1) {
@@ -73,6 +76,8 @@ public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements Pro
 				c.setMaxResults(CommonConstant.ROW_PER_PAGE);
 			}
 		}
+
+		c.add(Restrictions.eq("isCustomProduct", ProductTypeEnum.INSTOCK.getCode()));
 		c.add(Restrictions.eq("status", CommonStatus.ACTIVE.getCode()));
 		c.addOrder(Order.asc("createdTime"));
 		c.addOrder(Order.asc("isNewArrival"));
@@ -103,8 +108,19 @@ public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements Pro
 			c.add(Restrictions.eq("subCategory.seq", subCategory));
 		}
 
+		c.add(Restrictions.eq("isCustomProduct", ProductTypeEnum.INSTOCK.getCode()));
 		c.add(Restrictions.eq("status", CommonStatus.ACTIVE.getCode()));
 		return c.list();
+	}
+
+	@Override
+	public boolean reduceItemQty(Long productId, int quantity) {
+		Query query = this.getCurrentSession().createSQLQuery(
+				"UPDATE product SET quantity = quantity - :qty WHERE id = :productId and is_custom_product = "
+						+ ProductTypeEnum.INSTOCK.getCode());
+		query.setParameter("qty", quantity);
+		query.setParameter("productId", productId);
+		return query.executeUpdate() > 0;
 	}
 
 }

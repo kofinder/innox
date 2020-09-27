@@ -28,6 +28,7 @@ import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.ImagesUtil;
+import com.finder.innox.utils.ProductTypeEnum;
 
 @Service
 @Transactional
@@ -56,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
 
 		} else { // save
 			product.setIsNewArrival(true);
+			product.setIsCustomProduct(ProductTypeEnum.INSTOCK.getCode());
 			product.setStatus(CommonStatus.ACTIVE.getCode());
 			product.setCreatedTime(new Date());
 		}
@@ -83,9 +85,6 @@ public class ProductServiceImpl implements ProductService {
 		product.setOverview(productDTO.getOverview());
 		product.setDetail(productDTO.getDetail());
 		product.setQuantity(productDTO.getQuantity());
-
-		product.setSize(productDTO.getSize());
-		product.setColor(productDTO.getColor());
 
 		productDao.saveOrUpdate(product);
 		logger.info("manageProduct() >> Product Save or Update is successful");
