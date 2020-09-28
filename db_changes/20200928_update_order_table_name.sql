@@ -1,0 +1,1 @@
+RENAME TABLE `innox`.`order` TO `innox`.`orders`;

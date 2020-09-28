@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "`order`")
+@Table(name = "orders")
 public class Order extends CommonEntity implements Serializable {
 
 	private static final long serialVersionUID = -2597723991920877831L;
