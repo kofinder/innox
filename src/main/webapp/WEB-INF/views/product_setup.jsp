@@ -14,6 +14,9 @@
 
 <link rel="stylesheet"
 	href="resources/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+	
+  <!-- summernote -->
+  <link rel="stylesheet" href="resources/plugins/summernote/summernote-bs4.css">
 
 <div class="content-wrapper">
 
@@ -183,6 +186,14 @@
 									</div>
 								</div>
 
+								<div class="form-group">
+									<label for="detail">Heigh Lights</label>
+									<form:textarea path="overview" rows="4" class="form-control textarea"
+										id="overview_id" aria-required="true" wrap="hard"></form:textarea>
+									<p class="text-sm mb-0">Write some high lights about your
+										product !</p>
+								</div>
+
 								<!-- display if product edit -->
 								<c:if test="${productDTO.seq > 0}">
 									<div class="form-group">
@@ -321,9 +332,9 @@
 
 								<div class="form-group">
 									<label for="detail">Detail</label>
-									<form:textarea path="detail" rows="4" class="form-control"
+									<form:textarea path="detail" class="form-control textarea"
 										id="detail_id" aria-required="true" wrap="hard"></form:textarea>
-									<p class="text-sm mb-0">Write some overview about your
+									<p class="text-sm mb-0">Write some detail about your
 										product !</p>
 								</div>
 
@@ -444,12 +455,22 @@
 <script
 	src="resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
+<!-- Summernote -->
+<script src="resources/plugins/summernote/summernote-bs4.min.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		bsCustomFileInput.init();
 		/* $("#icheck-primary").find("label")
 		css("margin-right", "10px"); */
 	});
+</script>
+
+<script>
+	$(function() {
+		// Summernote
+		$('.textarea').summernote()
+	})
 </script>
 
 <script>

@@ -121,6 +121,14 @@
 			value="/WEB-INF/views/font_setup.jsp" />
 	</definition>
 
+	<definition name="order_search" extends="mainLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/order_search.jsp" />
+	</definition>
 
+	<definition name="order_detail" extends="mainLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/order_detail.jsp" />
+	</definition>
 
 </tiles-definitions>

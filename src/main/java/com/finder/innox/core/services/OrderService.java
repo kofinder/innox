@@ -12,4 +12,8 @@ public interface OrderService {
 	List<OrderDTO> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate);
 
 	OrderDTO getOrderDTOById(long orderId);
+
+	List<OrderDTO> searchOrderHistoryList(OrderDTO orderDTO);
+
+	OrderDTO orderManage(OrderDTO orderDTO) throws Exception;
 }

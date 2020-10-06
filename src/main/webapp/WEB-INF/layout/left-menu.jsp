@@ -123,6 +123,19 @@
 					</ul></li>
 
 				<li class="nav-item has-treeview"><a href="#" class="nav-link">
+						<i class="nav-icon fas fa-luggage-cart"></i>
+						<p>
+							Order <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item"><a href="order_search.html"
+							class="nav-link"> <i class="far fa-circle nav-icon"></i>
+								<p>Order Search</p>
+						</a></li>
+					</ul></li>
+
+				<li class="nav-item has-treeview"><a href="#" class="nav-link">
 						<i class="nav-icon fas fa-cogs"></i>
 						<p>
 							Master Setup <i class="right fas fa-angle-left"></i>

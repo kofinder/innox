@@ -22,5 +22,7 @@ public interface ProductDao extends GenericDao<Product, Long> {
 			Long subCategory);
 
 	boolean reduceItemQty(Long productId, int quantity);
+	
+	boolean addItemQty(Long productId, int quantity);
 
 }

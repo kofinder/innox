@@ -27,6 +27,32 @@ public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements Pro
 	@Override
 	public List<Product> productSearch(ProductDTO searchProductDTO) {
 		Criteria c = this.getCurrentSession().createCriteria(Product.class);
+
+		if (!CommonUtil.isEmpty(searchProductDTO.getName())) {
+			c.add(Restrictions.like("name", searchProductDTO.getName(), MatchMode.ANYWHERE));
+		}
+
+		if (!CommonUtil.isEmpty(searchProductDTO.getCodeNumber())) {
+			c.add(Restrictions.like("codeNumber", searchProductDTO.getCodeNumber(), MatchMode.ANYWHERE));
+		}
+
+		if (searchProductDTO.getBrandDTO() != null && searchProductDTO.getBrandDTO().getSeq() > 0) {
+			c.add(Restrictions.eq("brand.seq", searchProductDTO.getBrandDTO().getSeq()));
+		}
+
+		if (searchProductDTO.getCategoryDTO() != null && searchProductDTO.getCategoryDTO().getSeq() > 0) {
+			c.add(Restrictions.eq("category.seq", searchProductDTO.getCategoryDTO().getSeq()));
+		}
+
+		if (searchProductDTO.getSubCategoryDTO() != null && searchProductDTO.getSubCategoryDTO().getCategorySeq() > 0) {
+			c.add(Restrictions.eq("subCategory", searchProductDTO.getSubCategoryDTO().getCategorySeq()));
+		}
+		
+		if(searchProductDTO.getStatus() > 0) {
+			c.add(Restrictions.eq("status", searchProductDTO.getStatus()));
+		}
+
+		c.addOrder(Order.asc("status"));
 		return c.list();
 	}
 
@@ -117,6 +143,16 @@ public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements Pro
 	public boolean reduceItemQty(Long productId, int quantity) {
 		Query query = this.getCurrentSession().createSQLQuery(
 				"UPDATE product SET quantity = quantity - :qty WHERE id = :productId and is_custom_product = "
+						+ ProductTypeEnum.INSTOCK.getCode());
+		query.setParameter("qty", quantity);
+		query.setParameter("productId", productId);
+		return query.executeUpdate() > 0;
+	}
+
+	@Override
+	public boolean addItemQty(Long productId, int quantity) {
+		Query query = this.getCurrentSession().createSQLQuery(
+				"UPDATE product SET quantity = quantity + :qty WHERE id = :productId and is_custom_product = "
 						+ ProductTypeEnum.INSTOCK.getCode());
 		query.setParameter("qty", quantity);
 		query.setParameter("productId", productId);

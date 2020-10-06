@@ -15,6 +15,10 @@
 <link rel="stylesheet"
 	href="resources/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
+<!-- daterange picker -->
+<link rel="stylesheet"
+	href="resources/plugins/daterangepicker/daterangepicker.css">
+
 <div class="content-wrapper">
 
 	<div class="content-header">
@@ -38,7 +42,7 @@
 
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Product Search</h1>
+					<h1 class="m-0 text-dark">Order Manage</h1>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -62,7 +66,7 @@
 				<div class="col-12">
 					<div class="card card-default">
 						<div class="card-header">
-							<h3 class="card-title">Search</h3>
+							<h3 class="card-title">Order Item List</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -73,74 +77,93 @@
 						</div>
 
 						<div class="card-body">
-							<!-- product search-->
-							<form:form role="form" id="product_search_form"
-								modelAttribute="searchProductDTO" action="product_search.html"
+							<!-- order detail-->
+							<form:form role="form" id="order_detail_form"
+								modelAttribute="orderDTO" action="order_detail.html"
 								method="POST" enctype="multipart/form-data">
 								<form:hidden path="seq" />
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="productName">Name</label>
-											<form:input path="name" id="product_name"
-												placeholder="Product Name" class="form-control" />
+											<label for="invoiceNumber">invoice Number</label>
+											<form:input path="invoiceNumber" id="invoice_number"
+												disabled="true" class="form-control" />
 										</div>
 
 										<div class="form-group">
-											<label for="brand">Brand</label>
-											<form:select class="form-control" path="brandDTO.seq"
-												id="brand_id">
-												<form:option value="-1">--- Please Select One ---</form:option>
-												<form:options items="${brandList}" itemValue="seq"
-													itemLabel="name" />
+											<label for="orderStatus">Order Status</label>
+											<form:select class="form-control" path="orderStatus"
+												id="order_status">
+												<form:options items="${orderStatusList}" itemValue="code"
+													itemLabel="description" />
 											</form:select>
 										</div>
+
 										<div class="form-group">
-											<label for="category">Category</label>
-											<form:select class="form-control" path="categoryDTO.seq"
-												id="category_id">
-												<form:option value="-1">--- Please Select One ---</form:option>
-												<form:options items="${categroyList}" itemValue="seq"
-													itemLabel="name" />
-											</form:select>
+											<label for="deliveryFee">Delivery Fee</label>
+											<form:input path="deliveryFee" id="delivery_fee"
+												disabled="true" class="form-control" />
+										</div>
+
+										<div class="form-group">
+											<label for="userName">Customer Name</label>
+											<form:input path="customerDTO.userName" id="customer_name"
+												disabled="true" class="form-control" />
+										</div>
+
+										<div class="form-group">
+											<label for="townshipName">Township Name</label>
+											<form:input path="townshipDTO.townshipName"
+												id="township_name" disabled="true" class="form-control" />
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="codeNumber">Product Code</label>
-											<form:input path="codeNumber" id="product_no"
-												placeholder="Product No" class="form-control" />
+											<label for="paymentType">Payment Type</label>
+											<form:input path="paymentTypeDTO.name" id="paymentType"
+												disabled="true" class="form-control" />
 										</div>
 
 										<div class="form-group">
-											<label for="status">Status</label>
-											<form:select class="form-control" path="status"
-												id="status_id">
-												<form:option value="-1">--- Please Select One ---</form:option>
-												<form:options items="${statusList}" itemValue="code"
-													itemLabel="desc" />
+											<label for="paymentStatus">Payment Status</label>
+											<form:select class="form-control" path="paymentStatus"
+												id="payment_status">
+												<form:options items="${paymentStatusList}" itemValue="code"
+													itemLabel="description" />
 											</form:select>
 										</div>
 
-										<div class="form-group" id="sub_category_data">
-											<label for="subCategroy">Sub Category</label>
-											<form:select class="form-control" path="subCategoryDTO.seq"
-												id="sub_category_id">
-												<%-- <form:option value="-1">--- Please Select One ---</form:option> --%>
-												<form:option value="-1">--- Please Select One ---</form:option>
-												<form:options items="${subCategroyList}" itemValue="seq"
-													itemLabel="name" />
-											</form:select>
+										<div class="form-group">
+											<label for="totalCost">Total Cost</label>
+											<form:input path="totalCost" id="total_cost" disabled="true"
+												class="form-control" />
 										</div>
+
+										<div class="form-group">
+											<label for="stateName">State Name</label>
+											<form:input path="stateDTO.name" id="state_name"
+												disabled="true" class="form-control" />
+										</div>
+
+										<div class="form-group">
+											<label for="deliveryAddress">Detail Address</label>
+											<form:input path="deliveryAddress" id="detail_address"
+												disabled="true" class="form-control" />
+										</div>
+
+										<div class="form-group">
+											<label for="remark">Remark</label>
+											<form:input path="remark" id="remark" disabled="true"
+												class="form-control" />
+										</div>
+
 
 										<div class="form-group"
 											style="text-align: right; margin-top: 55px;">
-											<button id="product_s" type="submit"
-												style="margin-right: 10px;" class="btn btn-primary">Search</button>
-
-											<button id="product_search_clear" type="button"
-												class="btn btn-default">Clear</button>
+											<button id="order_update" type="button"
+												style="margin-right: 10px;" class="btn btn-primary"
+												data-toggle="modal" data-target="#modal-default">Update</button>
 										</div>
 									</div>
 								</div>
@@ -152,7 +175,7 @@
 					<div class="card card-default">
 
 						<div class="card-header">
-							<h3 class="card-title">Product List</h3>
+							<h3 class="card-title">Order List</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -163,7 +186,7 @@
 						</div>
 
 						<div class="card-body">
-							<!-- category list -->
+							<!-- order item list -->
 							<div class="row">
 
 								<div class="card-body">
@@ -175,52 +198,65 @@
 
 											<thead>
 												<tr role="row">
-													<td width="5%">Edit</td>
 													<td>No</td>
-													<td>Name</td>
-													<td>Code</td>
-													<td>Price</td>
-													<td>Qty</td>
-													<td>Brand</td>
-													<td>Category</td>
-													<td>Sub Catrgory</td>
-													<td>Status</td>
+													<td>Product Name</td>
+													<td>Unit Price</td>
+													<td>Quantity</td>
+													<td>Sub Total</td>
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach items="${productList}" var="prd"
+												<c:forEach items="${orderItemList}" var="orderItem"
 													varStatus="status">
 													<tr>
-														<td><a href="product_setup.html?prdId=${prd.seq}">
-																<i class="fas fa-edit"></i>
-														</a></td>
 														<td>${status.count}</td>
-														<td>${prd.name}</td>
-														<td>${prd.codeNumber}</td>
-														<td>${prd.priceDesc}</td>
-														<td>${prd.quantity}</td>
-														<td>${prd.brandDTO.name}</td>
-														<td>${prd.categoryDTO.name}</td>
-														<td>${prd.subCategoryDTO.name}</td>
-														<td>${prd.status}</td>
+														<td>${orderItem.productDTO.name}</td>
+														<td>${orderItem.unitPrice}</td>
+														<td>${orderItem.quantity}</td>
+														<td>${orderItem.subTotal}</td>
 													</tr>
 												</c:forEach>
 											</tbody>
 										</table>
 									</div>
 								</div>
-								<!-- category list -->
+								<!-- order item list -->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- category list -->
+			<!-- order item list -->
 
 			<!-- /.container-fluid -->
 		</div>
 		<!-- /.content -->
 	</div>
+</div>
+
+
+<div class="modal" id="modal-default">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Confirm</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure want to update ?</p>
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button id="order_update_modal" type="button"
+					class="btn btn-primary">Update</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
 </div>
 
 <!-- jQuery -->
@@ -240,16 +276,24 @@
 <script
 	src="resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
+<script src="resources/plugins/moment/moment.min.js"></script>
+<!-- date-range-picker -->
+<script src="resources/plugins/daterangepicker/daterangepicker.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		bsCustomFileInput.init();
 	});
 
-	/* $("#category-search-clear").click(function() {
+	$("#category-search-clear").click(function() {
 		$("#category_name").val('');
 		$("#status_id").val('-1');
 		$("#sequence_no").val('0');
-	}); */
+	});
+
+	$("#order_update_modal").click(function() {
+		$("#order_detail_form").submit();
+	})
 </script>
 
 <script>
@@ -259,33 +303,14 @@
 			"autoWidth" : false,
 		});
 	});
-
-	$("#category_id").on("change", function() {
-		$.ajax({
-			method : 'POST',
-			contentType : 'application/json',
-			url : 'subCategoryByCategoryAjax.html',
-			dataType : 'json',
-			async : true,
-			data : $("#category_id").val(),
-			success : function(data) {
-				$('#sub_category_id').html('');
-				var selectOneBox = '<option value="-1">--- Please Select One ---</option>';
-				$("#sub_category_id").append(selectOneBox);
-				$.each(data.data, function(i, cam) {
-					$("#sub_category_id").append($("<option></option>", {
-						value : cam.seq,
-						text : cam.name
-					}))
-				});
-			},
-			error : function(e) {
-				console.log("ERROR >>  ", e);
-			}
-		});
-	});
 </script>
 
+<script>
+	$(function() {
+		//Date range picker
+		$('#reservation').daterangepicker();
+	})
+</script>
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">

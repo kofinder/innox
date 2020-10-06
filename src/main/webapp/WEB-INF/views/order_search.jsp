@@ -15,6 +15,10 @@
 <link rel="stylesheet"
 	href="resources/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
+<!-- daterange picker -->
+<link rel="stylesheet"
+	href="resources/plugins/daterangepicker/daterangepicker.css">
+
 <div class="content-wrapper">
 
 	<div class="content-header">
@@ -38,7 +42,7 @@
 
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Product Search</h1>
+					<h1 class="m-0 text-dark">Order Search</h1>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -73,73 +77,69 @@
 						</div>
 
 						<div class="card-body">
-							<!-- product search-->
-							<form:form role="form" id="product_search_form"
-								modelAttribute="searchProductDTO" action="product_search.html"
+							<!-- order search-->
+							<form:form role="form" id="order_search_form"
+								modelAttribute="orderDTO" action="order_search.html"
 								method="POST" enctype="multipart/form-data">
 								<form:hidden path="seq" />
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="productName">Name</label>
-											<form:input path="name" id="product_name"
-												placeholder="Product Name" class="form-control" />
+											<label for="customerName">Customer Name</label>
+											<form:input path="customerName" id="customer_name"
+												placeholder="Customer Name" class="form-control" />
 										</div>
 
 										<div class="form-group">
-											<label for="brand">Brand</label>
-											<form:select class="form-control" path="brandDTO.seq"
-												id="brand_id">
+											<label for="orderStatus">Order Status</label>
+											<form:select class="form-control" path="orderStatus"
+												id="order_status">
 												<form:option value="-1">--- Please Select One ---</form:option>
-												<form:options items="${brandList}" itemValue="seq"
-													itemLabel="name" />
+												<form:options items="${orderStatusList}" itemValue="code"
+													itemLabel="description" />
 											</form:select>
 										</div>
+
 										<div class="form-group">
-											<label for="category">Category</label>
-											<form:select class="form-control" path="categoryDTO.seq"
-												id="category_id">
-												<form:option value="-1">--- Please Select One ---</form:option>
-												<form:options items="${categroyList}" itemValue="seq"
-													itemLabel="name" />
-											</form:select>
+											<label>Date range:</label>
+
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text"> <i
+														class="far fa-calendar-alt"></i>
+													</span>
+												</div>
+												<input type="text" class="form-control float-right"
+													name="dateRange" id="reservation" spellcheck="false"
+													data-ms-editor="true">
+											</div>
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="codeNumber">Product Code</label>
-											<form:input path="codeNumber" id="product_no"
-												placeholder="Product No" class="form-control" />
+											<label for="invoiceNumber">Invoice No</label>
+											<form:input path="invoiceNumber" id="invoice_no"
+												placeholder="Invoice No" class="form-control" />
 										</div>
 
 										<div class="form-group">
-											<label for="status">Status</label>
-											<form:select class="form-control" path="status"
-												id="status_id">
+											<label for="paymentStatus">Payment Status</label>
+											<form:select class="form-control" path="paymentStatus"
+												id="payment_status">
 												<form:option value="-1">--- Please Select One ---</form:option>
-												<form:options items="${statusList}" itemValue="code"
-													itemLabel="desc" />
+												<form:options items="${paymentStatusList}" itemValue="code"
+													itemLabel="description" />
 											</form:select>
 										</div>
 
-										<div class="form-group" id="sub_category_data">
-											<label for="subCategroy">Sub Category</label>
-											<form:select class="form-control" path="subCategoryDTO.seq"
-												id="sub_category_id">
-												<%-- <form:option value="-1">--- Please Select One ---</form:option> --%>
-												<form:option value="-1">--- Please Select One ---</form:option>
-												<form:options items="${subCategroyList}" itemValue="seq"
-													itemLabel="name" />
-											</form:select>
-										</div>
 
 										<div class="form-group"
 											style="text-align: right; margin-top: 55px;">
-											<button id="product_s" type="submit"
+											<button id="category-save" type="submit"
 												style="margin-right: 10px;" class="btn btn-primary">Search</button>
 
-											<button id="product_search_clear" type="button"
+											<button id="category-search-clear" type="button"
 												class="btn btn-default">Clear</button>
 										</div>
 									</div>
@@ -152,7 +152,7 @@
 					<div class="card card-default">
 
 						<div class="card-header">
-							<h3 class="card-title">Product List</h3>
+							<h3 class="card-title">Order List</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -177,45 +177,41 @@
 												<tr role="row">
 													<td width="5%">Edit</td>
 													<td>No</td>
-													<td>Name</td>
-													<td>Code</td>
-													<td>Price</td>
-													<td>Qty</td>
-													<td>Brand</td>
-													<td>Category</td>
-													<td>Sub Catrgory</td>
-													<td>Status</td>
+													<td>Order Invoice</td>
+													<td>Customer Name</td>
+													<td>Order Status</td>
+													<td>Payment Status</td>
+													<td>Total Cost</td>
+													<td>Order Date</td>
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach items="${productList}" var="prd"
+												<c:forEach items="${orderHistoryList}" var="order"
 													varStatus="status">
 													<tr>
-														<td><a href="product_setup.html?prdId=${prd.seq}">
+														<td><a href="order_detail.html?orderId=${order.seq}">
 																<i class="fas fa-edit"></i>
 														</a></td>
 														<td>${status.count}</td>
-														<td>${prd.name}</td>
-														<td>${prd.codeNumber}</td>
-														<td>${prd.priceDesc}</td>
-														<td>${prd.quantity}</td>
-														<td>${prd.brandDTO.name}</td>
-														<td>${prd.categoryDTO.name}</td>
-														<td>${prd.subCategoryDTO.name}</td>
-														<td>${prd.status}</td>
+														<td>${order.invoiceNumber}</td>
+														<td>${order.customerDTO.userName}</td>
+														<td>${order.orderStatusText}</td>
+														<td>${order.paymentStatusText}</td>
+														<td>${order.totalCostText}</td>
+														<td>${order.orderDate}</td>
 													</tr>
 												</c:forEach>
 											</tbody>
 										</table>
 									</div>
 								</div>
-								<!-- category list -->
+								<!-- order list -->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- category list -->
+			<!-- order list -->
 
 			<!-- /.container-fluid -->
 		</div>
@@ -240,16 +236,20 @@
 <script
 	src="resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
+<script src="resources/plugins/moment/moment.min.js"></script>
+<!-- date-range-picker -->
+<script src="resources/plugins/daterangepicker/daterangepicker.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		bsCustomFileInput.init();
 	});
 
-	/* $("#category-search-clear").click(function() {
+	$("#category-search-clear").click(function() {
 		$("#category_name").val('');
 		$("#status_id").val('-1');
 		$("#sequence_no").val('0');
-	}); */
+	});
 </script>
 
 <script>
@@ -259,33 +259,14 @@
 			"autoWidth" : false,
 		});
 	});
-
-	$("#category_id").on("change", function() {
-		$.ajax({
-			method : 'POST',
-			contentType : 'application/json',
-			url : 'subCategoryByCategoryAjax.html',
-			dataType : 'json',
-			async : true,
-			data : $("#category_id").val(),
-			success : function(data) {
-				$('#sub_category_id').html('');
-				var selectOneBox = '<option value="-1">--- Please Select One ---</option>';
-				$("#sub_category_id").append(selectOneBox);
-				$.each(data.data, function(i, cam) {
-					$("#sub_category_id").append($("<option></option>", {
-						value : cam.seq,
-						text : cam.name
-					}))
-				});
-			},
-			error : function(e) {
-				console.log("ERROR >>  ", e);
-			}
-		});
-	});
 </script>
 
+<script>
+	$(function() {
+		//Date range picker
+		$('#reservation').daterangepicker();
+	})
+</script>
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">

@@ -2,6 +2,8 @@ package com.finder.innox.core.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.finder.innox.core.domain.Order;
 import com.finder.innox.utils.CommonConstant;
@@ -46,6 +48,16 @@ public class OrderDTO implements Serializable {
 	private String deliveryAddress;
 
 	private String remark;
+
+	private String customerName;
+
+	private String fromDate;
+
+	private String toDate;
+
+	private String dateRange;
+
+	List<OrderItemDTO> orderItemList = new ArrayList<OrderItemDTO>();
 
 	public OrderDTO() {
 		super();
@@ -210,6 +222,46 @@ public class OrderDTO implements Serializable {
 
 	public void setTotalCostText(String totalCostText) {
 		this.totalCostText = totalCostText;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public String getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
+	}
+
+	public String getDateRange() {
+		return dateRange;
+	}
+
+	public void setDateRange(String dateRange) {
+		this.dateRange = dateRange;
+	}
+
+	public List<OrderItemDTO> getOrderItemList() {
+		return orderItemList;
+	}
+
+	public void setOrderItemList(List<OrderItemDTO> orderItemList) {
+		this.orderItemList = orderItemList;
 	}
 
 }

@@ -103,10 +103,26 @@ public class ProductController {
 
 	@GetMapping("/product_search")
 	public String productSearchGet(Model model, HttpServletRequest request) {
+		CommonModelSetUp(model);
+		model.addAttribute("searchProductDTO", new ProductDTO());
+		@SuppressWarnings("unchecked")
+		List<ProductDTO> productList = (List<ProductDTO>) model.asMap().get("productList");
+		if (productList != null) {
+			model.addAttribute("productList", productList);
+		} else {
+			model.addAttribute("productList", productService.productSearch(new ProductDTO()));
+		}
 
-		model.addAttribute("productList", productService.productSearch(null));
 		model.addAttribute("pageTitle", PageTitleConstant.PRODUCT_SEARCH_TITLE);
 		return "product_search";
+	}
+
+	@PostMapping("/product_search")
+	public String productSearchPost(@ModelAttribute ProductDTO searchProductDTO, Model model,
+			RedirectAttributes attributes, HttpServletRequest request) {
+		attributes.addFlashAttribute("productList", productService.productSearch(searchProductDTO));
+		attributes.addFlashAttribute("pageTitle", PageTitleConstant.PRODUCT_SEARCH_TITLE);
+		return "redirect:product_search.html";
 	}
 
 	@PostMapping("/subCategoryByCategoryAjax")

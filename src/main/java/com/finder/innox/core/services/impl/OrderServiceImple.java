@@ -32,6 +32,7 @@ import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.OrderStatusEnum;
 import com.finder.innox.utils.PaymentStatusEnum;
+import com.finder.innox.utils.ProductTypeEnum;
 
 @Service
 @Transactional
@@ -253,6 +254,48 @@ public class OrderServiceImple implements OrderService {
 			return new OrderDTO(order);
 		}
 		return null;
+	}
+
+	@Override
+	public List<OrderDTO> searchOrderHistoryList(OrderDTO orderDTO) {
+
+		if (!CommonUtil.isEmpty(orderDTO.getDateRange())) {
+			String[] dateReangeArr = orderDTO.getDateRange().split("-");
+
+			if (dateReangeArr.length == 2) {
+				orderDTO.setFromDate(dateReangeArr[0]);
+				orderDTO.setToDate(dateReangeArr[1]);
+			}
+		}
+
+		List<Order> entityList = orderDao.searchOrderHistoryList(orderDTO);
+		if (entityList != null) {
+			List<OrderDTO> dtoList = new ArrayList<OrderDTO>();
+
+			entityList.forEach(order -> {
+				dtoList.add(new OrderDTO(order));
+			});
+			return dtoList;
+		}
+		return null;
+	}
+
+	@Override
+	public OrderDTO orderManage(OrderDTO orderDTO) throws Exception {
+		logger.info("orderManage() >> Order Id : " + orderDTO.getSeq() + " >>> Payment Status : "
+				+ orderDTO.getOrderStatus() + " >>> " + orderDTO.getPaymentStatus());
+		orderDao.updateOrderStatus(orderDTO.getSeq(), orderDTO.getOrderStatus(), orderDTO.getPaymentStatus());
+
+		if (OrderStatusEnum.CANCEL.getCode() == orderDTO.getOrderStatus()) {
+			List<OrderItem> orderItemList = orderItemDao.getOrderItemListByOrderId(orderDTO.getSeq());
+
+			orderItemList.forEach(orderItem -> {
+				if (orderItem.getProduct().getIsCustomProduct() == ProductTypeEnum.INSTOCK.getCode()) {
+					productDao.addItemQty(orderItem.getSeq(), orderItem.getQuantity());
+				}
+			});
+		}
+		return new OrderDTO(orderDao.get(orderDTO.getSeq()));
 	}
 
 }
