@@ -48,6 +48,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	public UserServiceImpl() {
+		super();
+	}
 
 	@Override
 	public List<User> getAllUser() {

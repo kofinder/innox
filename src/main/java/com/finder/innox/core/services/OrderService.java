@@ -9,7 +9,7 @@ public interface OrderService {
 
 	OrderDTO orderConfirm(OrderConfirmRequest confirmRequest, long customerId) throws Exception;
 
-	List<OrderDTO> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate);
+	List<OrderDTO> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate, long customerId);
 
 	OrderDTO getOrderDTOById(long orderId);
 

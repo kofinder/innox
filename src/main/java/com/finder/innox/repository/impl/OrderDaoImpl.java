@@ -19,9 +19,10 @@ import com.finder.innox.utils.CommonUtil;
 public class OrderDaoImpl extends GenericDaoImpl<Order, Long> implements OrderDao {
 
 	@Override
-	public List<Order> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate) {
+	public List<Order> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate, long customerId) {
 		Criteria c = this.getCurrentSession().createCriteria(Order.class);
 
+		c.add(Restrictions.eq("customer.userSeq", customerId));
 		c.add(Restrictions.in("orderStatus", orderStatusList));
 
 		if (!CommonUtil.isEmpty(startDate) || !CommonUtil.isEmpty(endDate)) {

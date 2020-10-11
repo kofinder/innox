@@ -89,6 +89,9 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 	@Autowired
 	private CustomProductDao customProductDao;
 
+	@Autowired
+	private ShoppingCartDao shoppingCartDao;
+
 	@Override
 	public Long instockAddToCart(InstockShoppingCartRequest shoppingCartRequest) {
 		logger.info("instockAddToCart() >> Start");
@@ -287,6 +290,7 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 		logger.info("customAddToCart() >> Product layout save success");
 
 		// product size
+		int totalQty = 0;
 		for (ProductSizeRequest prdSize : customProductRequest.getProduct_sizes()) {
 			BigDecimal prdPrice = BigDecimal.ZERO;
 			ProductSize productSize = new ProductSize();
@@ -305,6 +309,8 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 			logger.info("customAddToCart() >> Product Size Qty >> " + prdSize.getQuantity());
 			product.setPrice(product.getPrice().add(prdPrice));
 			product.setOriginalPrice(product.getOriginalPrice().add(prdPrice));
+
+			totalQty = Math.addExact(totalQty, prdSize.getQuantity());
 		}
 		logger.info("customAddToCart() >> Product size save success");
 
@@ -313,6 +319,16 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 		logger.info("customAddToCart() >> End");
 
 		// TODO implement insert shopping cart for custom product
+		ShoppingCart shoppingCart = new ShoppingCart();
+		shoppingCart.setCustomer(user);
+		shoppingCart.setProduct(product);
+		shoppingCart.setQuantity(totalQty);
+		shoppingCart.setIsCustomProduct(true);
+		shoppingCart.setCreatedTime(new Date());
+		shoppingCart.setUpdatedTime(new Date());
+
+		shoppingCartDao.save(shoppingCart);
+		logger.info("customAddToCart() >> Custom product add to cart successful");
 
 		return product.getSeq();
 	}

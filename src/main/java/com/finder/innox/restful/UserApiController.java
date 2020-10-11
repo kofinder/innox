@@ -247,7 +247,7 @@ public class UserApiController {
 			}
 		}
 
-		// TODO user name duplicated phone no check
+		// TODO user phone no check
 	}
 
 	private void isValidProfileUpdateData(UserRegisterRequest profileUpdateRequest, List<FieldError> errorList) {

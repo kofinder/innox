@@ -11,6 +11,9 @@ import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +52,7 @@ import com.finder.innox.utils.FieldError;
 import com.finder.innox.utils.FieldError.ErrorMessage;
 import com.finder.innox.utils.FieldError.FieldCode;
 import com.finder.innox.utils.JsonUtil;
+import com.finder.innox.utils.UserRoleEnum;
 
 @InnoxShopApi(apiPath = InnoxApiConstant.API_AUTH_RESOURCES_NAME)
 public class OrderApiController {
@@ -312,6 +316,18 @@ public class OrderApiController {
 		Response<OrderHistoryListResponse> apiResponse = new Response<OrderHistoryListResponse>();
 
 		try {
+
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			long customerId = 0;
+			if (!(authentication instanceof AnonymousAuthenticationToken)) {
+				UserDTO userDto = userService.findByName(authentication.getName(), UserRoleEnum.ROLE_USER.getCode());
+				customerId = userDto.getSeq();
+			}
+			if (customerId <= 0) {
+				errorList.add(
+						new FieldError(FieldCode.USER_NAME.getCode(), ErrorMessage.USER_NAME_REQUIRED.getMessage()));
+			}
+
 			List<Integer> orderStatusList = new ArrayList<Integer>();
 			if (CommonUtil.isEmpty(orderStatus)) {
 				errorList.add(new FieldError(FieldCode.ORDER_STATUS.getCode(),
@@ -325,7 +341,8 @@ public class OrderApiController {
 
 			if (errorList.size() == 0) {
 				OrderHistoryListResponse response = new OrderHistoryListResponse();
-				List<OrderDTO> orderDtos = orderService.getOrderHistory(orderStatusList, startDate, endDate);
+				List<OrderDTO> orderDtos = orderService.getOrderHistory(orderStatusList, startDate, endDate,
+						customerId);
 				orderDtos.forEach(order -> {
 					OrderHistoryResponse historyResponse = new OrderHistoryResponse(order);
 					response.getOrder_historys().add(historyResponse);

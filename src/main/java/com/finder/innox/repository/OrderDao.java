@@ -7,7 +7,7 @@ import com.finder.innox.core.dto.OrderDTO;
 
 public interface OrderDao extends GenericDao<Order, Long> {
 
-	List<Order> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate);
+	List<Order> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate, long customerId);
 
 	List<Order> searchOrderHistoryList(OrderDTO orderDTO);
 	

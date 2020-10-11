@@ -231,10 +231,10 @@ public class OrderServiceImple implements OrderService {
 	}
 
 	@Override
-	public List<OrderDTO> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate) {
+	public List<OrderDTO> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate, long customerId) {
 		logger.info("getOrderHistory() >> " + "Order Status : " + orderStatusList.toString() + " >> Start Date : "
 				+ startDate + " >> End Date : " + endDate);
-		List<Order> orderList = orderDao.getOrderHistory(orderStatusList, startDate, endDate);
+		List<Order> orderList = orderDao.getOrderHistory(orderStatusList, startDate, endDate, customerId);
 		if (orderList == null || orderList.isEmpty()) {
 			return new ArrayList<OrderDTO>();
 		}
