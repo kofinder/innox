@@ -37,7 +37,7 @@ public class ProductApiController {
 	@Autowired
 	private ProductService productService;
 
-	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST)
+	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST, produces = "application/json; charset=utf-8")
 	public String getProductList(@RequestParam(name = "pageNo") int pageNo, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";
@@ -77,7 +77,7 @@ public class ProductApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST_BY_SUB_CATEGORY)
+	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST_BY_SUB_CATEGORY,produces = "application/json; charset=utf-8")
 	public String getProductListBySubCategory(@RequestParam(name = "sub_category_id") Long sub_category_id,
 			@RequestParam(name = "page_no", required = false) Integer page_no, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
@@ -132,7 +132,7 @@ public class ProductApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST_SEARCH)
+	@GetMapping(path = InnoxApiConstant.API_PRODUCT_LIST_SEARCH, produces = "application/json; charset=utf-8")
 	public String productListSearch(@RequestParam(name = "keyword", required = false) String searchKeyword,
 			@RequestParam(name = "startPrice", required = false) BigDecimal startPrice,
 			@RequestParam(name = "endPrice", required = false) BigDecimal endPrice,
@@ -166,7 +166,7 @@ public class ProductApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_PRODUCT_DETAIL)
+	@GetMapping(path = InnoxApiConstant.API_PRODUCT_DETAIL, produces = "application/json; charset=utf-8")
 	public String productDetail(@RequestParam(name = "product_id") Long product_id, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";

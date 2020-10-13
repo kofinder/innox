@@ -1,6 +1,7 @@
 package com.finder.innox.response;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class ProductDetailResponse implements Serializable {
 
 	private List<String> images = new ArrayList<String>();
 
+	private BigDecimal price;
+
 	private String price_text;
 
 	private String origninal_price_text;
@@ -43,6 +46,8 @@ public class ProductDetailResponse implements Serializable {
 	private boolean is_new_arrival;
 
 	private String detail;
+
+	private String overview;
 
 	List<ColorResponse> color_list = new ArrayList<ColorResponse>();
 
@@ -78,6 +83,7 @@ public class ProductDetailResponse implements Serializable {
 			this.images.add(CommonUtil.prepareImagePath(product.getImagePath4(), request));
 		}
 
+		this.price = product.getPrice();
 		this.price_text = CommonUtil.formatBigDecimalAsCurrency(product.getPrice(), CommonConstant.CURRENCY_CODE_KS);
 
 		if (product.isPromotion()) {
@@ -91,6 +97,7 @@ public class ProductDetailResponse implements Serializable {
 		this.is_popular = product.isPopular();
 		this.is_new_arrival = product.isNewArrival();
 		this.detail = product.getDetail();
+		this.overview = product.getOverview();
 
 		product.getProductColorList().forEach(color -> {
 			this.getColor_list().add(new ColorResponse(color));
@@ -236,6 +243,22 @@ public class ProductDetailResponse implements Serializable {
 
 	public void setImages(List<String> images) {
 		this.images = images;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public String getOverview() {
+		return overview;
+	}
+
+	public void setOverview(String overview) {
+		this.overview = overview;
 	}
 
 }

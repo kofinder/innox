@@ -187,7 +187,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="detail">Heigh Lights</label>
+									<label for="overview">High Light</label>
 									<form:textarea path="overview" rows="4" class="form-control textarea"
 										id="overview_id" aria-required="true" wrap="hard"></form:textarea>
 									<p class="text-sm mb-0">Write some high lights about your
