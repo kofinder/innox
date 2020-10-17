@@ -49,7 +49,7 @@ public class CustomProductApiController {
 	@Autowired
 	private CustomItemLayoutService cusItemLayoutService;
 
-	@GetMapping(path = InnoxApiConstant.API_CUSTOM_PRODUCT_LIST)
+	@GetMapping(path = InnoxApiConstant.API_CUSTOM_PRODUCT_LIST, produces = "application/json; charset=utf-8")
 	public String getCustomProductListBySubCategory(@RequestParam(name = "sub_category_id") Long sub_category_id,
 			HttpServletRequest request, HttpServletResponse httpResponse) {
 		logger.info("getCustomProductListBySubCategory () >> Start");
@@ -85,7 +85,7 @@ public class CustomProductApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_CUSTOM_PRODUCT_DETAIl)
+	@GetMapping(path = InnoxApiConstant.API_CUSTOM_PRODUCT_DETAIl, produces = "application/json; charset=utf-8")
 	public String getCustomProductDetail(@RequestParam(name = "custom_product_id") Long custom_product_id,
 			HttpServletRequest request, HttpServletResponse httpResponse) {
 		logger.info("getCustomProductDetail() >> Start >> Custom Product Id : " + custom_product_id);

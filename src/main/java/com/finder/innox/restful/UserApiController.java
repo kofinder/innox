@@ -49,7 +49,7 @@ public class UserApiController {
 	@Autowired
 	private UserAddressService addressService;
 
-	@PostMapping(path = InnoxApiConstant.API_RESOURCES_NAME + InnoxApiConstant.API_USER_REGISTER)
+	@PostMapping(path = InnoxApiConstant.API_RESOURCES_NAME + InnoxApiConstant.API_USER_REGISTER, produces = "application/json; charset=utf-8")
 	public String userRegister(@RequestBody UserRegisterRequest registerRequest, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";
@@ -102,7 +102,7 @@ public class UserApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME + InnoxApiConstant.API_USER)
+	@GetMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME + InnoxApiConstant.API_USER,produces = "application/json; charset=utf-8")
 	public String getUserProfileData(@RequestParam(name = "user_id") long user_id, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";
@@ -169,7 +169,7 @@ public class UserApiController {
 		return result;
 	}
 
-	@PutMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME + InnoxApiConstant.API_USER)
+	@PutMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME + InnoxApiConstant.API_USER, produces = "application/json; charset=utf-8")
 	public String updateUserProfile(@RequestBody UserRegisterRequest profileUpdateRequest, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";

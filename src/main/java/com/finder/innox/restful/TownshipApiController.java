@@ -29,7 +29,7 @@ public class TownshipApiController {
 	@Autowired
 	private TownshipService townshipService;
 
-	@GetMapping(path = InnoxApiConstant.API_TOWNSHIP_LIST)
+	@GetMapping(path = InnoxApiConstant.API_TOWNSHIP_LIST, produces = "application/json; charset=utf-8")
 	public String getTownshipListByState(@RequestParam(name = "state_id") Long state_id,
 			HttpServletResponse httpResponse) {
 		String result = "";

@@ -41,7 +41,7 @@ public class HomeApiController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@GetMapping(path = InnoxApiConstant.API_HOME_PAGE_DATA)
+	@GetMapping(path = InnoxApiConstant.API_HOME_PAGE_DATA, produces = "application/json; charset=utf-8")
 	public String homePageData(HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;

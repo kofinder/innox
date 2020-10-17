@@ -12,7 +12,7 @@ public interface ShoppingCartService {
 
 	ShoppingCartDTO getShoppingCartById(long id);
 
-	ShoppingCartDTO updateShoppingCart(InstockShoppingCartRequest updateCartRequest);
+	List<ShoppingCartDTO> updateShoppingCart(InstockShoppingCartRequest updateCartRequest);
 
 	List<ShoppingCartDTO> getShoppingCartListByCusId(long customerId);
 

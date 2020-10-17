@@ -27,7 +27,7 @@ public class DesignerApiController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping(path = InnoxApiConstant.API_ARTWORK_DESIGNER)
+	@GetMapping(path = InnoxApiConstant.API_ARTWORK_DESIGNER, produces = "application/json; charset=utf-8")
 	public String getDesignerList(HttpServletRequest request) {
 		logger.info("getDesignerList() >> Start");
 		String result = "";

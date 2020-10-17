@@ -143,7 +143,7 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public ShoppingCartDTO updateShoppingCart(InstockShoppingCartRequest updateCartRequest) {
+	public List<ShoppingCartDTO> updateShoppingCart(InstockShoppingCartRequest updateCartRequest) {
 		logger.info("updateShoppingCart() >> Start >> Cart Id : " + updateCartRequest.getShopping_cart_id()
 				+ " >> Quantity >>" + updateCartRequest.getQuantity());
 
@@ -161,7 +161,7 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 		shoppingCartDTO.setTotalAmountText(
 				CommonUtil.formatBigDecimalAsCurrency(totalAmount, CommonConstant.CURRENCY_CODE_KS));
 
-		return shoppingCartDTO;
+		return this.getShoppingCartListByCusId(updateCartRequest.getCustomer_id());
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class StateApiController {
 	@Autowired
 	private StateService stateService;
 
-	@GetMapping(path = InnoxApiConstant.API_STATE_LIST)
+	@GetMapping(path = InnoxApiConstant.API_STATE_LIST, produces = "application/json; charset=utf-8")
 	public String getStateList(HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
 		ProcessException pe = null;

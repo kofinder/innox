@@ -77,7 +77,7 @@ public class OrderApiController {
 	@Autowired
 	private OrderItemService orderItemService;
 
-	@PostMapping(path = InnoxApiConstant.API_ORDER_PRELOAD)
+	@PostMapping(path = InnoxApiConstant.API_ORDER_PRELOAD, produces = "application/json; charset=utf-8")
 	public String orderPerload(@RequestBody OrderPreloadRequest orderRequest, HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
 		String result = "";
@@ -203,7 +203,7 @@ public class OrderApiController {
 		return result;
 	}
 
-	@PostMapping(path = InnoxApiConstant.API_ORDER_CONFIRM)
+	@PostMapping(path = InnoxApiConstant.API_ORDER_CONFIRM, produces = "application/json; charset=utf-8")
 	public String orderConfirm(@RequestBody OrderConfirmRequest confirmRequest, HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
 		String result = "";
@@ -304,7 +304,7 @@ public class OrderApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_ORDER_HISTORY)
+	@GetMapping(path = InnoxApiConstant.API_ORDER_HISTORY, produces = "application/json; charset=utf-8")
 	public String orderHistorys(@PathVariable(name = "order_status") String orderStatus,
 			@RequestParam(name = "start_date", required = false) String startDate,
 			@RequestParam(name = "end_date", required = false) String endDate,
@@ -368,7 +368,7 @@ public class OrderApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_ORDER_DETAIL)
+	@GetMapping(path = InnoxApiConstant.API_ORDER_DETAIL, produces = "application/json; charset=utf-8")
 	public String orderDetail(@PathVariable(name = "order_id") Long orderId, HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
 		String result = "";

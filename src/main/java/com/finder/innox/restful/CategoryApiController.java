@@ -42,7 +42,7 @@ public class CategoryApiController {
 	@Autowired
 	private SubCategoryService subCategoryService;
 
-	@GetMapping(path = InnoxApiConstant.API_CATEGORY_LIST)
+	@GetMapping(path = InnoxApiConstant.API_CATEGORY_LIST, produces = "application/json; charset=utf-8")
 	public String getCategoryList(HttpServletRequest request) {
 		logger.info("getCategoryList() Start");
 		String result = "";
@@ -72,7 +72,7 @@ public class CategoryApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_SUB_CATEGORY_LIST)
+	@GetMapping(path = InnoxApiConstant.API_SUB_CATEGORY_LIST, produces = "application/json; charset=utf-8")
 	public String getSubCategoryListByCategoryId(@RequestParam(name = "category_id") Long category_id,
 			HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";

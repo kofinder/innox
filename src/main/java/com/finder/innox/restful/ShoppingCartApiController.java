@@ -52,7 +52,7 @@ public class ShoppingCartApiController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
+	@PostMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART, produces = "application/json; charset=utf-8")
 	public String instockProductAddToCart(@RequestBody InstockShoppingCartRequest requestData,
 			HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 		String result = "";
@@ -95,17 +95,16 @@ public class ShoppingCartApiController {
 		return result;
 	}
 
-	@PutMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
+	@PutMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART, produces = "application/json; charset=utf-8")
 	public String updateAddToCart(@RequestParam(name = "cart_id") long cart_id,
 			@RequestParam(name = "quantity") int quantity, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
-		Response<AddToCartResponse> apiResponse = new Response<AddToCartResponse>();
+		Response<ShoppingCartListResponse> apiResponse = new Response<ShoppingCartListResponse>();
 
 		try {
-			AddToCartResponse response = new AddToCartResponse();
 			checkValidUpdateCartData(cart_id, quantity, errorList);
 
 			if (errorList.size() == 0) {
@@ -120,10 +119,20 @@ public class ShoppingCartApiController {
 					updateCartRequest.setCustomer_id(userDto.getSeq());
 				}
 
-				ShoppingCartDTO shoppingCartDTO = shoppingCartService.updateShoppingCart(updateCartRequest);
-				response.setMessage("Shopping cart update is success!");
-				response.setTotal_amount(shoppingCartDTO.getTotalAmount());
-				response.setTotal_amount_text(shoppingCartDTO.getTotalAmountText());
+				List<ShoppingCartDTO> cartDtos = shoppingCartService.updateShoppingCart(updateCartRequest);
+
+				ShoppingCartListResponse response = new ShoppingCartListResponse();
+				BigDecimal totalAmount = BigDecimal.ZERO;
+				for (ShoppingCartDTO cart : cartDtos) {
+					ShoppingCartResponse cartResponse = ShoppingCartResponse.transferDtoToResponseData(cart, request);
+					response.getShopping_carts().add(cartResponse);
+
+					totalAmount = totalAmount.add(cart.getProductSubTotal());
+				}
+
+				response.setTotal_amount(totalAmount);
+				response.setTotal_amount_text(CommonUtil.formatBigDecimalAsCurrency(response.getTotal_amount(),
+						CommonConstant.CURRENCY_CODE_KS));
 
 				apiResponse.setData(response);
 				apiResponse.setResponseMessage("Shopping cart update is success!");
@@ -144,7 +153,7 @@ public class ShoppingCartApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_SHOPPING_CART_LIST)
+	@GetMapping(path = InnoxApiConstant.API_SHOPPING_CART_LIST, produces = "application/json; charset=utf-8")
 	public String getShoppingCartList(HttpServletRequest request) {
 		String result = "";
 		ProcessException pe = null;
@@ -177,7 +186,7 @@ public class ShoppingCartApiController {
 		return result;
 	}
 
-	@DeleteMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART)
+	@DeleteMapping(path = InnoxApiConstant.API_INSTOCK_ADD_TO_CART, produces = "application/json; charset=utf-8")
 	public String deleteShoppingCarts(@RequestBody Map<String, List<Long>> cart_ids, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";
@@ -220,7 +229,7 @@ public class ShoppingCartApiController {
 		return result;
 	}
 
-	@PostMapping(path = InnoxApiConstant.API_CUSTOM_ADD_TO_CART)
+	@PostMapping(path = InnoxApiConstant.API_CUSTOM_ADD_TO_CART, produces = "application/json; charset=utf-8")
 	public String customProductAddToCart(@RequestBody CustomProductRequest customProductRequest,
 			HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 		String result = "";
