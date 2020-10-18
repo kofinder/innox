@@ -2,6 +2,7 @@ package com.finder.innox.restful;
 
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpStatus;
@@ -24,9 +25,11 @@ import com.finder.innox.core.services.UserService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
 import com.finder.innox.request.JwtRequest;
-import com.finder.innox.response.JwtResponse;
 import com.finder.innox.response.Response;
+import com.finder.innox.response.UserRegisterResponse;
+import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.JsonUtil;
+import com.finder.innox.utils.UserRoleEnum;
 
 @InnoxShopApi(apiPath = InnoxApiConstant.API_RESOURCES_NAME)
 public class JwtAuthenticationController {
@@ -43,9 +46,11 @@ public class JwtAuthenticationController {
 	private UserService userService;
 
 	@RequestMapping(value = InnoxApiConstant.API_USER_LOGIN, method = RequestMethod.POST)
-	public String createAuthenticationToken(@RequestBody JwtRequest authenticationRequest, HttpServletResponse httpResponse) throws Exception {
+	public String createAuthenticationToken(@RequestBody JwtRequest authenticationRequest,
+			HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
 		String result = "";
-		Response<JwtResponse> apiResponse = new Response<JwtResponse>();
+//		Response<JwtResponse> apiResponse = new Response<JwtResponse>();
+		Response<UserRegisterResponse> apiResponse = new Response<UserRegisterResponse>();
 		ProcessException pe = null;
 		try {
 			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -55,11 +60,21 @@ public class JwtAuthenticationController {
 			if (userDetails != null) {
 
 				UserDTO userDTO = userService.findByName(userDetails.getUsername(), 0);
-				JwtResponse jwtResponse = new JwtResponse();
-				jwtResponse.setUser_id(userDTO.getSeq());
-				jwtResponse.setJwt_token(jwtTokenUtil.generateToken(userDetails));
+				UserRegisterResponse response = new UserRegisterResponse();
+				response.setUser_id(userDTO.getSeq());
+				response.setUser_name(userDTO.getUserName());
+				response.setEmail(userDTO.getEmail());
+				response.setPhoneNo(userDTO.getPhoneNo());
+				response.setUser_role_level(userDTO.getUserRoleLevel());
+				response.setUser_role_level_text(UserRoleEnum.getDescByCode(userDTO.getUserRoleLevel()));
+				response.setProfile_image(CommonUtil.prepareImagePath(userDTO.getAvatar(), httpRequest));
+				response.setJwt_token(jwtTokenUtil.generateToken(userDetails));
 
-				apiResponse.setData(jwtResponse);
+//				JwtResponse jwtResponse = new JwtResponse();
+//				jwtResponse.setUser_id(userDTO.getSeq());
+//				jwtResponse.setJwt_token(jwtTokenUtil.generateToken(userDetails));
+
+				apiResponse.setData(response);
 			} else {
 				httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
 				pe = new ProcessException(ErrorType.INVALID_DATA, httpResponse);
