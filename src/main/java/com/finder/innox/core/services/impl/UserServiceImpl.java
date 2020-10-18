@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
+
 	public UserServiceImpl() {
 		super();
 	}
@@ -175,7 +175,8 @@ public class UserServiceImpl implements UserService {
 		}
 
 		// user address
-		if (registerRequest.getState_id() != null || registerRequest.getTownship_id() != null
+		if ((registerRequest.getState_id() != null && registerRequest.getState_id() > 0)
+				|| (registerRequest.getTownship_id() != null && registerRequest.getTownship_id() > 0)
 				|| !CommonUtil.isEmpty(registerRequest.getDetail_address())) {
 			UserAddress userAddress = new UserAddress();
 

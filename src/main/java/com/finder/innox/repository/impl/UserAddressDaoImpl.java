@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.finder.innox.core.domain.UserAddress;
 import com.finder.innox.repository.UserAddressDao;
 
-@SuppressWarnings({ "deprecation", "unchecked" })
+@SuppressWarnings({ "deprecation" })
 @Repository
 public class UserAddressDaoImpl extends GenericDaoImpl<UserAddress, Long> implements UserAddressDao {
 
@@ -15,6 +15,7 @@ public class UserAddressDaoImpl extends GenericDaoImpl<UserAddress, Long> implem
 	public UserAddress getUserAddressByUserId(long userId) {
 		Criteria c = this.getCurrentSession().createCriteria(UserAddress.class);
 		c.add(Restrictions.eq("user.userSeq", userId));
+		c.setMaxResults(1);
 		return (UserAddress) c.uniqueResult();
 	}
 

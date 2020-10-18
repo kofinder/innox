@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.finder.innox.JwtTokenUtil;
 import com.finder.innox.annotation.InnoxShopApi;
+import com.finder.innox.core.dto.UserAddressDTO;
 import com.finder.innox.core.dto.UserDTO;
+import com.finder.innox.core.services.UserAddressService;
 import com.finder.innox.core.services.UserService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
@@ -44,6 +46,9 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private UserAddressService addressService;
 
 	@RequestMapping(value = InnoxApiConstant.API_USER_LOGIN, method = RequestMethod.POST)
 	public String createAuthenticationToken(@RequestBody JwtRequest authenticationRequest,
@@ -69,6 +74,29 @@ public class JwtAuthenticationController {
 				response.setUser_role_level_text(UserRoleEnum.getDescByCode(userDTO.getUserRoleLevel()));
 				response.setProfile_image(CommonUtil.prepareImagePath(userDTO.getAvatar(), httpRequest));
 				response.setJwt_token(jwtTokenUtil.generateToken(userDetails));
+
+				UserAddressDTO addressDTO = addressService.getUserAddressByUserId(userDTO.getSeq());
+				if (addressDTO != null) {
+					if (addressDTO.getStateDTO() != null) {
+						response.setState_id(addressDTO.getStateDTO().getSeq());
+						response.setState_name(addressDTO.getStateDTO().getName());
+					} else {
+						response.setState_name("-");
+					}
+
+					if (addressDTO.getTownshipDTO() != null) {
+						response.setTownship_id(addressDTO.getTownshipDTO().getSeq());
+						response.setTownship_name(addressDTO.getTownshipDTO().getTownshipName());
+					} else {
+						response.setTownship_name("-");
+					}
+
+					response.setDetail_address(addressDTO.getDetailAddress());
+				} else {
+					response.setState_name("-");
+					response.setTownship_name("-");
+					response.setDetail_address("");
+				}
 
 //				JwtResponse jwtResponse = new JwtResponse();
 //				jwtResponse.setUser_id(userDTO.getSeq());

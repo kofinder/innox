@@ -49,7 +49,8 @@ public class UserApiController {
 	@Autowired
 	private UserAddressService addressService;
 
-	@PostMapping(path = InnoxApiConstant.API_RESOURCES_NAME + InnoxApiConstant.API_USER_REGISTER, produces = "application/json; charset=utf-8")
+	@PostMapping(path = InnoxApiConstant.API_RESOURCES_NAME
+			+ InnoxApiConstant.API_USER_REGISTER, produces = "application/json; charset=utf-8")
 	public String userRegister(@RequestBody UserRegisterRequest registerRequest, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";
@@ -73,6 +74,29 @@ public class UserApiController {
 					response.setUser_role_level(userDTO.getUserRoleLevel());
 					response.setUser_role_level_text(UserRoleEnum.getDescByCode(userDTO.getUserRoleLevel()));
 					response.setProfile_image(CommonUtil.prepareImagePath(userDTO.getAvatar(), request));
+
+					UserAddressDTO addressDTO = addressService.getUserAddressByUserId(userDTO.getSeq());
+					if (addressDTO != null) {
+						if (addressDTO.getStateDTO() != null) {
+							response.setState_id(addressDTO.getStateDTO().getSeq());
+							response.setState_name(addressDTO.getStateDTO().getName());
+						} else {
+							response.setState_name("-");
+						}
+
+						if (addressDTO.getTownshipDTO() != null) {
+							response.setTownship_id(addressDTO.getTownshipDTO().getSeq());
+							response.setTownship_name(addressDTO.getTownshipDTO().getTownshipName());
+						} else {
+							response.setTownship_name("-");
+						}
+
+						response.setDetail_address(addressDTO.getDetailAddress());
+					} else {
+						response.setState_name("-");
+						response.setTownship_name("-");
+						response.setDetail_address("");
+					}
 
 					UserDetails userDetails = userService.loadUserByUsername(response.getUser_name());
 
@@ -102,7 +126,8 @@ public class UserApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME + InnoxApiConstant.API_USER,produces = "application/json; charset=utf-8")
+	@GetMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME
+			+ InnoxApiConstant.API_USER, produces = "application/json; charset=utf-8")
 	public String getUserProfileData(@RequestParam(name = "user_id") long user_id, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";
@@ -139,11 +164,25 @@ public class UserApiController {
 
 					UserAddressDTO addressDTO = addressService.getUserAddressByUserId(userDTO.getSeq());
 					if (addressDTO != null) {
-						response.setState_id(addressDTO.getStateDTO().getSeq());
-						response.setState_name(addressDTO.getStateDTO().getName());
-						response.setTownship_id(addressDTO.getTownshipDTO().getSeq());
-						response.setTownship_name(addressDTO.getTownshipDTO().getTownshipName());
+						if (addressDTO.getStateDTO() != null) {
+							response.setState_id(addressDTO.getStateDTO().getSeq());
+							response.setState_name(addressDTO.getStateDTO().getName());
+						} else {
+							response.setState_name("-");
+						}
+
+						if (addressDTO.getTownshipDTO() != null) {
+							response.setTownship_id(addressDTO.getTownshipDTO().getSeq());
+							response.setTownship_name(addressDTO.getTownshipDTO().getTownshipName());
+						} else {
+							response.setTownship_name("-");
+						}
+
 						response.setDetail_address(addressDTO.getDetailAddress());
+					} else {
+						response.setState_name("-");
+						response.setTownship_name("-");
+						response.setDetail_address("");
 					}
 
 					apiResponse.setData(response);
@@ -169,7 +208,8 @@ public class UserApiController {
 		return result;
 	}
 
-	@PutMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME + InnoxApiConstant.API_USER, produces = "application/json; charset=utf-8")
+	@PutMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME
+			+ InnoxApiConstant.API_USER, produces = "application/json; charset=utf-8")
 	public String updateUserProfile(@RequestBody UserRegisterRequest profileUpdateRequest, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";
