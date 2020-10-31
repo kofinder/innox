@@ -45,7 +45,7 @@
 				<!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a href="#">Home</a></li>
+						<li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
 						<li class="breadcrumb-item active">${pageTitle}</li>
 					</ol>
 				</div>
@@ -82,7 +82,7 @@
 
 						<div class="row">
 							<div class="col-md-6">
-								<div class="form-group">
+								<div class="form-group" id="brand_name_data">
 									<label for="brandName">Brand Name</label>
 									<form:input path="name" id="brand_name"
 										placeholder="Brand Name" class="form-control" />
@@ -99,7 +99,7 @@
 							</div>
 
 							<div class="col-md-6">
-								<div class="form-group">
+								<div class="form-group" id="sequence_no_data">
 									<label for="sequenceNo">Sequence No</label>
 									<form:input path="sequence" id="sequence_no"
 										placeholder="Sequence No" class="form-control" />
@@ -129,7 +129,8 @@
 								</div>
 
 								<div class="form-group" style="text-align: right;">
-									<button type="submit" class="btn btn-primary">Save</button>
+									<button type="submit" class="btn btn-primary"
+										onclick="checkBrandSetup()">Save</button>
 								</div>
 							</div>
 						</div>
@@ -229,6 +230,39 @@
 			"autoWidth" : false,
 		});
 	});
+</script>
+
+<script>
+	function checkBrandSetup() {
+		checkBrandSetupValid();
+		if (errors == 0) {
+			return true;
+		}
+		event.preventDefault();
+	}
+
+	function checkBrandSetupValid() {
+		errors = 0;
+		var nameErr = checkField("Name", $("#brand_name").val(), true, null,
+				null, null);
+
+		var sequenceErr = checkField("Sequence", $("#sequence_no").val(), true,
+				null, null, null);
+
+		if (nameErr) {
+			showError("brand_name_data", "brand_name", nameErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("brand_name_data", "brand_name")
+		}
+		
+		if (sequenceErr) {
+			showError("sequence_no_data", "sequence_no", nameErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("sequence_no_data", "sequence_no")
+		}
+	}
 </script>
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">

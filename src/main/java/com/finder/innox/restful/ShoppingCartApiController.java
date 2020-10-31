@@ -341,6 +341,13 @@ public class ShoppingCartApiController {
 			errorList.add(
 					new FieldError(FieldCode.QUANTITY_REQUIRED.getCode(), ErrorMessage.QUANTITY_REQUIRED.getMessage()));
 		}
+
+		if (requestData.getProduct_id() > 0 && requestData.getQuantity() > 0) {
+			if (!shoppingCartService.isValidStockQty(requestData.getProduct_id(), requestData.getQuantity())) {
+				errorList.add(new FieldError(FieldCode.PRODUCT_OUT_OF_STOCK.getCode(),
+						ErrorMessage.PRODUCT_OUT_OF_STOCK.getMessage()));
+			}
+		}
 	}
 
 }

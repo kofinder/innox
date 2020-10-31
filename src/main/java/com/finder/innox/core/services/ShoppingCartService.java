@@ -21,5 +21,7 @@ public interface ShoppingCartService {
 	Long customAddToCart(CustomProductRequest customProductRequest, String customerName) throws Exception;
 
 	List<ShoppingCartDTO> getShoppingCartsForOrderPreload(List<Long> cartIds);
+	
+	boolean isValidStockQty(long product_id, int qty);
 
 }

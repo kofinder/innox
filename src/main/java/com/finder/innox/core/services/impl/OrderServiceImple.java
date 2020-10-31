@@ -129,7 +129,7 @@ public class OrderServiceImple implements OrderService {
 		order.setRemark(confirmRequest.getRemark());
 		order.setCreatedTime(new Date());
 		order.setUpdatedTime(new Date());
-
+		
 		Long orderId = orderDao.saveWithId(order);
 		logger.info("orderConfirm() >> Order save is success >> Order Id : " + orderId);
 
