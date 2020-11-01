@@ -15,6 +15,8 @@ public class ShoppingCartResponse implements Serializable {
 
 	private long cart_id;
 
+	private long product_id;
+
 	private String product_name;
 
 	private BigDecimal product_price;
@@ -32,6 +34,7 @@ public class ShoppingCartResponse implements Serializable {
 	public static ShoppingCartResponse transferDtoToResponseData(ShoppingCartDTO cartDto, HttpServletRequest request) {
 		ShoppingCartResponse response = new ShoppingCartResponse();
 		response.setCart_id(cartDto.getSeq());
+		response.setProduct_id(cartDto.getProductDTO().getSeq());
 		response.setProduct_name(cartDto.getProductDTO().getName());
 		response.setProduct_price(cartDto.getProductDTO().getPrice());
 		response.setProduct_price_text(
@@ -115,6 +118,14 @@ public class ShoppingCartResponse implements Serializable {
 
 	public void setProduct_image(String product_image) {
 		this.product_image = product_image;
+	}
+
+	public long getProduct_id() {
+		return product_id;
+	}
+
+	public void setProduct_id(long product_id) {
+		this.product_id = product_id;
 	}
 
 }
