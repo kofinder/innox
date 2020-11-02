@@ -315,6 +315,8 @@ public class ShoppingCartApiController {
 			errorList.add(
 					new FieldError(FieldCode.QUANTITY_REQUIRED.getCode(), ErrorMessage.QUANTITY_REQUIRED.getMessage()));
 		}
+		
+		// TODO to check product qty out of stock 
 	}
 
 	private void checkValidAddToCartData(InstockShoppingCartRequest requestData, List<FieldError> errorList) {

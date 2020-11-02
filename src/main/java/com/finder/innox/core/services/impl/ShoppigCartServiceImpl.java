@@ -352,7 +352,7 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 		Product product = productDao.get(product_id);
 		logger.info("isValidStockQty() >> Expected Qty : " + qty + " >> Stock Qty : " + product.getQuantity()
 				+ " >> Product Id : " + product.getSeq());
-		if (product != null && product.getQuantity() > 0 && qty >= product.getQuantity()) {
+		if (product != null && product.getQuantity() > 0 && qty <= product.getQuantity()) {
 			return true;
 		}
 		return false;
