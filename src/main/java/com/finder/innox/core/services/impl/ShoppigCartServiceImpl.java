@@ -95,12 +95,12 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 	@Override
 	public Long instockAddToCart(InstockShoppingCartRequest shoppingCartRequest) {
 		logger.info("instockAddToCart() >> Start");
-		ShoppingCart shoppingCart = null;
+		ShoppingCart shoppingCart = cartDao.getDataById(shoppingCartRequest.getCustomer_id(), 0,
+				shoppingCartRequest.getProduct_id(), shoppingCartRequest.getColor_id(),
+				shoppingCartRequest.getSize_id());
 
-		if (cartDao.getDataById(shoppingCartRequest.getCustomer_id(), 0, shoppingCartRequest.getProduct_id(),
-				shoppingCartRequest.getColor_id(), shoppingCartRequest.getSize_id()) != null) {
+		if (shoppingCart != null) {
 			// Update
-			shoppingCart = cartDao.getDataById(0, shoppingCartRequest.getShopping_cart_id(), 0, 0, 0);
 			shoppingCart.setQuantity(Math.addExact(shoppingCart.getQuantity(), shoppingCartRequest.getQuantity()));
 		} else {
 			// Save
