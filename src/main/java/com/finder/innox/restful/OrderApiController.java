@@ -155,11 +155,14 @@ public class OrderApiController {
 				// total cost
 				BigDecimal totalItemCost = BigDecimal.ZERO;
 
+				// shopping cart data
 				for (ShoppingCartDTO cart : cartItemList) {
 					OrderItemResponse orderItemResponse = new OrderItemResponse();
 					orderItemResponse.setCart_id(cart.getSeq());
 					orderItemResponse.setProduct_id(cart.getProductDTO().getSeq());
 					orderItemResponse.setProduct_name(cart.getProductDTO().getName());
+					orderItemResponse.setColor_name(cart.getColorDTO().getColorName());
+					orderItemResponse.setSize_name(cart.getSize().getSizeName());
 					orderItemResponse.setImage_path(
 							CommonUtil.prepareImagePath(cart.getProductDTO().getImagePath1(), httpRequest));
 					orderItemResponse.setUnit_price(cart.getProductDTO().getPrice());
