@@ -82,4 +82,13 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 		return (User) usr;
 	}
 
+	@Override
+	public List<User> getActiveUserForAnnouncement() {
+		Criteria c = this.getCurrentSession().createCriteria(User.class);
+		c.add(Restrictions.eq("status", CommonStatus.ACTIVE.getCode()));
+		c.add(Restrictions.ne("userRoleLevel", UserRoleEnum.ROLE_ADMIN.getCode()));
+		c.add(Restrictions.isNotNull("deviceToken"));
+		return c.list();
+	}
+
 }

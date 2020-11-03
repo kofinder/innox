@@ -131,4 +131,9 @@
 			value="/WEB-INF/views/order_detail.jsp" />
 	</definition>
 
+	<definition name="announcement_setup" extends="mainLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/announcement_setup.jsp" />
+	</definition>
+
 </tiles-definitions>

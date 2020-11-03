@@ -1,9 +1,10 @@
-package com.finder.innox.core.dto;
+	package com.finder.innox.core.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finder.innox.core.domain.User;
 import com.finder.innox.utils.CommonStatus;
+import com.finder.innox.utils.DeviceTypeEnum;
 import com.finder.innox.utils.UserRoleEnum;
 
 public class UserDTO {
@@ -15,7 +16,7 @@ public class UserDTO {
 	private String password;
 
 	private String email;
-	
+
 	private String phoneNo;
 
 	private int status;
@@ -40,6 +41,10 @@ public class UserDTO {
 
 	private int userRoleLevel;
 
+	private String deviceToken;
+
+	private int deviceType;
+
 	public UserDTO() {
 		super();
 	}
@@ -60,6 +65,8 @@ public class UserDTO {
 			this.recordDelFlag = user.getRecordDelFlag() == null ? false : user.getRecordDelFlag();
 			this.userRoleLevel = user.getUserRoleLevel() == null ? UserRoleEnum.ROLE_USER.getCode()
 					: user.getUserRoleLevel();
+			this.deviceToken = user.getDeviceToken();
+			this.deviceType = user.getDeviceType() == null ? DeviceTypeEnum.ANDROID.getCode() : user.getDeviceType();
 		}
 	}
 
@@ -190,7 +197,21 @@ public class UserDTO {
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	
-	
+
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
+
+	public int getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(int deviceType) {
+		this.deviceType = deviceType;
+	}
 
 }

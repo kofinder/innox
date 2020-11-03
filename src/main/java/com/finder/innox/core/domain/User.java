@@ -77,6 +77,12 @@ public class User implements Serializable {
 	@Column(name = "user_role_level")
 	private Integer userRoleLevel;
 
+	@Column(name = "device_token")
+	private String deviceToken;
+
+	@Column(name = "device_type")
+	private Integer deviceType;
+
 	public Long getUserSeq() {
 		return userSeq;
 	}
@@ -203,6 +209,22 @@ public class User implements Serializable {
 
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
+	}
+
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
+
+	public Integer getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(Integer deviceType) {
+		this.deviceType = deviceType;
 	}
 
 }

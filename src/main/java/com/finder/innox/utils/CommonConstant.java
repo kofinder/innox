@@ -34,7 +34,7 @@ public class CommonConstant {
 	public static final String FCM_TOPIC = "FCM_TOPIC";
 	public static final String PLAYSTORE_URL = "playStoreUrl";
 	public static final String DOWNLOAD_URL = "downloadUrl";
-	public static final String SERVER_KEY = "AAAASfmQMPs:APA91bEN8OfmGlrjHeVTZ1FpACIiW1gwlCoIN6cBwjwWnfzGJTUq0NhrqSZIllr31vilX3o5ufPRl1rOwma-onjjxvgTqqW6V_O7en2NsGgg_CqITZGwlaa0OX6XtFfY5carI0_JdIjQ";
+	public static final String SERVER_KEY = "AAAA8anIqA4:APA91bGVUx1sqcTVC0h8kpkNDJiJyu5fhjDpbGD_atljoVE-_f2FMZtBzgh-xLElTDdpBrVr9RBguT_gRyvwyzpMUjKqXLXwuKtMhCkcpH29Y-nk0YSfHnCH2SUufCPxVI4DUutuuZQN";
 	public static final String FCM_URL = "https://fcm.googleapis.com/fcm/send";
 	public static final String TOPIC_ANNOUNCEMENT = "/topics/";
 	public static final String STD_DATE_FORMAT_EEEE_dd_MMMM_yyyy = "EEEE, dd MMMM yyyy";
@@ -91,6 +91,10 @@ public class CommonConstant {
 	public static final String FONTS_DIRECTORY = "fonts/";
 	public static final String FONTS_IMAGE_DIRECTORY = "fonts_image/";
 	public static final String FONTS_IMAGE_PERFIX = "fonts_image";
+	
+	public static final String ANNOUNCEMENT_DIRECTORY = "category/";
+	public static final String ANNOUNCEMENT_IMAGE_DIRECTORY = "category_image/";
+	public static final String ANNOUNCEMENT_IMAGE_PERFIX = "category_image";
 
 	public static final int RECORD_LIMIT_PROMO_ITEM = 6;
 	public static final int RECORD_LIMIT_POPULAR = 6;
