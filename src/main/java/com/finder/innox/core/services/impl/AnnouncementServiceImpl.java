@@ -155,4 +155,20 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		logger.info("sendFcmTopic() => finish");
 	}
 
+	@Override
+	public List<AnnouncementDTO> searchAnnouncementData(AnnouncementDTO announcementDTO) {
+		logger.info("searchAnnouncementData() >> Start");
+		List<Announcement> entityList = announcementDao.searchAnnouncementData(announcementDTO);
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<AnnouncementDTO>();
+		}
+
+		List<AnnouncementDTO> dtoList = new ArrayList<AnnouncementDTO>();
+		entityList.forEach(entity -> {
+			dtoList.add(new AnnouncementDTO(entity));
+		});
+		logger.info("searchAnnouncementData() >> End >> Announcement list : " + dtoList.size());
+		return dtoList;
+	}
+
 }

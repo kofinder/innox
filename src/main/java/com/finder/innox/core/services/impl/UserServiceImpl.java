@@ -146,6 +146,7 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(registerRequest.getEmail());
 		user.setPhoneNo(registerRequest.getPhoneNo());
 		user.setStatus(CommonStatus.ACTIVE.getCode());
+		user.setDeviceType(registerRequest.getDevice_type());
 		user.setRecordRegDate(new Date());
 
 		// user role

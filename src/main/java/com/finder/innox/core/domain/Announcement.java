@@ -10,8 +10,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "announcement")
-public class Announcement extends CommonEntity implements Serializable {
 
+public class Announcement extends CommonEntity implements Serializable {
 	private static final long serialVersionUID = -8859715003227826414L;
 
 	@Column(name = "noti_type")

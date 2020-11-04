@@ -38,7 +38,7 @@
 
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Announcement Search</h1>
+					<h1 class="m-0 text-dark">${pageTitle}Search</h1>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -74,18 +74,32 @@
 
 						<div class="card-body">
 							<!-- category search-->
-							<form:form role="form" id="category_search_form"
-								modelAttribute="searchCatDTO" action="category_search.html"
-								method="POST" enctype="multipart/form-data">
+							<form:form role="form" id="announcement_search_form"
+								modelAttribute="announcementSearchDTO"
+								action="announcement_search.html" method="POST"
+								enctype="multipart/form-data">
 								<form:hidden path="seq" />
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="categoryName">Category Name</label>
-											<form:input path="name" id="category_name"
-												placeholder="Category Name" class="form-control" />
+											<div class="form-group">
+												<label for="title">Title</label>
+												<form:input path="title" id="title" placeholder="Title"
+													class="form-control" />
+											</div>
+											<div class="form-group">
+												<label for="status">Noti Type</label>
+												<form:select class="form-control" path="notiType"
+													id="notiType">
+													<form:option value="-1">--- Please Select One ---</form:option>
+													<form:options items="${notiTypeList}" itemValue="code"
+														itemLabel="description" />
+												</form:select>
+											</div>
 										</div>
+									</div>
 
+									<div class="col-md-6">
 										<div class="form-group">
 											<label for="status">Status</label>
 											<form:select class="form-control" path="status"
@@ -95,20 +109,12 @@
 													itemLabel="desc" />
 											</form:select>
 										</div>
-									</div>
-
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="sequenceNo">Sequence No</label>
-											<form:input path="sequenceNo" id="sequence_no"
-												placeholder="Sequence No" class="form-control" />
-										</div>
 										<div class="form-group"
 											style="text-align: right; margin-top: 55px;">
-											<button id="category-save" type="submit"
+											<button id="announcement_search" type="submit"
 												style="margin-right: 10px;" class="btn btn-primary">Search</button>
 
-											<button id="category-search-clear" type="button"
+											<button id="announcement_search_clear" type="button"
 												class="btn btn-default">Clear</button>
 										</div>
 									</div>
@@ -121,7 +127,7 @@
 					<div class="card card-default">
 
 						<div class="card-header">
-							<h3 class="card-title">Category List</h3>
+							<h3 class="card-title">Announcement List</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -146,22 +152,23 @@
 												<tr role="row">
 													<td width="5%">Edit</td>
 													<td>No</td>
-													<td>Name</td>
-													<td>Sequence</td>
+													<td>Title</td>
+													<td>Noti Type</td>
 													<td>Status</td>
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach items="${categoryList}" var="cat"
+												<c:forEach items="${announcementList}" var="announce"
 													varStatus="status">
 													<tr>
-														<td><a href="category_setup.html?catId=${cat.seq}">
+														<td><a
+															href="announcement_setup.html?announcementId=${announce.seq}">
 																<i class="fas fa-edit"></i>
 														</a></td>
 														<td>${status.count}</td>
-														<td>${cat.name}</td>
-														<td>${cat.sequenceNo}</td>
-														<td>${cat.status}</td>
+														<td>${announce.title}</td>
+														<td>${announce.notiTypeText}</td>
+														<td>${announce.statusText}</td>
 													</tr>
 												</c:forEach>
 											</tbody>

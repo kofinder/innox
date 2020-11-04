@@ -34,6 +34,8 @@ public class AnnouncementDTO implements Serializable {
 
 	private int status;
 
+	private String statusText;
+
 	public AnnouncementDTO() {
 		super();
 	}
@@ -49,6 +51,7 @@ public class AnnouncementDTO implements Serializable {
 			this.detailImage = announcement.getDetailImage();
 			this.userDTO = new UserDTO(announcement.getCreatedBy());
 			this.status = announcement.getStatus() == null ? CommonStatus.ACTIVE.getCode() : announcement.getStatus();
+			this.statusText = CommonStatus.getDescByCode(this.status);
 		}
 	}
 
@@ -138,6 +141,14 @@ public class AnnouncementDTO implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
 	}
 
 }

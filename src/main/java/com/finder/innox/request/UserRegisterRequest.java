@@ -28,6 +28,8 @@ public class UserRegisterRequest implements Serializable {
 
 	private String profile_image;
 
+	private int device_type;
+
 	public String getName() {
 		return name;
 	}
@@ -114,6 +116,14 @@ public class UserRegisterRequest implements Serializable {
 
 	public void setUser_id(long user_id) {
 		this.user_id = user_id;
+	}
+
+	public int getDevice_type() {
+		return device_type;
+	}
+
+	public void setDevice_type(int device_type) {
+		this.device_type = device_type;
 	}
 
 }

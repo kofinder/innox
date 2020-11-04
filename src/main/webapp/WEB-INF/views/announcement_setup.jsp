@@ -192,7 +192,7 @@
 
 												<div class="form-group" style="text-align: right;">
 													<button id="announcement_save" type="submit"
-														class="btn btn-primary">Save</button>
+														class="btn btn-primary" onclick="checkAnnouncementSetup()">Save</button>
 												</div>
 											</div>
 										</div>
@@ -253,24 +253,24 @@
 
 	function checkAnnouncementValid() {
 		errors = 0;
-		var nameErr = checkField("Name", $("#category_name").val(), true, null,
-				null, null);
+		var nameErr = checkField("Name", $("#title").val(), true, null, null,
+				null);
 
-		var sequenceNoErr = checkField("Sequence No", $("#sequence_no").val(),
-				true, null, null, "n");
+		var descriptionErr = checkField("Description", $("#description").val(),
+				true, null, null, null);
 
 		if (nameErr) {
-			showError("category_name_data", "category_name", nameErr);
+			showError("title_data", "title", nameErr);
 			errors = 1;
 		} else {
-			removeErrorMsg("category_name_data", "category_name");
+			removeErrorMsg("title_data", "title");
 		}
 
-		if (sequenceNoErr) {
-			showError("sequence_no_data", "sequence_no", sequenceNoErr);
+		if (descriptionErr) {
+			showError("description_data", "description", descriptionErr);
 			errors = 1;
 		} else {
-			removeErrorMsg("sequence_no_data", "sequence_no");
+			removeErrorMsg("description_data", "description");
 		}
 	}
 </script>

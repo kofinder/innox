@@ -51,7 +51,7 @@ public class CategoryApiController {
 		List<CategoryDTO> categoryList = categoryService.getAllCategoryList();
 
 		CategoryListResponse resposne = new CategoryListResponse();
-		
+
 		categoryList.forEach(cat -> {
 			CategoryResponse categoryResponse = new CategoryResponse(cat, request);
 			resposne.getCategorys().add(categoryResponse);

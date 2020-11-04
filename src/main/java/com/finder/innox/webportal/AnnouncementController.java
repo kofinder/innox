@@ -1,6 +1,7 @@
 package com.finder.innox.webportal;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,7 @@ import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.MessageEnum;
 import com.finder.innox.utils.NotificationTypeEnum;
+import com.finder.innox.utils.PageTitleConstant;
 import com.finder.innox.utils.UserRoleEnum;
 
 @Controller
@@ -39,6 +41,11 @@ public class AnnouncementController {
 	@ModelAttribute(name = "images")
 	public String getImagePath() {
 		return CommonConstant.IMAGE_PATH;
+	}
+
+	@ModelAttribute(name = "pageTitle")
+	public String getPageTitle() {
+		return PageTitleConstant.ANNOUNCEMENT;
 	}
 
 	@GetMapping("/announcement_setup")
@@ -80,7 +87,34 @@ public class AnnouncementController {
 			logger.info("announcementManagePost() >>> " + e.getMessage());
 		}
 
-		return "redirect:announcement_setup.html";
+		return "redirect:announcement_search.html";
+	}
+
+	@GetMapping("/announcement_search")
+	public String announcementSearchGet(Model model, HttpServletRequest httpRequest) {
+		model.addAttribute("announcementSearchDTO", new AnnouncementDTO());
+		model.addAttribute("announcementList", announcementService.searchAnnouncementData(new AnnouncementDTO()));
+		model.addAttribute("statusList", CommonStatus.values());
+		model.addAttribute("notiTypeList", NotificationTypeEnum.values());
+		return "announcement_search";
+	}
+
+	@PostMapping("/announcement_search")
+	public String announcementSearchPost(
+			@ModelAttribute(name = "announcementSearchDTO") AnnouncementDTO announcementSearchDTO, Model model,
+			HttpServletRequest httpRequest) {
+
+		try {
+			model.addAttribute("announcementSearchDTO", announcementSearchDTO);
+			model.addAttribute("announcementList", announcementService.searchAnnouncementData(announcementSearchDTO));
+			model.addAttribute("statusList", CommonStatus.values());
+			model.addAttribute("notiTypeList", NotificationTypeEnum.values());
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("announcementSearchPost() >> " + e.getMessage());
+		}
+
+		return "announcement_search";
 	}
 
 }

@@ -136,4 +136,9 @@
 			value="/WEB-INF/views/announcement_setup.jsp" />
 	</definition>
 
+	<definition name="announcement_search" extends="mainLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/announcement_search.jsp" />
+	</definition>
+
 </tiles-definitions>

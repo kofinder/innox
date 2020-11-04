@@ -148,6 +148,11 @@
 							class="nav-link"> <i class="far fa-circle nav-icon"></i>
 								<p>Announcement Setup</p>
 						</a></li>
+						
+						<li class="nav-item"><a href="announcement_search.html"
+							class="nav-link"> <i class="far fa-circle nav-icon"></i>
+								<p>Announcement Search</p>
+						</a></li>
 					</ul></li>
 
 				<li class="nav-item has-treeview"><a href="#" class="nav-link">

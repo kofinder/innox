@@ -258,6 +258,11 @@ public class UserApiController {
 			errorList.add(new FieldError(FieldCode.USER_NAME.getCode(), ErrorMessage.USER_NAME_REQUIRED.getMessage()));
 		}
 
+		if (registerRequest.getDevice_type() <= 0) {
+			errorList.add(
+					new FieldError(FieldCode.DEVICE_TYPE.getCode(), ErrorMessage.DEVICE_TYPE_REQUIRED.getMessage()));
+		}
+
 		if (registerRequest.getUser_role() <= 0) {
 			errorList.add(new FieldError(FieldCode.USER_ROLE.getCode(), ErrorMessage.USER_ROLE_REQUIRED.getMessage()));
 		}
