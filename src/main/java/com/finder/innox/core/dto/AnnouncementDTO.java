@@ -5,7 +5,9 @@ import java.io.Serializable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finder.innox.core.domain.Announcement;
+import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonStatus;
+import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.NotificationTypeEnum;
 
 public class AnnouncementDTO implements Serializable {
@@ -36,6 +38,8 @@ public class AnnouncementDTO implements Serializable {
 
 	private String statusText;
 
+	private String createdDate;
+
 	public AnnouncementDTO() {
 		super();
 	}
@@ -52,6 +56,8 @@ public class AnnouncementDTO implements Serializable {
 			this.userDTO = new UserDTO(announcement.getCreatedBy());
 			this.status = announcement.getStatus() == null ? CommonStatus.ACTIVE.getCode() : announcement.getStatus();
 			this.statusText = CommonStatus.getDescByCode(this.status);
+			this.createdDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_FORMAT_dd_MMM_yyyy_NO_SPAVE,
+					announcement.getCreatedTime());
 		}
 	}
 
@@ -149,6 +155,14 @@ public class AnnouncementDTO implements Serializable {
 
 	public void setStatusText(String statusText) {
 		this.statusText = statusText;
+	}
+
+	public String getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 
 }

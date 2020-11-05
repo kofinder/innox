@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.finder.innox.core.domain.User;
 import com.finder.innox.core.dto.UserDTO;
+import com.finder.innox.request.DeviceTokenUpdateRequest;
 import com.finder.innox.request.UserRegisterRequest;
 
 public interface UserService extends UserDetailsService {
@@ -29,5 +30,7 @@ public interface UserService extends UserDetailsService {
 	UserDTO getUserById(long userId);
 
 	UserDTO userProfileUpdate(UserRegisterRequest updateRequest) throws Exception;
+
+	int updateDeviceToken(DeviceTokenUpdateRequest request) throws Exception;
 
 }

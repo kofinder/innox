@@ -27,6 +27,7 @@ import com.finder.innox.core.dto.UserDTO;
 import com.finder.innox.core.services.UserService;
 import com.finder.innox.repository.UserAddressDao;
 import com.finder.innox.repository.UserDao;
+import com.finder.innox.request.DeviceTokenUpdateRequest;
 import com.finder.innox.request.UserRegisterRequest;
 import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonStatus;
@@ -292,5 +293,18 @@ public class UserServiceImpl implements UserService {
 
 		logger.info("userProfileUpdate() >> End");
 		return null;
+	}
+
+	@Override
+	public int updateDeviceToken(DeviceTokenUpdateRequest request) throws Exception {
+		logger.info("updateDeviceToken() >> Start");
+
+		logger.info("Request Data >> user id : " + request.getUser_id() + " >> token : " + request.getDevice_token()
+				+ " >> device type : " + request.getDevice_type());
+
+		userDao.updateDeviceToken(request.getUser_id(), request.getDevice_token(), request.getDevice_type());
+
+		logger.info("updateDeviceToken() >> Start");
+		return 1;
 	}
 }

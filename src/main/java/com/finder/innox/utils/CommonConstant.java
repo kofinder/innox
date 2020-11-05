@@ -4,6 +4,7 @@ public class CommonConstant {
 
 	public static final String STD_DATE_TIME_FORMAT = "dd/MM/yyyy hh:mm a";
 	public static final String STD_DATE_FORMAT = "dd/MM/yyyy";
+	public static final String STD_DATE_FORMAT_dd_MMM_yyyy_NO_SPAVE = "dd/MMM/yyyy";
 	public static final String STD_DATE_FORMAT_MM_dd_yyyy = "MM/dd/yyyy";
 	public static final String STD_DATE_FORMAT_MM_dd_yyyy_hh_mm_ss_a = "MM/dd/yyyy hh:mm:ss a";
 	public static final String STD_DATE_FORMAT_yyyy_MM_dd_hh_mm_ss_a = "yyyy/MM/dd hh:mm:ss a";

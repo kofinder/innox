@@ -32,6 +32,7 @@ public interface InnoxApiConstant {
 	public static String API_USER = "/user";
 	public static String API_USER_REGISTER = "/register";
 	public static String API_USER_LOGIN = "/login";
+	public static String API_DEVICE_TOKEN_UPDATE = "/device_token";
 
 	public static String API_SHOPPING_CART_LIST = "/shopping/carts";
 	public static String API_INSTOCK_ADD_TO_CART = "/shopping/cart";
@@ -41,5 +42,8 @@ public interface InnoxApiConstant {
 	public static String API_ORDER_CONFIRM = "/order/confirm";
 	public static String API_ORDER_HISTORY = "/order/history/{order_status}";
 	public static String API_ORDER_DETAIL = "/order/{order_id}";
+
+	public static String API_ANNOUNCEMENT_LIST = "/announcements";
+	public static String API_ANNOUNCEMENT_DETAIL = "/announcement/{announcement_id}";
 
 }

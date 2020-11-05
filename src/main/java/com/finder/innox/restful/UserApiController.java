@@ -25,6 +25,7 @@ import com.finder.innox.core.services.UserAddressService;
 import com.finder.innox.core.services.UserService;
 import com.finder.innox.exception.ProcessException;
 import com.finder.innox.exception.ProcessException.ErrorType;
+import com.finder.innox.request.DeviceTokenUpdateRequest;
 import com.finder.innox.request.UserRegisterRequest;
 import com.finder.innox.response.Response;
 import com.finder.innox.response.UserRegisterResponse;
@@ -245,6 +246,52 @@ public class UserApiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("updateUserProfile() >> " + e.getMessage(), e);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
+		}
+
+		result = JsonUtil.formatJsonResponse(apiResponse, pe);
+		return result;
+	}
+
+	@PutMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME
+			+ InnoxApiConstant.API_DEVICE_TOKEN_UPDATE, produces = "application/json; charset=utf-8")
+	public String updateDeviceToken(@RequestBody DeviceTokenUpdateRequest request, HttpServletRequest httpRequest,
+			HttpServletResponse httpResponse) {
+		String result = "";
+		ProcessException pe = null;
+		List<FieldError> errorList = new ArrayList<FieldError>();
+		Response<String> apiResponse = new Response<String>();
+		try {
+
+			if (CommonUtil.isEmpty(httpRequest.getHeader("user_id"))
+					|| Long.valueOf(httpRequest.getHeader("user_id")) <= 0) {
+				errorList.add(new FieldError(FieldCode.CUSTOMER_ID.getCode(),
+						ErrorMessage.CUSTOMER_ID_REQUIRED.getMessage()));
+			} else if (CommonUtil.isEmpty(request.getDevice_token())) {
+				errorList.add(new FieldError(FieldCode.DEVICE_TOKEN.getCode(),
+						ErrorMessage.DEVICE_TOKEN_REQUIRED.getMessage()));
+			}
+
+			if (errorList.size() == 0) {
+				request.setUser_id(Long.valueOf(httpRequest.getHeader("user_id")));
+				int updateCount = userService.updateDeviceToken(request);
+
+				if (updateCount == 1) {
+					apiResponse.setResponseMessage("Device token update is success!");
+				} else {
+					httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+					pe = new ProcessException(ErrorType.INVALID_DATA, httpResponse);
+				}
+			} else {
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
+				pe.setFieldErrorList(errorList);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("updateDeviceToken() >> " + e.getMessage(), e);
 			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
 			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}

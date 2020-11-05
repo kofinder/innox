@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import com.finder.innox.repository.UserDao;
 import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.UserRoleEnum;
 
-@SuppressWarnings({ "deprecation", "unchecked" })
+@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 
@@ -89,6 +90,22 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 		c.add(Restrictions.ne("userRoleLevel", UserRoleEnum.ROLE_ADMIN.getCode()));
 		c.add(Restrictions.isNotNull("deviceToken"));
 		return c.list();
+	}
+
+	@Override
+	public void updateDeviceToken(long userId, String deviceToken, int deviceType) {
+		StringBuilder sqlBuilder = new StringBuilder();
+
+		sqlBuilder.append("UPDATE user SET device_token = '" + deviceToken + "'");
+
+		if (deviceType > 0) {
+			sqlBuilder.append(", device_type = " + deviceType);
+		}
+
+		sqlBuilder.append(" WHERE id = " + userId);
+
+		Query query = this.getCurrentSession().createSQLQuery(sqlBuilder.toString());
+		query.executeUpdate();
 	}
 
 }
