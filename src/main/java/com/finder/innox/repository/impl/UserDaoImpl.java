@@ -58,9 +58,12 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 	}
 
 	@Override
-	public User findByPhoneNo(String phoneNo) {
+	public User findByPhoneNo(String phoneNo, long userId) {
 		Criteria c = this.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.eq("phoneNo", phoneNo));
+		if (userId > 0) {
+			c.add(Restrictions.ne("userSeq", userId));
+		}
 		return (User) c.uniqueResult();
 	}
 

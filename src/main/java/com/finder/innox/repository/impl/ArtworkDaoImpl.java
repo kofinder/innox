@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import com.finder.innox.core.domain.Artwork;
 import com.finder.innox.core.dto.ArtworkDTO;
 import com.finder.innox.repository.ArtworkDao;
+import com.finder.innox.utils.CommonConstant;
+import com.finder.innox.utils.CommonUtil;
 
 @SuppressWarnings({ "unchecked", "deprecation" })
 @Repository
@@ -43,6 +45,57 @@ public class ArtworkDaoImpl extends GenericDaoImpl<Artwork, Long> implements Art
 		Criteria c = this.getCurrentSession().createCriteria(Artwork.class);
 		c.add(Restrictions.eq("designer.id", designerId));
 		c.addOrder(Order.asc("artworkName"));
+		return c.list();
+	}
+
+	@Override
+	public List<Artwork> searchArtworkList(String startDate, String endDate, Integer status, Long designerId,
+			Integer pageNo) {
+
+		Criteria c = this.getCurrentSession().createCriteria(Artwork.class);
+
+		if (designerId != null && designerId.compareTo(0L) > 0) {
+			c.add(Restrictions.eq("designer.userSeq", designerId));
+		}
+
+		if (status != null && status.compareTo(0) > 0) {
+			c.add(Restrictions.eq("status", status));
+		}
+
+		if (!CommonUtil.isEmpty(startDate) || !CommonUtil.isEmpty(endDate)) {
+			if (!CommonUtil.isEmpty(startDate) && !CommonUtil.isEmpty(endDate)) {
+				c.add(Restrictions.ge("createdTime",
+						CommonUtil.changeStringToDate(CommonConstant.STD_DATE_FORMAT_dd_MM_yyyy_hh_mm_ss_a,
+								CommonUtil.changeFormatOfDateString(CommonConstant.STD_DATE_FORMAT,
+										CommonConstant.STD_DATE_FORMAT_dd_MM_yyyy_hh_mm_ss_a, startDate))));
+				c.add(Restrictions.lt("createdTime",
+						CommonUtil.addDays(
+								CommonUtil
+										.changeStringToDate(CommonConstant.STD_DATE_FORMAT_dd_MM_yyyy_hh_mm_ss_a,
+												CommonUtil.changeFormatOfDateString(CommonConstant.STD_DATE_FORMAT,
+														CommonConstant.STD_DATE_FORMAT_dd_MM_yyyy_hh_mm_ss_a, endDate)),
+								1)));
+
+			} else if (!CommonUtil.isEmpty(startDate) && CommonUtil.isEmpty(endDate)) {
+				c.add(Restrictions.ge("createdTime",
+						CommonUtil.changeStringToDate(CommonConstant.STD_DATE_FORMAT_dd_MM_yyyy_hh_mm_ss_a,
+								CommonUtil.changeFormatOfDateString(CommonConstant.STD_DATE_FORMAT,
+										CommonConstant.STD_DATE_FORMAT_dd_MM_yyyy_hh_mm_ss_a, startDate))));
+			} else {
+				c.add(Restrictions.lt("createdTime",
+						CommonUtil.addDays(
+								CommonUtil
+										.changeStringToDate(CommonConstant.STD_DATE_FORMAT_dd_MM_yyyy_hh_mm_ss_a,
+												CommonUtil.changeFormatOfDateString(CommonConstant.STD_DATE_FORMAT,
+														CommonConstant.STD_DATE_FORMAT_dd_MM_yyyy_hh_mm_ss_a, endDate)),
+								1)));
+			}
+		}
+
+		if (pageNo != null && pageNo.compareTo(0) > 0) {
+			c.setFirstResult((pageNo - 1) * CommonConstant.ROW_PER_PAGE);
+			c.setMaxResults(CommonConstant.ROW_PER_PAGE);
+		}
 		return c.list();
 	}
 

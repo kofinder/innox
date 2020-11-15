@@ -87,7 +87,7 @@ public class OrderApiController {
 
 		try {
 
-			Long customerId = Long.valueOf(httpRequest.getHeader(CommonConstant.API_REQUEST_HEADER_USER_ID));
+			Long customerId = Long.valueOf(httpRequest.getHeader(CommonConstant.API_REQUEST_HEADER_CUSTOMER_ID));
 
 			if (orderRequest.getCart_ids() == null || orderRequest.getCart_ids().isEmpty()) {
 				errorList.add(new FieldError(FieldCode.SHOPPING_CART_ID.getCode(),
@@ -217,7 +217,7 @@ public class OrderApiController {
 		try {
 			isValidOrderConfirmRequest(confirmRequest, errorList);
 
-			Long customerId = Long.valueOf(httpRequest.getHeader(CommonConstant.API_REQUEST_HEADER_USER_ID));
+			Long customerId = Long.valueOf(httpRequest.getHeader(CommonConstant.API_REQUEST_HEADER_CUSTOMER_ID));
 
 			if (errorList.size() == 0) {
 				OrderDTO orderDTO = orderService.orderConfirm(confirmRequest, customerId);

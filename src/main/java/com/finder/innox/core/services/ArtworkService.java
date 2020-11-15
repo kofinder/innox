@@ -12,4 +12,9 @@ public interface ArtworkService {
 
 	List<ArtworkDTO> getArtworkListByDesigner(long designerId);
 
+	List<ArtworkDTO> searchArtworkList(String startDate, String endDate, Integer status, Long designerId,
+			Integer pageNo);
+
+	ArtworkDTO getArtworkDataById(long artworkId);
+
 }

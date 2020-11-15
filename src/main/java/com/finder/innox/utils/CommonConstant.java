@@ -47,13 +47,13 @@ public class CommonConstant {
 	public static final String BASE_PATH = "innox";
 	public static final String IMAGE_SUFFIX = ".png";
 	public static final String IMAGE_SAVE_DIRECTORY = "/usr/innox/images/";
-	
+
 	public static final String USER_DOCUMENT_DIRECTORY = "user_document/";
 	public static final String USER_DOCUMENT_PREFIX = "userdocument";
 	public static final String USER_IMAGE_DIRECTORY = "user_image/";
 	public static final String USER_IMAGE_PREFIX = "user_image";
 	public static final String USER_DIRECTORY = "user/";
-	
+
 	public static final String IMAGE_RESOURCES_PATH = "resources/img";
 	public static final String DEFAULT_LOGO = "innox_logo.jpg";
 
@@ -92,7 +92,7 @@ public class CommonConstant {
 	public static final String FONTS_DIRECTORY = "fonts/";
 	public static final String FONTS_IMAGE_DIRECTORY = "fonts_image/";
 	public static final String FONTS_IMAGE_PERFIX = "fonts_image";
-	
+
 	public static final String ANNOUNCEMENT_DIRECTORY = "category/";
 	public static final String ANNOUNCEMENT_IMAGE_DIRECTORY = "category_image/";
 	public static final String ANNOUNCEMENT_IMAGE_PERFIX = "category_image";
@@ -112,9 +112,10 @@ public class CommonConstant {
 
 	public static final String UI_MESSGAE = "message";
 	public static final String UI_ERROR_MESSGAE = "errorMsg";
-	
-	public static final String API_REQUEST_HEADER_USER_ID = "customer_id";
-	
+
+	public static final String API_REQUEST_HEADER_CUSTOMER_ID = "customer_id";
+	public static final String API_REQUEST_HEADER_DESIGNER_ID = "designer_id";
+
 	public static final String ORDER_SEQ_NO_PREFIX = "IOX";
 	public static final String ORDER_SEQ_NO_DATE_FORMAT = "yyyyMM";
 	public static final String PERCENTAGE_SIGN = "%";

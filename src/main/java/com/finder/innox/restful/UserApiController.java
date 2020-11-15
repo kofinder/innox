@@ -331,6 +331,7 @@ public class UserApiController {
 			}
 		}
 
+		// user name duplicated check
 		if (!CommonUtil.isEmpty(registerRequest.getName()) && registerRequest.getUser_role() > 0) {
 			if (userService.isUserNameAlreadExist(registerRequest.getName(),
 					UserRoleEnum.getCodeByCode(registerRequest.getUser_role()), 0)) {
@@ -339,7 +340,12 @@ public class UserApiController {
 			}
 		}
 
-		// TODO user phone no check
+		// user phone no duplicate check
+		if (!CommonUtil.isEmpty(registerRequest.getPhoneNo())
+				&& userService.findByPhoneNo(registerRequest.getPhoneNo(), 0) != null) {
+			errorList.add(new FieldError(FieldCode.DUPLICATED_PHONE_NO.getCode(),
+					ErrorMessage.DUPLICATED_PHONE_NO.getMessage()));
+		}
 	}
 
 	private void isValidProfileUpdateData(UserRegisterRequest profileUpdateRequest, List<FieldError> errorList) {
@@ -348,9 +354,9 @@ public class UserApiController {
 			errorList.add(new FieldError(FieldCode.USER_NAME.getCode(), ErrorMessage.USER_NAME_REQUIRED.getMessage()));
 		}
 
-		if (profileUpdateRequest.getUser_role() <= 0) {
-			errorList.add(new FieldError(FieldCode.USER_ROLE.getCode(), ErrorMessage.USER_ROLE_REQUIRED.getMessage()));
-		}
+//		if (profileUpdateRequest.getUser_role() <= 0) {
+//			errorList.add(new FieldError(FieldCode.USER_ROLE.getCode(), ErrorMessage.USER_ROLE_REQUIRED.getMessage()));
+//		}
 
 		if (CommonUtil.isEmpty(profileUpdateRequest.getPhoneNo())) {
 			errorList.add(new FieldError(FieldCode.PHONE_NO.getCode(), ErrorMessage.PHONE_NO_REQUIRED.getMessage()));
@@ -368,6 +374,7 @@ public class UserApiController {
 			errorList.add(new FieldError(FieldCode.ADDRESS.getCode(), ErrorMessage.ADDRESS_REQUIRED.getMessage()));
 		}
 
+		// user name duplicated check
 		if (profileUpdateRequest.getUser_id() > 0 && !CommonUtil.isEmpty(profileUpdateRequest.getName())
 				&& profileUpdateRequest.getUser_role() > 0) {
 			if (userService.isUserNameAlreadExist(profileUpdateRequest.getName(),
@@ -376,6 +383,13 @@ public class UserApiController {
 				errorList.add(
 						new FieldError(FieldCode.DUPLICATE_NAME.getCode(), ErrorMessage.DUPLICATE_NAME.getMessage()));
 			}
+		}
+
+		// user phone no duplicate check
+		if (!CommonUtil.isEmpty(profileUpdateRequest.getPhoneNo()) && userService
+				.findByPhoneNo(profileUpdateRequest.getPhoneNo(), profileUpdateRequest.getUser_id()) != null) {
+			errorList.add(new FieldError(FieldCode.DUPLICATED_PHONE_NO.getCode(),
+					ErrorMessage.DUPLICATED_PHONE_NO.getMessage()));
 		}
 
 	}

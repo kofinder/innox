@@ -23,7 +23,7 @@ public interface UserService extends UserDetailsService {
 
 	boolean isUserNameAlreadExist(String userName, int userRole, long userId);
 
-	UserDTO findByPhoneNo(String phoneNo);
+	UserDTO findByPhoneNo(String phoneNo, long userId);
 
 	UserDTO userRegister(UserRegisterRequest registerRequest) throws Exception;
 

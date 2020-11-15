@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.finder.innox.annotation.InnoxShopApi;
 import com.finder.innox.core.dto.ArtworkCategoryDTO;
 import com.finder.innox.core.dto.ArtworkDTO;
 import com.finder.innox.core.services.ArtworkCategoryService;
@@ -29,13 +29,14 @@ import com.finder.innox.response.ArtworkCategoryResponse;
 import com.finder.innox.response.ArtworkListResponse;
 import com.finder.innox.response.ArtworkResponse;
 import com.finder.innox.response.Response;
+import com.finder.innox.utils.CommonConstant;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.FieldError;
 import com.finder.innox.utils.FieldError.ErrorMessage;
 import com.finder.innox.utils.FieldError.FieldCode;
 import com.finder.innox.utils.JsonUtil;
 
-@InnoxShopApi(apiPath = InnoxApiConstant.API_RESOURCES_NAME)
+@RestController
 public class ArtworkApiController {
 
 	private final Logger logger = LogManager.getLogger(this.getClass());
@@ -46,7 +47,7 @@ public class ArtworkApiController {
 	@Autowired
 	private ArtworkCategoryService artworkCategroyService;
 
-	@PostMapping(path = InnoxApiConstant.API_ARTWORK_UPLOAD)
+	@PostMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME + InnoxApiConstant.API_ARTWORK_UPLOAD)
 	public String uploadArtwork(@RequestBody ArtworkUploadRequest artworkUplaod, HttpServletRequest request,
 			HttpServletResponse httpResponse) {
 		String result = "";
@@ -101,7 +102,7 @@ public class ArtworkApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_ARTWORK_CATEGORY)
+	@GetMapping(path = InnoxApiConstant.API_RESOURCES_NAME + InnoxApiConstant.API_ARTWORK_CATEGORY)
 	public String getArtworkCategoryList(HttpServletRequest request) {
 		String result = "";
 		ProcessException pe = null;
@@ -125,7 +126,7 @@ public class ArtworkApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_ARTWORK_LIST_BY_CATEGORY)
+	@GetMapping(path = InnoxApiConstant.API_RESOURCES_NAME + InnoxApiConstant.API_ARTWORK_LIST_BY_CATEGORY)
 	public String getArtworkListByCategory(@RequestParam(name = "artwork_category_id") Long artwork_category_id,
 			HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
@@ -166,7 +167,7 @@ public class ArtworkApiController {
 		return result;
 	}
 
-	@GetMapping(path = InnoxApiConstant.API_ARTWORK_LIST_BY_DESIGNER)
+	@GetMapping(path = InnoxApiConstant.API_RESOURCES_NAME + InnoxApiConstant.API_ARTWORK_LIST_BY_DESIGNER)
 	public String getArtworkListByDesigner(@RequestParam(name = "designer_id") Long designer_id,
 			HttpServletRequest request, HttpServletResponse httpResponse) {
 		String result = "";
@@ -193,6 +194,100 @@ public class ArtworkApiController {
 			httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
 			pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
 			pe.setFieldErrorList(errorList);
+		}
+
+		result = JsonUtil.formatJsonResponse(apiResponse, pe);
+		return result;
+	}
+
+	@GetMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME
+			+ InnoxApiConstant.API_SEARCH_ARTWORK_LIST, produces = "application/json; charset=utf-8")
+	public String searchArtworkList(@RequestParam(name = "start_date", required = false) String startDate,
+			@RequestParam(name = "end_date", required = false) String endDate,
+			@RequestParam(name = "status", required = false) Integer status,
+			@RequestParam(name = "pageNo", required = false) Integer pageNo, HttpServletRequest httpRequest,
+			HttpServletResponse httpResponse) {
+
+		String result = "";
+		ProcessException pe = null;
+		List<FieldError> errorList = new ArrayList<FieldError>();
+		Response<ArtworkListResponse> apiResponse = new Response<ArtworkListResponse>();
+		ArtworkListResponse artworkListResponse = new ArtworkListResponse();
+
+		try {
+
+			if (CommonUtil.isEmpty(httpRequest.getHeader(CommonConstant.API_REQUEST_HEADER_DESIGNER_ID))) {
+				errorList.add(
+						new FieldError(FieldCode.DESIGNER.getCode(), ErrorMessage.DESIGNER_ID_REQUIRED.getMessage()));
+			}
+
+			if (errorList.size() == 0) {
+				Long designerId = Long.valueOf(httpRequest.getHeader(CommonConstant.API_REQUEST_HEADER_DESIGNER_ID));
+
+				List<ArtworkDTO> dtoList = artworkService.searchArtworkList(startDate, endDate, status, designerId,
+						pageNo);
+
+				dtoList.forEach(artwork -> {
+					ArtworkResponse artworkResponse = new ArtworkResponse(artwork, httpRequest);
+					artworkListResponse.getArtworks().add(artworkResponse);
+				});
+
+				apiResponse.setData(artworkListResponse);
+				apiResponse.setResponseMessage("Data retrieval is success");
+			} else {
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
+				pe.setFieldErrorList(errorList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("searchArtworkList() >> " + e.getMessage(), e);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
+		}
+
+		result = JsonUtil.formatJsonResponse(apiResponse, pe);
+		return result;
+	}
+
+	@GetMapping(path = InnoxApiConstant.API_AUTH_RESOURCES_NAME
+			+ InnoxApiConstant.API_ARTWORK_DETAIL, produces = "application/json; charset=utf-8")
+	public String artworkDetail(@RequestParam(name = "artwork_id", required = false) Long artworkId, HttpServletRequest httpRequest,
+			HttpServletResponse httpResponse) {
+		String result = "";
+		ProcessException pe = null;
+		List<FieldError> errorList = new ArrayList<FieldError>();
+		Response<ArtworkResponse> apiResponse = new Response<ArtworkResponse>();
+		ArtworkResponse artworkResponse = null;
+
+		try {
+
+			if (artworkId == null || artworkId.compareTo(0l) <= 0) {
+				errorList.add(
+						new FieldError(FieldCode.ARTWORK.getCode(), ErrorMessage.ARTWORK_ID_REQUIRED.getMessage()));
+			}
+
+			if (errorList.size() == 0) {
+				ArtworkDTO artworkDTO = artworkService.getArtworkDataById(artworkId);
+				if (artworkDTO != null) {
+					artworkResponse = new ArtworkResponse(artworkDTO, httpRequest);
+					apiResponse.setData(artworkResponse);
+					apiResponse.setResponseMessage("Data retrieval is success");
+				} else {
+					httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+					pe = new ProcessException(ErrorType.INVALID_DATA, httpResponse);
+				}
+			} else {
+				httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+				pe = new ProcessException(ErrorType.MULTIPLE_ERROR, httpResponse);
+				pe.setFieldErrorList(errorList);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("searchArtworkList() >> " + e.getMessage(), e);
+			httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+			pe = new ProcessException(ErrorType.GENERAL, httpResponse);
 		}
 
 		result = JsonUtil.formatJsonResponse(apiResponse, pe);

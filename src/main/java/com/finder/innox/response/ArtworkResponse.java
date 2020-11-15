@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.finder.innox.core.dto.ArtworkDTO;
 import com.finder.innox.utils.CommonConstant;
+import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.CommonUtil;
 
 public class ArtworkResponse implements Serializable {
@@ -23,6 +24,10 @@ public class ArtworkResponse implements Serializable {
 
 	private String artwork_image;
 
+	private int status;
+
+	private String status_text;
+
 	public ArtworkResponse() {
 		super();
 	}
@@ -35,6 +40,8 @@ public class ArtworkResponse implements Serializable {
 			this.artwork_price_text = CommonUtil.formatBigDecimalAsCurrency(artworkDTO.getSellPrice(),
 					CommonConstant.CURRENCY_CODE_KS);
 			this.artwork_image = CommonUtil.prepareImagePath(artworkDTO.getArtworkImage(), request);
+			this.status = artworkDTO.getStatus();
+			this.status_text = CommonStatus.getDescByCode(this.status);
 		}
 	}
 
@@ -76,6 +83,22 @@ public class ArtworkResponse implements Serializable {
 
 	public void setArtwork_image(String artwork_image) {
 		this.artwork_image = artwork_image;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getStatus_text() {
+		return status_text;
+	}
+
+	public void setStatus_text(String status_text) {
+		this.status_text = status_text;
 	}
 
 }

@@ -312,7 +312,8 @@ public class ShoppigCartServiceImpl implements ShoppingCartService {
 
 			totalQty = Math.addExact(totalQty, prdSize.getQuantity());
 		}
-		logger.info("customAddToCart() >> Product size save success");
+		logger.info("customAddToCart() >> Product size save success >> Total Qty : " + totalQty + " >> Final Price : "
+				+ product.getPrice());
 
 		// update total price
 		productDao.update(product);

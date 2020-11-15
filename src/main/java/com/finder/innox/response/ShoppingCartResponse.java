@@ -31,6 +31,8 @@ public class ShoppingCartResponse implements Serializable {
 
 	private String product_image;
 
+	private boolean is_custom_product;
+
 	public static ShoppingCartResponse transferDtoToResponseData(ShoppingCartDTO cartDto, HttpServletRequest request) {
 		ShoppingCartResponse response = new ShoppingCartResponse();
 		response.setCart_id(cartDto.getSeq());
@@ -52,7 +54,7 @@ public class ShoppingCartResponse implements Serializable {
 		} else if (!CommonUtil.isEmpty(cartDto.getProductDTO().getImagePath4())) {
 			response.setProduct_image(CommonUtil.prepareImagePath(cartDto.getProductDTO().getImagePath4(), request));
 		}
-
+		response.setIs_custom_product(cartDto.isCustomProduct());
 		return response;
 	}
 
@@ -126,6 +128,14 @@ public class ShoppingCartResponse implements Serializable {
 
 	public void setProduct_id(long product_id) {
 		this.product_id = product_id;
+	}
+
+	public boolean isIs_custom_product() {
+		return is_custom_product;
+	}
+
+	public void setIs_custom_product(boolean is_custom_product) {
+		this.is_custom_product = is_custom_product;
 	}
 
 }

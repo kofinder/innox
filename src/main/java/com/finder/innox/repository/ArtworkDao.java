@@ -11,4 +11,6 @@ public interface ArtworkDao extends GenericDao<Artwork, Long> {
 
 	List<Artwork> getArtworkListByDesigner(long designerId);
 
+	List<Artwork> searchArtworkList(String startDate, String endDate, Integer status, Long designerId, Integer pageNo);
+
 }

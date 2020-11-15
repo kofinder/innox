@@ -14,7 +14,7 @@ public interface UserDao extends GenericDao<User, Long> {
 
 	List<User> getDesignerList();
 
-	User findByPhoneNo(String phoneNo);
+	User findByPhoneNo(String phoneNo, long userId);
 
 	User isUserNameAlreadyExist(String userName, int userRole, long userId);
 

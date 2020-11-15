@@ -117,4 +117,34 @@ public class ArtworkServiceImpl implements ArtworkService {
 		return dtoList;
 	}
 
+	@Override
+	public List<ArtworkDTO> searchArtworkList(String startDate, String endDate, Integer status, Long designerId,
+			Integer pageNo) {
+		logger.info("searchArtworkList() >> Start date : " + startDate + " >> End date : " + endDate + " >> Status : "
+				+ status + " >> Designer Id : " + designerId + " >> Page no : " + pageNo);
+
+		List<Artwork> entityList = artworkDao.searchArtworkList(startDate, endDate, status, designerId, pageNo);
+		if (entityList == null || entityList.isEmpty()) {
+			return new ArrayList<ArtworkDTO>();
+		}
+
+		List<ArtworkDTO> dtoList = new ArrayList<ArtworkDTO>();
+		entityList.forEach(entity -> {
+			ArtworkDTO artworkDTO = new ArtworkDTO(entity);
+			dtoList.add(artworkDTO);
+		});
+		logger.info("searchArtworkList() >> End >> Artwork list " + dtoList.size());
+		return dtoList;
+	}
+
+	@Override
+	public ArtworkDTO getArtworkDataById(long artworkId) {
+		logger.info("getArtworkDataById() >> Start >> Artworkk Id : " + artworkId);
+		Artwork artwork = artworkDao.get(artworkId);
+		if (artwork != null && artwork.getSeq() > 0) {
+			return new ArtworkDTO(artwork);
+		}
+		return null;
+	}
+
 }

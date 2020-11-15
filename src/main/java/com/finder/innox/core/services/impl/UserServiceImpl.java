@@ -128,9 +128,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO findByPhoneNo(String phoneNo) {
-		logger.info("findByPhoneNo() >> " + phoneNo);
-		User user = userDao.findByPhoneNo(phoneNo);
+	public UserDTO findByPhoneNo(String phoneNo, long userId) {
+		logger.info("findByPhoneNo() >> Phone no : " + phoneNo + "User id : " + userId);
+		User user = userDao.findByPhoneNo(phoneNo, userId);
 		if (user != null) {
 			return new UserDTO(user);
 		}
@@ -175,6 +175,7 @@ public class UserServiceImpl implements UserService {
 				e.printStackTrace();
 			}
 		}
+		logger.info("userRegister() >> User register is successful.");
 
 		// user address
 		if ((registerRequest.getState_id() != null && registerRequest.getState_id() > 0)
@@ -184,19 +185,20 @@ public class UserServiceImpl implements UserService {
 
 			userAddress.setUser(user);
 
-			if (registerRequest.getState_id() != null) {
+			if (registerRequest.getState_id() != null && registerRequest.getState_id() > 0) {
 				State state = new State();
 				state.setSeq(registerRequest.getState_id());
 				userAddress.setState(state);
 			}
 
-			if (registerRequest.getTownship_id() != null) {
+			if (registerRequest.getTownship_id() != null && registerRequest.getTownship_id() > 0) {
 				Township township = new Township();
 				township.setSeq(registerRequest.getTownship_id());
 				userAddress.setTownship(township);
 			}
 
 			userAddress.setDetailAddress(registerRequest.getDetail_address());
+			userAddress.setIsPrimaryAddress(true);
 			userAddress.setCreatedTime(new Date());
 			userAddress.setUpdatedTime(new Date());
 
