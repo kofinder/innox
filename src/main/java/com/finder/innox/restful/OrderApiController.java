@@ -52,6 +52,7 @@ import com.finder.innox.utils.FieldError;
 import com.finder.innox.utils.FieldError.ErrorMessage;
 import com.finder.innox.utils.FieldError.FieldCode;
 import com.finder.innox.utils.JsonUtil;
+import com.finder.innox.utils.ProductTypeEnum;
 import com.finder.innox.utils.UserRoleEnum;
 
 @InnoxShopApi(apiPath = InnoxApiConstant.API_AUTH_RESOURCES_NAME)
@@ -220,6 +221,7 @@ public class OrderApiController {
 			Long customerId = Long.valueOf(httpRequest.getHeader(CommonConstant.API_REQUEST_HEADER_CUSTOMER_ID));
 
 			if (errorList.size() == 0) {
+				// order confirm
 				OrderDTO orderDTO = orderService.orderConfirm(confirmRequest, customerId);
 
 				if (orderDTO != null) {
@@ -243,6 +245,10 @@ public class OrderApiController {
 							OrderItemResponse orderItemResponse = new OrderItemResponse();
 							orderItemResponse.setProduct_id(dto.getProductDTO().getSeq());
 							orderItemResponse.setProduct_name(dto.getProductDTO().getName());
+							if (dto.getProductDTO().getIsCustomProduct() == ProductTypeEnum.INSTOCK.getCode()) {
+								orderItemResponse.setColor_name(dto.getColorDTO().getColorName());
+								orderItemResponse.setSize_name(dto.getSizeDTO().getSizeName());
+							}
 							orderItemResponse.setImage_path(
 									CommonUtil.prepareImagePath(dto.getProductDTO().getImagePath1(), httpRequest));
 							orderItemResponse.setUnit_price(dto.getProductDTO().getPrice());

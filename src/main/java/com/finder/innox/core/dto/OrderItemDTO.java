@@ -15,6 +15,10 @@ public class OrderItemDTO implements Serializable {
 
 	private ProductDTO productDTO;
 
+	private ColorDTO colorDTO;
+
+	private SizeDTO sizeDTO;
+
 	private BigDecimal unitPrice;
 
 	private int quantity;
@@ -30,6 +34,8 @@ public class OrderItemDTO implements Serializable {
 			this.seq = orderItem.getSeq();
 			this.orderDTO = new OrderDTO(orderItem.getOrder());
 			this.productDTO = new ProductDTO(orderItem.getProduct());
+			this.colorDTO = new ColorDTO(orderItem.getColor());
+			this.sizeDTO = new SizeDTO(orderItem.getSize());
 			this.unitPrice = orderItem.getUnitPrice();
 			this.quantity = orderItem.getQuantity() == null ? 0 : orderItem.getQuantity();
 			this.subTotal = orderItem.getSubTotal();
@@ -83,6 +89,22 @@ public class OrderItemDTO implements Serializable {
 
 	public void setSubTotal(BigDecimal subTotal) {
 		this.subTotal = subTotal;
+	}
+
+	public ColorDTO getColorDTO() {
+		return colorDTO;
+	}
+
+	public void setColorDTO(ColorDTO colorDTO) {
+		this.colorDTO = colorDTO;
+	}
+
+	public SizeDTO getSizeDTO() {
+		return sizeDTO;
+	}
+
+	public void setSizeDTO(SizeDTO sizeDTO) {
+		this.sizeDTO = sizeDTO;
 	}
 
 }

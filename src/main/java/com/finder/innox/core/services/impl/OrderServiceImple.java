@@ -129,18 +129,23 @@ public class OrderServiceImple implements OrderService {
 		order.setRemark(confirmRequest.getRemark());
 		order.setCreatedTime(new Date());
 		order.setUpdatedTime(new Date());
-		
+
 		Long orderId = orderDao.saveWithId(order);
 		logger.info("orderConfirm() >> Order save is success >> Order Id : " + orderId);
 
 		if (orderId != null && orderId.compareTo(0L) >= 0) {
 			logOrder("Order record saved successfully", order);
 
+			// order item manage
 			for (ShoppingCart shoppingCart : shoppingCarts) {
 				OrderItem orderItem = new OrderItem();
 
 				orderItem.setOrder(order);
 				orderItem.setProduct(shoppingCart.getProduct());
+				if (shoppingCart.getProduct().getIsCustomProduct() == ProductTypeEnum.INSTOCK.getCode()) {
+					orderItem.setColor(shoppingCart.getColor());
+					orderItem.setSize(shoppingCart.getSize());
+				}
 				orderItem.setUnitPrice(shoppingCart.getProduct().getPrice());
 				orderItem.setQuantity(shoppingCart.getQuantity());
 				orderItem.setSubTotal(
@@ -231,7 +236,8 @@ public class OrderServiceImple implements OrderService {
 	}
 
 	@Override
-	public List<OrderDTO> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate, long customerId) {
+	public List<OrderDTO> getOrderHistory(List<Integer> orderStatusList, String startDate, String endDate,
+			long customerId) {
 		logger.info("getOrderHistory() >> " + "Order Status : " + orderStatusList.toString() + " >> Start Date : "
 				+ startDate + " >> End Date : " + endDate);
 		List<Order> orderList = orderDao.getOrderHistory(orderStatusList, startDate, endDate, customerId);

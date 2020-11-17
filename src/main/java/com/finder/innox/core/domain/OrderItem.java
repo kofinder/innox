@@ -23,6 +23,14 @@ public class OrderItem extends CommonEntity implements Serializable {
 	@JoinColumn(name = "product_id")
 	private Product product;
 
+	@ManyToOne
+	@JoinColumn(name = "color_id")
+	private Color color;
+
+	@ManyToOne
+	@JoinColumn(name = "size_id")
+	private Size size;
+
 	@Column(name = "unit_price")
 	private BigDecimal unitPrice;
 
@@ -70,6 +78,22 @@ public class OrderItem extends CommonEntity implements Serializable {
 
 	public void setSubTotal(BigDecimal subTotal) {
 		this.subTotal = subTotal;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public Size getSize() {
+		return size;
+	}
+
+	public void setSize(Size size) {
+		this.size = size;
 	}
 
 }
