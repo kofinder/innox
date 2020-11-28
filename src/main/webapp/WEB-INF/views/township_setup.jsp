@@ -234,8 +234,8 @@
 		var nameErr = checkField("Name", $("#township_name").val(), true, null,
 				null, null);
 
-		var nrcNameErr = checkField("NRC Name", $("#nrc_name").val(), true,
-				null, null, null);
+		/* var nrcNameErr = checkField("NRC Name", $("#nrc_name").val(), true,
+				null, null, null); */
 
 		if (nameErr) {
 			showError("township_name_data", "township_name", nameErr);
@@ -244,12 +244,12 @@
 			removeErrorMsg("township_name_data", "township_name");
 		}
 
-		if (nrcNameErr) {
+		/* if (nrcNameErr) {
 			showError("nrc_name_data", "nrc_name", nrcNameErr);
 			errors = 1;
 		} else {
 			removeErrorMsg("nrc_name_data", "nrc_name");
-		}
+		} */
 
 	}
 </script>

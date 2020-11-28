@@ -200,6 +200,8 @@
 												<tr role="row">
 													<td>No</td>
 													<td>Product Name</td>
+													<td>Color</td>
+													<td>Size</td>
 													<td>Unit Price</td>
 													<td>Quantity</td>
 													<td>Sub Total</td>
@@ -211,6 +213,8 @@
 													<tr>
 														<td>${status.count}</td>
 														<td>${orderItem.productDTO.name}</td>
+														<td>${orderItem.colorDTO.colorName}</td>
+														<td>${orderItem.sizeDTO.sizeName}</td>
 														<td>${orderItem.unitPrice}</td>
 														<td>${orderItem.quantity}</td>
 														<td>${orderItem.subTotal}</td>

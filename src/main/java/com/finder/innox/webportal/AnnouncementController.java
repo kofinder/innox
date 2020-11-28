@@ -1,7 +1,6 @@
 package com.finder.innox.webportal;
 
 import java.security.Principal;
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 

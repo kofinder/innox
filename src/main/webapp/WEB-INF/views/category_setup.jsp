@@ -300,7 +300,7 @@
 
 																<div class="form-group" style="text-align: right;">
 																	<button id="sub_category_save" type="submit"
-																		class="btn btn-primary" onclick="checkSubCategorySetupValid()">Save</button>
+																		class="btn btn-primary" onclick="checkSubCategroySetup()">Save</button>
 																</div>
 															</div>
 
@@ -309,8 +309,6 @@
 												</div>
 											</div>
 											<!-- sub category setup -->
-
-
 
 											<!-- sub category list -->
 											<div class="card card-default">

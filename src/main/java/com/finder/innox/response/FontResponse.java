@@ -8,6 +8,8 @@ public class FontResponse implements Serializable {
 
 	private long font_id;
 
+	private String font_name;
+
 	private String font_url;
 
 	private String font_sample;
@@ -34,6 +36,14 @@ public class FontResponse implements Serializable {
 
 	public void setFont_sample(String font_sample) {
 		this.font_sample = font_sample;
+	}
+
+	public String getFont_name() {
+		return font_name;
+	}
+
+	public void setFont_name(String font_name) {
+		this.font_name = font_name;
 	}
 
 }

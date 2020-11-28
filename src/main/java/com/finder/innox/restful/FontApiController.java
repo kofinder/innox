@@ -42,6 +42,7 @@ public class FontApiController {
 			fontDtos.forEach(font -> {
 				FontResponse fontResponse = new FontResponse();
 				fontResponse.setFont_id(font.getSeq());
+				fontResponse.setFont_name(font.getName());
 				fontResponse.setFont_url(font.getFontURL());
 				fontResponse.setFont_sample(font.getFontSample());
 
