@@ -18,6 +18,7 @@ public class TownshipDaoImpl extends GenericDaoImpl<Township, Long> implements T
 	public List<Township> searchTownshipList() {
 		Criteria c = this.getCurrentSession().createCriteria(Township.class);
 		c.addOrder(Order.asc("townshipName"));
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return c.list();
 	}
 
@@ -27,6 +28,7 @@ public class TownshipDaoImpl extends GenericDaoImpl<Township, Long> implements T
 		if (stateId != null && stateId > 0) {
 			c.add(Restrictions.eq("state.seq", stateId));
 		}
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return c.list();
 	}
 }

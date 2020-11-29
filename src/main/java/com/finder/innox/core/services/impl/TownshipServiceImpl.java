@@ -35,10 +35,14 @@ public class TownshipServiceImpl implements TownshipService {
 
 	@Override
 	public List<TownshipDTO> searchTownshipList() {
+		logger.info("searchTownshipList() >> Start");
 		List<Township> entityList = townshipDao.searchTownshipList();
 		if (entityList == null || entityList.isEmpty()) {
 			return new ArrayList<TownshipDTO>();
 		}
+
+		logger.info("searchTownshipList() >> Twonship Entity List : " + entityList);
+
 		List<TownshipDTO> dtoList = new ArrayList<TownshipDTO>();
 		entityList.forEach(township -> {
 			dtoList.add(new TownshipDTO(township));
@@ -98,11 +102,13 @@ public class TownshipServiceImpl implements TownshipService {
 			return new ArrayList<TownshipDTO>();
 		}
 
+		logger.info("getTownshipListByState() >> Entity Township List : " + entityList.size());
+
 		List<TownshipDTO> dtoList = new ArrayList<TownshipDTO>();
 		entityList.forEach(township -> {
 			dtoList.add(new TownshipDTO(township));
 		});
-		logger.info("getTownshipListByState() >> State List : " + dtoList.size());
+		logger.info("getTownshipListByState() >> Township List : " + dtoList.size());
 		return dtoList;
 	}
 }

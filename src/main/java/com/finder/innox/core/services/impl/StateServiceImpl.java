@@ -6,8 +6,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ import com.finder.innox.utils.UserRoleEnum;
 @Transactional
 public class StateServiceImpl implements StateService {
 
-	private final Logger logger = LogManager.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private StateDao stateDao;
@@ -43,18 +43,18 @@ public class StateServiceImpl implements StateService {
 
 	@Override
 	public List<StateDTO> getStateDataList(int status) {
-		logger.debug("getStateDataList() >> Start");
+		logger.info("getStateDataList() >> Start");
 		List<State> entityList = stateDao.getStateDataList(status);
 		if (entityList == null || entityList.isEmpty()) {
 			return new ArrayList<StateDTO>();
 		}
-
+		logger.info("getStateDataList() >> State Entity List : " + entityList.size());
+		
 		List<StateDTO> dtoList = new ArrayList<StateDTO>();
 		entityList.forEach(entity -> {
-			StateDTO stateDto = new StateDTO(entity);
-			dtoList.add(stateDto);
+			dtoList.add(new StateDTO(entity));
 		});
-		logger.debug("getStateDataList() >> End >> State List : " + dtoList.size());
+		logger.info("getStateDataList() >> End >> State List : " + dtoList.size());
 		return dtoList;
 	}
 

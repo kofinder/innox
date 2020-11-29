@@ -26,6 +26,7 @@ public class StateDaoImpl extends GenericDaoImpl<State, Long> implements StateDa
 		if (status > 0) {
 			c.add(Restrictions.eq("status", status));
 		}
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return c.list();
 	}
 
