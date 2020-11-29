@@ -216,7 +216,7 @@ public class UserApiController {
 		String result = "";
 		List<FieldError> errorList = new ArrayList<FieldError>();
 		ProcessException pe = null;
-		Response<String> apiResponse = new Response<String>();
+		Response<UserRegisterResponse> apiResponse = new Response<UserRegisterResponse>();
 
 		try {
 
@@ -230,8 +230,30 @@ public class UserApiController {
 			isValidProfileUpdateData(profileUpdateRequest, errorList);
 
 			if (errorList.size() == 0) {
+				UserRegisterResponse userRegisterResponse = new UserRegisterResponse();
 				UserDTO userDTO = userService.userProfileUpdate(profileUpdateRequest);
 				if (userDTO != null) {
+					userRegisterResponse.setUser_name(userDTO.getUserName());
+					userRegisterResponse.setPhoneNo(userDTO.getPhoneNo());
+					userRegisterResponse.setEmail(userDTO.getEmail());
+					userRegisterResponse.setJwt_token(userDTO.getJwtToken());
+
+					UserAddressDTO addressDTO = addressService.getUserAddressByUserId(userDTO.getSeq());
+					if (addressDTO != null) {
+						if (addressDTO.getStateDTO() != null) {
+							userRegisterResponse.setState_id(addressDTO.getStateDTO().getSeq());
+							userRegisterResponse.setState_name(addressDTO.getStateDTO().getName());
+						}
+
+						if (addressDTO.getTownshipDTO() != null) {
+							userRegisterResponse.setTownship_id(addressDTO.getTownshipDTO().getSeq());
+							userRegisterResponse.setTownship_name(addressDTO.getStateDTO().getName());
+						}
+
+						userRegisterResponse.setDetail_address(addressDTO.getDetailAddress());
+					}
+
+					apiResponse.setData(userRegisterResponse);
 					apiResponse.setResponseMessage("User profile update is success!");
 				} else {
 					httpResponse.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);

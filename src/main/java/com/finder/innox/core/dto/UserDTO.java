@@ -1,4 +1,4 @@
-	package com.finder.innox.core.dto;
+package com.finder.innox.core.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,6 +44,8 @@ public class UserDTO {
 	private String deviceToken;
 
 	private int deviceType;
+
+	private String jwtToken;
 
 	public UserDTO() {
 		super();
@@ -212,6 +214,14 @@ public class UserDTO {
 
 	public void setDeviceType(int deviceType) {
 		this.deviceType = deviceType;
+	}
+
+	public String getJwtToken() {
+		return jwtToken;
+	}
+
+	public void setJwtToken(String jwtToken) {
+		this.jwtToken = jwtToken;
 	}
 
 }

@@ -20,7 +20,7 @@ public class FieldError {
 		DUPLICATE_NAME("2020"), CUSTOM_ITEM_ID("2021"), CUSTOM_PRODUCT_LAYOUT("2022"), PRODUCT_FONTS_ID("2023"),
 		PRODUCT_SIZE_ID("2024"), PAYMENT_TYPE_CODE("2025"), ORDER_STATUS("2026"), ORDER("2027"),
 		PRODUCT_OUT_OF_STOCK("2028"), DEVICE_TYPE("2029"), DEVICE_TOKEN("2030"), ANNOUNCEMENT_ID("2031"),
-		DUPLICATED_PHONE_NO("2032");
+		DUPLICATED_PHONE_NO("2032"), JWT_TOKEN_REQUIRED("2033");
 
 		private String code;
 
@@ -55,7 +55,7 @@ public class FieldError {
 		ORDER_ID_REQUIRED("Order id is is required"), PRODUCT_OUT_OF_STOCK("Product is out of stock"),
 		DEVICE_TYPE_REQUIRED("Device type is required"), DEVICE_TOKEN_REQUIRED("Device token is required"),
 		ANNOUNCEMENT_ID_REQUIRED("Announcement id is required"),
-		DUPLICATED_PHONE_NO("Phone no is already use by someone!");
+		DUPLICATED_PHONE_NO("Phone no is already use by someone!"), JWT_TOKEN_REQUIRED("Jwt token is required");
 
 		private String message;
 

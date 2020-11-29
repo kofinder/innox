@@ -32,6 +32,8 @@ public class UserRegisterResponse implements Serializable {
 
 	private String detail_address;
 
+	private boolean valid_jwt_token;
+
 	public Long getUser_id() {
 		return user_id;
 	}
@@ -134,6 +136,14 @@ public class UserRegisterResponse implements Serializable {
 
 	public void setTownship_name(String township_name) {
 		this.township_name = township_name;
+	}
+
+	public boolean isValid_jwt_token() {
+		return valid_jwt_token;
+	}
+
+	public void setValid_jwt_token(boolean valid_jwt_token) {
+		this.valid_jwt_token = valid_jwt_token;
 	}
 
 }

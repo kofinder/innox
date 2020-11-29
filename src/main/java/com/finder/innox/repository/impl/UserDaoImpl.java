@@ -64,6 +64,7 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 		if (userId > 0) {
 			c.add(Restrictions.ne("userSeq", userId));
 		}
+		c.setMaxResults(1);
 		return (User) c.uniqueResult();
 	}
 

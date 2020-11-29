@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.finder.innox.JwtTokenUtil;
 import com.finder.innox.core.domain.Role;
 import com.finder.innox.core.domain.State;
 import com.finder.innox.core.domain.Township;
@@ -49,6 +50,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
 	public UserServiceImpl() {
 		super();
@@ -221,7 +225,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO userProfileUpdate(UserRegisterRequest updateRequest) throws Exception {
-		logger.info("userProfileUpdate() >> Start");
+		logger.info("userProfileUpdate() >> Start >> user id : " + updateRequest.getUser_id());
 
 		User user = userDao.get(updateRequest.getUser_id());
 		if (user != null) {
@@ -290,10 +294,23 @@ public class UserServiceImpl implements UserService {
 				addressDao.save(userAddress);
 			}
 
-			return new UserDTO(userDao.get(user.getUserSeq()));
+			// user update
+			userDao.saveOrUpdate(user);
+
+			UserDTO userDTO = new UserDTO(userDao.get(user.getUserSeq()));
+
+			UserDetails userDetails = this.loadUserByUsername(user.getUserName());
+			if (userDetails == null) {
+				userDTO.setJwtToken("");
+			} else {
+				userDTO.setJwtToken(jwtTokenUtil.generateToken(userDetails));
+				logger.info("### userProfileUpdate() >> Jwt Token : " + userDTO.getJwtToken());
+			}
+
+			return userDTO;
 		}
 
-		logger.info("userProfileUpdate() >> End");
+		logger.info("userProfileUpdate() >> NULL");
 		return null;
 	}
 
