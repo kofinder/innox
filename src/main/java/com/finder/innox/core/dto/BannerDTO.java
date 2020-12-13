@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finder.innox.core.domain.Banner;
+import com.finder.innox.utils.CommonStatus;
 
 public class BannerDTO implements Serializable {
 
@@ -27,6 +28,8 @@ public class BannerDTO implements Serializable {
 	private String createdTime;
 
 	private UserDTO userDTO;
+	
+	private String statusDesc;
 
 	public BannerDTO() {
 		super();
@@ -41,6 +44,7 @@ public class BannerDTO implements Serializable {
 			this.sequenceNo = banner.getSequenceNo();
 			this.status = banner.getStatus() == null ? 0 : banner.getStatus();
 			this.userDTO = new UserDTO(banner.getCreatedBy());
+			this.statusDesc = CommonStatus.getDescByCode(this.status);
 		}
 	}
 
@@ -115,5 +119,15 @@ public class BannerDTO implements Serializable {
 	public void setUserDTO(UserDTO userDTO) {
 		this.userDTO = userDTO;
 	}
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
+	}
+	
+	
 
 }

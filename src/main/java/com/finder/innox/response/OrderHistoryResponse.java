@@ -3,6 +3,7 @@ package com.finder.innox.response;
 import java.io.Serializable;
 
 import com.finder.innox.core.dto.OrderDTO;
+import com.finder.innox.utils.OrderStatusEnum;
 
 public class OrderHistoryResponse implements Serializable {
 
@@ -16,6 +17,8 @@ public class OrderHistoryResponse implements Serializable {
 
 	private String order_date;
 
+	private boolean is_cancel_order;
+
 	public OrderHistoryResponse() {
 		super();
 	}
@@ -26,6 +29,7 @@ public class OrderHistoryResponse implements Serializable {
 			this.invoice_number = orderDTO.getInvoiceNumber();
 			this.total_cost_text = orderDTO.getTotalCostText();
 			this.order_date = orderDTO.getOrderDate();
+			this.is_cancel_order = OrderStatusEnum.PROCESSING.getCode() == orderDTO.getOrderStatus() ? true : false;
 		}
 	}
 
@@ -59,6 +63,14 @@ public class OrderHistoryResponse implements Serializable {
 
 	public void setOrder_date(String order_date) {
 		this.order_date = order_date;
+	}
+
+	public boolean isIs_cancel_order() {
+		return is_cancel_order;
+	}
+
+	public void setIs_cancel_order(boolean is_cancel_order) {
+		this.is_cancel_order = is_cancel_order;
 	}
 
 }

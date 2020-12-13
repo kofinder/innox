@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import com.finder.innox.core.domain.OrderItem;
+import com.finder.innox.utils.ProductTypeEnum;
 
 public class OrderItemDTO implements Serializable {
 
@@ -25,6 +26,8 @@ public class OrderItemDTO implements Serializable {
 
 	private BigDecimal subTotal;
 
+	private String productTypeDesc;
+
 	public OrderItemDTO() {
 		super();
 	}
@@ -39,6 +42,10 @@ public class OrderItemDTO implements Serializable {
 			this.unitPrice = orderItem.getUnitPrice();
 			this.quantity = orderItem.getQuantity() == null ? 0 : orderItem.getQuantity();
 			this.subTotal = orderItem.getSubTotal();
+			this.productTypeDesc = ProductTypeEnum
+					.getDescByCode(orderItem.getProduct() != null && orderItem.getProduct().getIsCustomProduct() != null
+							? orderItem.getProduct().getIsCustomProduct()
+							: 0);
 
 		}
 	}
@@ -105,6 +112,14 @@ public class OrderItemDTO implements Serializable {
 
 	public void setSizeDTO(SizeDTO sizeDTO) {
 		this.sizeDTO = sizeDTO;
+	}
+
+	public String getProductTypeDesc() {
+		return productTypeDesc;
+	}
+
+	public void setProductTypeDesc(String productTypeDesc) {
+		this.productTypeDesc = productTypeDesc;
 	}
 
 }

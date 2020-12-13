@@ -25,6 +25,8 @@ public class CategoryDTO implements Serializable {
 
 	private int feature;
 
+	private String statusDesc;
+
 	public CategoryDTO() {
 		super();
 	}
@@ -37,6 +39,7 @@ public class CategoryDTO implements Serializable {
 			this.sequenceNo = c.getSequence() == null ? 0 : c.getSequence();
 			this.status = c.getStatus() == null ? CommonStatus.INACTIVE.getCode() : c.getStatus();
 			this.feature = c.getFeature();
+			this.statusDesc = CommonStatus.getDescByCode(this.status);
 		}
 	}
 
@@ -94,6 +97,14 @@ public class CategoryDTO implements Serializable {
 
 	public void setFeature(int feature) {
 		this.feature = feature;
+	}
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 
 }

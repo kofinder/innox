@@ -23,6 +23,8 @@ public class BrandDTO implements Serializable {
 
 	private Integer status;
 
+	private String statusDesc;
+
 	public BrandDTO() {
 		super();
 	}
@@ -34,6 +36,8 @@ public class BrandDTO implements Serializable {
 			this.sequence = brand.getSequence();
 			this.imagePath = brand.getImagePath();
 			this.status = brand.getStatus() == null ? CommonStatus.INACTIVE.getCode() : brand.getStatus();
+			this.statusDesc = CommonStatus.getDescByCode(this.status);
+			System.out.println("############ " + this.statusDesc);
 		}
 	}
 
@@ -83,6 +87,14 @@ public class BrandDTO implements Serializable {
 
 	public void setImageFile(MultipartFile imageFile) {
 		this.imageFile = imageFile;
+	}
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 
 }

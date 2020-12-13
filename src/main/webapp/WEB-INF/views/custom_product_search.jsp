@@ -181,7 +181,14 @@
 														<td>${cusPrd.subCategoryDTO.name}</td>
 														<td>${cusPrd.productName}</td>
 														<td>${cusPrd.initialPrice}</td>
-														<td>${prd.status}</td>
+														<td><c:choose>
+																<c:when test="${cusPrd.status == 1}">
+																	<span class="badge badge-primary">${cusPrd.statusDesc}</span>
+																</c:when>
+																<c:otherwise>
+																	<span class="badge badge-danger">${cusPrd.statusDesc}</span>
+																</c:otherwise>
+															</c:choose></td>
 													</tr>
 												</c:forEach>
 											</tbody>

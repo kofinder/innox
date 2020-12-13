@@ -202,7 +202,14 @@
 														<td>${prd.brandDTO.name}</td>
 														<td>${prd.categoryDTO.name}</td>
 														<td>${prd.subCategoryDTO.name}</td>
-														<td>${prd.status}</td>
+														<td><c:choose>
+																<c:when test="${prd.status == 1}">
+																	<span class="badge badge-primary">${prd.statusDesc}</span>
+																</c:when>
+																<c:otherwise>
+																	<span class="badge badge-danger">${prd.statusDesc}</span>
+																</c:otherwise>
+															</c:choose></td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -260,30 +267,36 @@
 		});
 	});
 
-	$("#category_id").on("change", function() {
-		$.ajax({
-			method : 'POST',
-			contentType : 'application/json',
-			url : 'subCategoryByCategoryAjax.html',
-			dataType : 'json',
-			async : true,
-			data : $("#category_id").val(),
-			success : function(data) {
-				$('#sub_category_id').html('');
-				var selectOneBox = '<option value="-1">--- Please Select One ---</option>';
-				$("#sub_category_id").append(selectOneBox);
-				$.each(data.data, function(i, cam) {
-					$("#sub_category_id").append($("<option></option>", {
-						value : cam.seq,
-						text : cam.name
-					}))
-				});
-			},
-			error : function(e) {
-				console.log("ERROR >>  ", e);
-			}
-		});
-	});
+	$("#category_id")
+			.on(
+					"change",
+					function() {
+						$
+								.ajax({
+									method : 'POST',
+									contentType : 'application/json',
+									url : 'subCategoryByCategoryAjax.html',
+									dataType : 'json',
+									async : true,
+									data : $("#category_id").val(),
+									success : function(data) {
+										$('#sub_category_id').html('');
+										var selectOneBox = '<option value="-1">--- Please Select One ---</option>';
+										$("#sub_category_id").append(
+												selectOneBox);
+										$.each(data.data, function(i, cam) {
+											$("#sub_category_id").append(
+													$("<option></option>", {
+														value : cam.seq,
+														text : cam.name
+													}))
+										});
+									},
+									error : function(e) {
+										console.log("ERROR >>  ", e);
+									}
+								});
+					});
 </script>
 
 

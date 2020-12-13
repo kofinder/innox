@@ -38,7 +38,7 @@
 
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Announcement Search</h1>
+					<h1 class="m-0 text-dark">Category Search</h1>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -161,7 +161,14 @@
 														<td>${status.count}</td>
 														<td>${cat.name}</td>
 														<td>${cat.sequenceNo}</td>
-														<td>${cat.status}</td>
+														<td><c:choose>
+																<c:when test="${cat.status == 1}">
+																	<span class="badge badge-primary">${cat.statusDesc}</span>
+																</c:when>
+																<c:otherwise>
+																	<span class="badge badge-danger">${cat.statusDesc}</span>
+																</c:otherwise>
+															</c:choose></td>
 													</tr>
 												</c:forEach>
 											</tbody>

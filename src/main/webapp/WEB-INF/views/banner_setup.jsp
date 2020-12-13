@@ -102,6 +102,17 @@
 											<form:input path="description" class="form-control"
 												id="description_id" placeholder="Description" />
 										</div>
+										<c:if test="${bannerDTO.seq > 0 }">
+											<div class="form-group">
+												<label for="status">Status</label>
+												<form:select class="form-control" path="status"
+													id="status_id">
+													<form:option value="-1">--- Please Select One ---</form:option>
+													<form:options items="${statusList}" itemValue="code"
+														itemLabel="desc" />
+												</form:select>
+											</div>
+										</c:if>
 										<div class="form-group">
 											<label for=exampleInputFile>File input</label>
 											<div class="input-group">
@@ -178,7 +189,14 @@
 												<td>${b.name}</td>
 												<td>${b.description}</td>
 												<td>${b.sequenceNo}</td>
-												<td>${b.status}</td>
+												<td><c:choose>
+														<c:when test="${b.status == 1}">
+															<span class="badge badge-primary">${b.statusDesc}</span>
+														</c:when>
+														<c:otherwise>
+															<span class="badge badge-danger">${b.statusDesc}</span>
+														</c:otherwise>
+													</c:choose></td>
 											</tr>
 										</c:forEach>
 									</tbody>

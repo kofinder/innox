@@ -143,7 +143,8 @@
 										</div>
 
 										<div class="form-group" style="text-align: right;">
-											<button type="submit" class="btn btn-primary" onclick="checkFontSetup()">Save</button>
+											<button type="submit" class="btn btn-primary"
+												onclick="checkFontSetup()">Save</button>
 										</div>
 									</div>
 								</div>
@@ -181,6 +182,7 @@
 												<td>URL</td>
 												<td>Sample</td>
 												<td>Description</td>
+												<td>Status</td>
 											</tr>
 										</thead>
 										<tbody>
@@ -194,6 +196,14 @@
 													<td>${font.fontURL}</td>
 													<td>${font.fontSample}</td>
 													<td>${font.fontDescription}</td>
+													<td><c:choose>
+															<c:when test="${font.status == 1}">
+																<span class="badge badge-primary">${font.statusDesc}</span>
+															</c:when>
+															<c:otherwise>
+																<span class="badge badge-danger">${font.statusDesc}</span>
+															</c:otherwise>
+														</c:choose></td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -212,87 +222,87 @@
 	</div>
 </div>
 
-	<!-- jQuery -->
-	<script src="resources/plugins/jquery/jquery.min.js"></script>
-	<script src="resources/js/validation.js"></script>
-	<script src="resources/js/script.js"></script>
+<!-- jQuery -->
+<script src="resources/plugins/jquery/jquery.min.js"></script>
+<script src="resources/js/validation.js"></script>
+<script src="resources/js/script.js"></script>
 
-	<!-- DataTables -->
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js"></script>
-	<script
-		src="resources/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-	<script
-		src="resources/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="resources/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-	<!-- bs-custom-file-input -->
-	<script
-		src="resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- DataTables -->
+<script src="resources/plugins/datatables/jquery.dataTables.min.js"></script>
+<script
+	src="resources/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="resources/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="resources/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<!-- bs-custom-file-input -->
+<script
+	src="resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			bsCustomFileInput.init();
+<script type="text/javascript">
+	$(document).ready(function() {
+		bsCustomFileInput.init();
+	});
+</script>
+
+<script>
+	$(function() {
+		$("#example1").DataTable({
+			"responsive" : true,
+			"autoWidth" : false,
 		});
-	</script>
-
-	<script>
-		$(function() {
-			$("#example1").DataTable({
-				"responsive" : true,
-				"autoWidth" : false,
-			});
-		});
-	</script>
-	<script>
-		function checkFontSetup() {
-			checkValidFontSetup();
-			if (errors == 0) {
-				return true;
-			}
-
-			event.preventDefault();
+	});
+</script>
+<script>
+	function checkFontSetup() {
+		checkValidFontSetup();
+		if (errors == 0) {
+			return true;
 		}
 
-		function checkValidFontSetup() {
-			errors = 0;
+		event.preventDefault();
+	}
 
-			var nameErr = checkField("Font Name", $("#font_name").val(), true,
-					null, null, null);
+	function checkValidFontSetup() {
+		errors = 0;
 
-			var urlErr = checkField("Font URL", $("#font_url").val(), true,
-					null, null, null);
+		var nameErr = checkField("Font Name", $("#font_name").val(), true,
+				null, null, null);
 
-			var sampleErr = checkField("Font Sample", $("#font_sample").val(),
-					true, null, null, null);
+		var urlErr = checkField("Font URL", $("#font_url").val(), true, null,
+				null, null);
 
-			if (nameErr) {
-				showError("font_name_data", "font_name", nameErr);
-				errors = 1;
-			} else {
-				removeErrorMsg("font_name_data", "font_name");
-			}
+		var sampleErr = checkField("Font Sample", $("#font_sample").val(),
+				true, null, null, null);
 
-			if (urlErr) {
-				showError("font_url_data", "font_url", urlErr);
-				errors = 1;
-			} else {
-				removeErrorMsg("font_url_data", "font_url");
-			}
-
-			if (sampleErr) {
-				showError("font_sample_data", "font_sample", sampleErr);
-				errors = 1;
-			} else {
-				removeErrorMsg("font_sample_data", "font_sample");
-			}
+		if (nameErr) {
+			showError("font_name_data", "font_name", nameErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("font_name_data", "font_name");
 		}
-	</script>
-	<!-- Control Sidebar -->
-	<aside class="control-sidebar control-sidebar-dark">
-		<!-- Control sidebar content goes here -->
-		<div class="p-3">
-			<h5>Title</h5>
-			<p>Sidebar content</p>
-		</div>
-	</aside>
-	<!-- /.control-sidebar -->
+
+		if (urlErr) {
+			showError("font_url_data", "font_url", urlErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("font_url_data", "font_url");
+		}
+
+		if (sampleErr) {
+			showError("font_sample_data", "font_sample", sampleErr);
+			errors = 1;
+		} else {
+			removeErrorMsg("font_sample_data", "font_sample");
+		}
+	}
+</script>
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+	<!-- Control sidebar content goes here -->
+	<div class="p-3">
+		<h5>Title</h5>
+		<p>Sidebar content</p>
+	</div>
+</aside>
+<!-- /.control-sidebar -->

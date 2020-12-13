@@ -46,6 +46,7 @@ public interface InnoxApiConstant {
 	public static String API_ORDER_CONFIRM = "/order/confirm";
 	public static String API_ORDER_HISTORY = "/order/history/{order_status}";
 	public static String API_ORDER_DETAIL = "/order/{order_id}";
+	public static String API_ORDER_CANCEL = "/order/cancel/{order_id}";
 
 	public static String API_ANNOUNCEMENT_LIST = "/announcements";
 	public static String API_ANNOUNCEMENT_DETAIL = "/announcement/{announcement_id}";

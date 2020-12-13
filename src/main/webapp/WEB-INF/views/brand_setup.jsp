@@ -180,7 +180,14 @@
 										<td>${status.count}</td>
 										<td>${br.name}</td>
 										<td>${br.sequence}</td>
-										<td>${br.status}</td>
+										<td><c:choose>
+												<c:when test="${br.status == 1}">
+													<span class="badge badge-primary">${br.statusDesc}</span>
+												</c:when>
+												<c:otherwise>
+													<span class="badge badge-danger">${br.statusDesc}</span>
+												</c:otherwise>
+											</c:choose></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -255,7 +262,7 @@
 		} else {
 			removeErrorMsg("brand_name_data", "brand_name")
 		}
-		
+
 		if (sequenceErr) {
 			showError("sequence_no_data", "sequence_no", nameErr);
 			errors = 1;

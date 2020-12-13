@@ -205,6 +205,7 @@
 													<td>Unit Price</td>
 													<td>Quantity</td>
 													<td>Sub Total</td>
+													<td>Product Type</td>
 												</tr>
 											</thead>
 											<tbody>
@@ -218,6 +219,7 @@
 														<td>${orderItem.unitPrice}</td>
 														<td>${orderItem.quantity}</td>
 														<td>${orderItem.subTotal}</td>
+														<td>${orderItem.productTypeDesc}</td>
 													</tr>
 												</c:forEach>
 											</tbody>

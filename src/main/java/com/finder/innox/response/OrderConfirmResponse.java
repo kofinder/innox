@@ -32,6 +32,8 @@ public class OrderConfirmResponse implements Serializable {
 	private BigDecimal total_cost;
 
 	private String total_cost_text;
+	
+	private boolean is_cancel_order;
 
 	private UserResponse user_detail;
 
@@ -147,6 +149,14 @@ public class OrderConfirmResponse implements Serializable {
 
 	public void setUser_detail(UserResponse user_detail) {
 		this.user_detail = user_detail;
+	}
+
+	public boolean isIs_cancel_order() {
+		return is_cancel_order;
+	}
+
+	public void setIs_cancel_order(boolean is_cancel_order) {
+		this.is_cancel_order = is_cancel_order;
 	}
 
 }

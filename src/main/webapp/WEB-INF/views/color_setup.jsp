@@ -158,7 +158,14 @@
 										<td>${status.count}</td>
 										<td>${color.colorName}</td>
 										<td>${color.colorCode}</td>
-										<td>${color.statusDesc}</td>
+										<td><c:choose>
+												<c:when test="${color.status == 1}">
+													<span class="badge badge-primary">${color.statusDesc}</span>
+												</c:when>
+												<c:otherwise>
+													<span class="badge badge-danger">${color.statusDesc}</span>
+												</c:otherwise>
+											</c:choose></td>
 									</tr>
 								</c:forEach>
 							</tbody>

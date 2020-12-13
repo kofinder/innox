@@ -169,7 +169,14 @@
 												<td>${size.sizeName}</td>
 												<td>${size.sizeCode}</td>
 												<td>${size.sizeCategoryDesc}</td>
-												<td>${size.statusDesc}</td>
+												<td><c:choose>
+														<c:when test="${size.status == 1}">
+															<span class="badge badge-primary">${size.statusDesc}</span>
+														</c:when>
+														<c:otherwise>
+															<span class="badge badge-danger">${size.statusDesc}</span>
+														</c:otherwise>
+													</c:choose></td>
 											</tr>
 										</c:forEach>
 									</tbody>

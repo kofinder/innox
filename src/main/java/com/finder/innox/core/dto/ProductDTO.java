@@ -87,6 +87,8 @@ public class ProductDTO implements Serializable {
 
 	private CustomItemDTO customItemDTO;
 
+	private String statusDesc;
+
 	public ProductDTO() {
 		super();
 	}
@@ -132,6 +134,8 @@ public class ProductDTO implements Serializable {
 					productSizeList.add(new SizeDTO(size.getSize()));
 				});
 			}
+			
+			this.statusDesc = CommonStatus.getDescByCode(this.status);
 
 		}
 	}
@@ -414,6 +418,14 @@ public class ProductDTO implements Serializable {
 
 	public void setCustomItemDTO(CustomItemDTO customItemDTO) {
 		this.customItemDTO = customItemDTO;
+	}
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 
 }

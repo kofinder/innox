@@ -58,6 +58,7 @@ public class FontsServiceImpl implements FontsService {
 		Fonts fonts = null;
 		if (fontsDTO.getSeq() > 0) {
 			fonts = fontsDao.get(fontsDTO.getSeq());
+			fonts.setStatus(fontsDTO.getStatus());
 			fonts.setUpdatedTime(new Date());
 		} else {
 			fonts = new Fonts();

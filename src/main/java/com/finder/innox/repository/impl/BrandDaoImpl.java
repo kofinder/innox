@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.finder.innox.core.domain.Brand;
 import com.finder.innox.repository.BrandDao;
-import com.finder.innox.utils.CommonStatus;
 
 @Repository
 public class BrandDaoImpl extends GenericDaoImpl<Brand, Long> implements BrandDao{
@@ -21,8 +20,8 @@ public class BrandDaoImpl extends GenericDaoImpl<Brand, Long> implements BrandDa
 		CriteriaBuilder cb = this.getCurrentSession().getCriteriaBuilder();
 		CriteriaQuery<Brand> cr = cb.createQuery(Brand.class);
 		Root<Brand> root  = cr.from(Brand.class);
-		cr.select(root)
-			.where(cb.equal(root.get("status"), CommonStatus.ACTIVE.getCode()));
+//		cr.select(root)
+//			.where(cb.equal(root.get("status"), CommonStatus.ACTIVE.getCode()));
 		
 		Query<Brand> query = this.getCurrentSession().createQuery(cr);
 		List<Brand> entityList = query.getResultList();

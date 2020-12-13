@@ -304,4 +304,16 @@ public class OrderServiceImple implements OrderService {
 		return new OrderDTO(orderDao.get(orderDTO.getSeq()));
 	}
 
+	@Override
+	public OrderDTO cancelOrder(long orderId) throws Exception {
+		logger.info("cancelOrder() >> Order Id : " + orderId);
+		Order order = orderDao.get(orderId);
+		if (order != null) {
+			order.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
+			orderDao.saveOrUpdate(order);
+			return new OrderDTO(order);
+		}
+		return null;
+	}
+
 }

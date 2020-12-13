@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finder.innox.core.domain.Fonts;
+import com.finder.innox.utils.CommonStatus;
 
 public class FontsDTO implements Serializable {
 
@@ -26,6 +27,8 @@ public class FontsDTO implements Serializable {
 
 	private int status;
 
+	private String statusDesc;
+
 	public FontsDTO() {
 		super();
 	}
@@ -38,6 +41,8 @@ public class FontsDTO implements Serializable {
 			this.fontSample = font.getFontSample();
 			this.fontDescription = font.getFontDescription();
 			this.fontImage = font.getFontImage();
+			this.status = font.getStatus() == null ? CommonStatus.INACTIVE.getCode() : font.getStatus();
+			this.statusDesc = CommonStatus.getDescByCode(this.status);
 		}
 	}
 
@@ -103,6 +108,14 @@ public class FontsDTO implements Serializable {
 
 	public void setFontImageFile(MultipartFile fontImageFile) {
 		this.fontImageFile = fontImageFile;
+	}
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 
 }

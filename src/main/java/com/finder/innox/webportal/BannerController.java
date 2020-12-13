@@ -20,6 +20,7 @@ import com.finder.innox.core.dto.UserDTO;
 import com.finder.innox.core.services.BannerService;
 import com.finder.innox.core.services.UserService;
 import com.finder.innox.utils.CommonConstant;
+import com.finder.innox.utils.CommonStatus;
 import com.finder.innox.utils.CommonUtil;
 import com.finder.innox.utils.PageTitleConstant;
 import com.finder.innox.utils.UserRoleEnum;
@@ -84,6 +85,7 @@ public class BannerController {
 
 	private void commonModel(Model model) {
 		model.addAttribute("pageTitle", PageTitleConstant.BANNER_TITLE);
+		model.addAttribute("statusList", CommonStatus.values());
 	}
 
 }

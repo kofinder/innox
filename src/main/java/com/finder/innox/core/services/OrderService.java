@@ -16,4 +16,6 @@ public interface OrderService {
 	List<OrderDTO> searchOrderHistoryList(OrderDTO orderDTO);
 
 	OrderDTO orderManage(OrderDTO orderDTO) throws Exception;
+
+	OrderDTO cancelOrder(long orderId) throws Exception;
 }
